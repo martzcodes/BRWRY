@@ -1,0 +1,19 @@
+{
+  "name": "BRWRY",
+  "version": "0.0.1",
+  "description": "BRWRY based on Node, Express, Angular, Bootstrap, Socket.io",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Martz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "~3.5.1",
+    "socket.io": "~0.9.16",
+    "jade": "~1.3.1",
+    "ds18b20": "0.0.1",
+    "rpi-gpio": "0.0.4",
+    "async": "~0.6.2"
+  }
+}

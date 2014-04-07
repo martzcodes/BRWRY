@@ -1,0 +1,122 @@
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading"><h3 class="panel-title">System Info</h3></div>
+			<div class="panel-body">
+				<div class="input-group">
+					<span class="input-group-addon">System Name</span>
+					<input type="text" class="form-control" data-ng-model="system.systemname">
+				</div>
+				<br/>
+				<div class="input-group">
+					<span class="input-group-addon">Brewer Name</span>
+					<input type="text" class="form-control" data-ng-model="system.brewername">
+				</div>
+				<br/>
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<button type="button" class="btn btn-primary" data-ng-click="updateSystem(system)">Update System Info</span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="panel panel-warning">
+			<div class="panel-heading"><h3 class="panel-title">Temp Sensor Setup</h3></div>
+			<div class="panel-body">Temp Sensor description, blah blah blah</div>
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>Address</th>
+						<th>Name</th>
+						<th>Location</th>
+						<th>Enabled?</th>
+						<th>Calibration</th>
+						<th>Last Changed</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="temperature in system.sensors">
+						<td>{{temperature.sensoraddress}}</td>
+						<td><input type="text" ng-model="temperature.sensorname"></td>
+						<td><input type="text" ng-model="temperature.sensorloc"></td>
+						<td><input type="checkbox" ng-model="temperature.sensorstatus" ng-true-value="1" ng-false-value="0" ng-checked="temperature.sensorstatus"></td>
+						<td><input type="number" ng-model="temperature.calibration"></td>
+						<td>{{temperature.sensorlastchange}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<br/>
+			<div class="panel-body">
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<button type="button" class="btn btn-primary" data-ng-click="updateSensors(system)">Update All Sensors</span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="panel panel-danger">
+			<div class="panel-heading"><h3 class="panel-title">GPIO Pin Setup</h3></div>
+			<div class="panel-body">Allowable Pins are: {{allowablepins}}</div>
+			<table class="table table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>Pin</th>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Location</th>
+						<th>Status</th>
+						<th>Safe Value</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="gpioPin in gpioPins">
+						<td>{{gpioPin.address}}</td>
+						<td><input type="text" ng-model="gpioPin.name"></td>
+						<td><input type="text" ng-model="gpioPin.type"></td>
+						<td><input type="text" ng-model="newPin.location"></td>
+						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="gpioPin.value" ng-checked="gpioPin.value"></td>
+						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="gpioPin.safeValue" ng-checked="gpioPin.safeValue"></td>
+						<td><button class="btn btn-danger" ng-click="removeGPIO(gpioPin)">Remove</button></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><input type="number" ng-model="newPin.address"></td>
+						<td><input type="text" ng-model="newPin.name"></td>
+						<td><input type="text" ng-model="newPin.type"></td>
+						<td><input type="text" ng-model="newPin.location"></td>
+						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newPin.value" ng-checked="newPin.value"></td>
+						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newPin.safeValue" ng-checked="newPin.safeValue"></td>
+						<td><button class="btn btn-success" ng-click="updateGPIO(newPin)">Add</button></td>
+					</tr>
+				</tbody>
+			</table>
+			<br/>
+			<div class="panel-body">
+				<div class="btn-group btn-group-justified">
+					<div class="btn-group">
+						<button type="button" class="btn btn-primary" data-ng-click="updateAllGPIO(gpioPins)">Update All Pins</span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
