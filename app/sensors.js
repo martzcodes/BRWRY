@@ -2,6 +2,117 @@
 var sense = require('./fakeds18b20.js'); //when testing on something other than a pi
 var async = require('async');
 
+exports.checkUpdate = function(systemjson,updaterequest,callback) {
+	if (systemjson.sensors.length == 0) {
+		async.each(updaterequest.sensors,function(updatesensor,cb){
+			systemjson.sensors.push({sensoraddress:updatesensor.sensoraddress,
+				sensorname:updatesensor.sensorname,
+				sensorloc:updatesensor.sensorloc,
+				sensorstatus:updatesensor.sensorstatus,
+				sensorcalibration:updatesensor.sensorcalibration,
+				sensorlastchange:Date()
+			})
+			cb();
+		},function(err){
+			if(err) {
+				// One of the iterations produced an error.
+				// All processing will now stop.
+				console.log('An id failed to process');
+			} else {
+				console.log('All ids have been processed successfully');
+				callback(true,systemjson);
+			}
+		})
+	} else {
+		//sensors are already in the list (which they should be)
+		var changeexist = false;
+		async.each(updaterequest.sensors,function(updatesensor,updatecb){
+			var sensorexist = false;
+			var detailchange = false;
+			async.each(systemjson.sensors,function(systemsensor,cb){
+				if (systemsensor.sensoraddress == updatesensor.sensoraddress) {
+					sensorexist = true;
+					async.parallel([
+						function(pcallback){
+							if (systemsensor.sensorname == updatesensor.sensorname) {
+								pcallback(null);
+							} else {
+								systemsensor.sensorname = updatesensor.sensorname;
+								detailchange = true;
+								pcallback(null);
+							}
+						},
+						function(pcallback){
+							if (systemsensor.sensorloc == updatesensor.sensorloc) {
+								pcallback(null);
+							} else {
+								systemsensor.sensorloc = updatesensor.sensorloc;
+								detailchange = true;
+								pcallback(null);
+							}
+						},
+						function(pcallback){
+							if (systemsensor.sensorstatus == updatesensor.sensorstatus) {
+								pcallback(null);
+							} else {
+								systemsensor.sensorstatus = updatesensor.sensorstatus;
+								detailchange = true;
+								pcallback(null);
+							}
+						},
+						function(pcallback){
+							if (systemsensor.sensorcalibration == updatesensor.sensorcalibration) {
+								pcallback(null);
+							} else {
+								systemsensor.sensorcalibration = updatesensor.sensorcalibration;
+								detailchange = true;
+								pcallback(null);
+							}
+						}
+					],
+					// optional callback
+					function(err){
+						// if (detailchange) set changeexist to true
+						if (detailchange) {
+							changeexist = true;
+							systemsensor.sensorlastchange = Date();
+							cb();
+						}
+						// the results array will equal ['one','two'] even though
+						// the second function had a shorter timeout.
+					});
+				}
+				updatecb()
+			},function(jsonerr){
+				if (sensorexist == false) {
+					systemjson.sensors.push({sensoraddress:updatesensor.sensoraddress,
+						sensorname:updatesensor.sensorname,
+						sensorloc:updatesensor.sensorloc,
+						sensorstatus:updatesensor.sensorstatus,
+						sensorcalibration:updatesensor.sensorcalibration,
+						sensorlastchange:Date()
+					})
+					changeexist = true;
+				} else {
+					if (detailchange) {
+						changeexist = true;
+					}
+				}
+			})
+		},function(err){
+			if( err ) {
+				// One of the iterations produced an error.
+				// All processing will now stop.
+				console.log('An id failed to process');
+			} else {
+				console.log('All ids have been processed successfully');
+				callback(changeexist,systemjson);
+			}
+		})
+	}
+
+}
+
 function checkSensors(systemjson,callback){
 	sense.sensors(function(err, ids) {
 		if (systemjson.sensors.length == 0) {
@@ -55,59 +166,8 @@ function checkSensors(systemjson,callback){
 					callback(systemjson);
 				}
 			})
-			/*
-			for (var i=0;i<ids.length;i++) {
-				var sensorexists = false;
-				for (var k=0;k<systemjson.sensors.length;k++){
-					if (ids[i] == systemjson.sensors[k]) {
-						sensorexists = true;
-					}
-				}
-				systemjson.sensors.push({sensoraddress:ids[i],
-					sensorname:'',
-					sensorloc:'',
-					sensorstatus:'',
-					sensorcalibration:'',
-					sensorlastchange:Date()
-				})
-
-			}
-			if (i === ids.length-1) {
-				callback(systemjson);
-			}
-			*/
 		}
-		//ids.forEach(function(sensor){
-
-			/*
-			Sensor.find({address:sensor},function (err, sensors) {
-				if (err) {
-					console.log("error: ",error)
-				}
-				if (sensors.length == 0) {
-					Sensor.create({
-						name: 'unnamed', //Name
-						type: 'Temperature', //Normally temperature (don't want to prevent using other types of senors), not used
-						address: sensor, //addressed used to get readings
-						location: 'No Where', //description of where this is placed in the brewing process
-						calibration: 0, //Calibration number (if the sensor is off by a set amount)
-						value: -1, //current reading
-						date: Date(), //time of current reading
-						lastValue: -1, //last reading
-						active: 1, //Is it being used?
-						linked: []  //Is it linked to anything else (PID control of something)
-					});
-					console.log('Created sensor',sensor,'!')
-				}
-			})
-*/
-		//});
 	});
-/*
-	Sensor.find({},function (err, sensors) {
-		if (socket) socket.emit('checksensors', {'checksensors': sensors});
-	});
-*/
 }
 
 exports.checkSensors = function(systemjson,callback) {

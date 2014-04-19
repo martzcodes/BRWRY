@@ -34,7 +34,6 @@ var loadSystemJson = function(cb) {
 				equipment:[],
 				sensors:[],
 			};
-			console.log('here');
 			sensors.checkSensors(templatejson, function(systemjson){
 				writeSystemJson(systemjson,function(newsystemjson){
 					cb(newsystemjson)
@@ -78,6 +77,17 @@ exports.update = function(req, res) {
 		if (updaterequest.type == 'sensor') {
 			var sensorcheck = false;
 			//check for differences... if different, then update systemjson
+			//i.e. don't write if nothing has changed
+
+			sensors.checkUpdate(systemjson,updaterequest,function(changed,changedsystemjson){
+				console.log('changed',changed)
+				if (changed) {
+					writeSystemJson(changedsystemjson,function(newsystemjson){
+						console.log(newsystemjson)
+					})
+				}
+			})
+
 		}
 		if (updaterequest.type == 'equipment') {
 			var equipmentcheck = false;
@@ -85,7 +95,7 @@ exports.update = function(req, res) {
 			
 		}
 		if (updaterequest.type == 'brew') {
-			
+			//start or stop brew
 			
 		}
 	})
