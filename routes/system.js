@@ -171,6 +171,21 @@ exports.update = function(req, res) {
 			//updaterequest.system available
 			
 		}
+		if (updaterequest.type == 'toggle') {
+			console.log('toggled')
+			loadSystemJson(function(systemjson){
+				equipment.togglePin(systemjson,updaterequest.gpioPin,function(changed,changedsystemjson){
+					console.log('toggle',changedsystemjson.equipment)
+					if (changed) {
+						systemjson.equipment = changedsystemjson.equipment;
+						writeSystemJson(systemjson,function(newsystemjson){
+							console.log(newsystemjson)
+							socket.emit('equipment', newsystemjson);
+						})
+					}
+				})
+			})
+		}
 		if (updaterequest.type == 'brew') {
 			//start or stop brew
 			

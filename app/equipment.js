@@ -103,7 +103,7 @@ exports.initPins = function(socket,Equipment) {
 		})
 	});
 }
-
+/*
 exports.togglePin = function(socket,Equipment,gpioPin) {
 	var currentState = gpioPin.state;
 	var newState, newValue;
@@ -127,6 +127,34 @@ exports.togglePin = function(socket,Equipment,gpioPin) {
 		if(err) console.log('Error:',err);
 		console.log('Pin',gpioPin.address,'turned',gpioPin.modes[newState]);
 	});
+}
+*/
+exports.togglePin = function(systemjson,gpioPin,callback) {
+	var existcheck = false;
+	async.each(systemjson.equipment,function(equipment,cb){
+		if (equipment.address == gpioPin.address) {
+			existcheck = true;
+			console.log('checked = true')
+			if (equipment.value == 1) {
+				equipment.value = 0;
+			} else {
+				equipment.value = 1;
+			}
+			gpio.write(equipment.address,equipment.value,function(err){
+				console.log('Error:',err);
+				cb();
+			});
+		} else {
+			cb();
+		}
+		
+	},function(err){
+		if (existcheck == true) {
+			callback(true,systemjson)
+		} else {
+			callback(false)
+		}
+	})
 }
 
 exports.toggleAllPin = function(socket,Equipment) {

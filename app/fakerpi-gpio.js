@@ -24,8 +24,9 @@ Gpio.prototype.DIR_OUT = 'out';
  * @param {string}   direction The pin direction, either 'in' or 'out'
  * @param {function} cb        Optional callback
  */
-Gpio.prototype.setup = function(channel, direction, cb /*err*/) {
+Gpio.prototype.setup = function(channel, direction, cb) {
     //don't really need to do anything... may store values later
+    cb();
 };
 
 /**  
@@ -35,8 +36,9 @@ Gpio.prototype.setup = function(channel, direction, cb /*err*/) {
  * @param {boolean}  value   If true, turns the channel on, else turns off
  * @param {function} cb      Optional callback
  */
-Gpio.prototype.write = function(channel, value, cb /*err*/ ) {
+Gpio.prototype.write = function(channel, value, cb) {
     //don't really need to do anything... may store values later
+    cb();
 };
 Gpio.prototype.output = Gpio.prototype.write;
 

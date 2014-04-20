@@ -13,6 +13,14 @@ angular.module('brwryApp.controllers')
 			$scope.system = data;
 		})
 
+		$scope.toggleGPIO = function(system,gpioPin) {
+		  	//console.log('toggled in ctrler',gpioPin);
+		  	//socket.emit('send:toggleGPIO', gpioPin);
+		  	console.log(gpioPin)
+		  	var data = {type:'toggle',system:system,gpioPin:gpioPin}
+		  	System.update({},data);
+		}
+
 		$scope.getInternal = function(callback) {
 			$http({method: 'GET', url: '/api/internal'})
 				.success(function(responsedata, status, headers, config) {
@@ -74,11 +82,6 @@ angular.module('brwryApp.controllers')
 			$scope.gpioPins = data.gpiopinout;
 		});
 
-		$scope.toggleGPIO = function(gpioPin) {
-		  	//console.log('toggled in ctrler',gpioPin);
-		  	socket.emit('send:toggleGPIO', gpioPin);
-		}
-
 		$scope.toggleAllGPIO = function() {
 		  	//console.log('toggled in ctrler',gpioPin);
 		  	socket.emit('send:toggleAllGPIO');
@@ -102,6 +105,14 @@ angular.module('brwryApp.controllers')
 		$scope.closeAlert = function(index) {
 			$scope.alerts.splice(index, 1);
 		};
+
+		$scope.getEquipmentClass = function(state) {
+			if(state) {
+				return "btn-danger"
+			} else {
+				return "btn-success"
+			}
+		}
 
 		System.get({},function(data){
 			$scope.system = data;
@@ -153,6 +164,15 @@ angular.module('brwryApp.controllers')
 			//socket.emit('send:updateGPIO', gpioPin);
 			System.update({},data)
 		}
+
+		$scope.toggleGPIO = function(system,gpioPin) {
+		  	//console.log('toggled in ctrler',gpioPin);
+		  	//socket.emit('send:toggleGPIO', gpioPin);
+		  	console.log(gpioPin)
+		  	var data = {type:'toggle',system:system,gpioPin:gpioPin}
+		  	System.update({},data);
+		}
+
 		$scope.updateAllGPIO = function(system) {
 			//console.log('toggled in ctrler',gpioPin);
 			//socket.emit('send:updateAllGPIO', gpioPins);

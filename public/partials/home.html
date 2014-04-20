@@ -38,7 +38,7 @@
 			<div class="panel-heading"><h3 class="panel-title">GPIO Pin Control</h3></div>
 			<div class="panel-body">
 				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="gpioPin in gpioPins | orderBy:gpioPin.address"><button class="btn btn-primary" ng-click="toggleGPIO(gpioPin)">Toggle</button> GPIO Pin {{gpioPin.address}} has a value of {{gpioPin.value}}. Last changed: {{gpioPin.date}}</li>
+					<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address"><button class="btn btn-primary" ng-click="toggleGPIO(system,gpioPin)">Toggle</button> GPIO Pin {{gpioPin.address}} has a value of {{gpioPin.value}}. Last changed: {{gpioPin.date}}</li>
 				</ul>
 			</div>
 		</div>
