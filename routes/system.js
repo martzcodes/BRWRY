@@ -16,6 +16,14 @@ exports.lastTempOut = function() {
 	socket.emit('tempout', {'tempout': lasttempout});
 }
 
+var checkEquipment = function(sensorsjson,callback) {
+
+}
+
+exports.checkEquipment = function(sensorsjson,callback) {
+	checkEquipment(sensorsjson, callback);
+}
+
 exports.checkTemp = function(sensorsjson,callback) {
 	sensors.checkTemp(sensorsjson,function(tempout){
 		socket.emit('tempout', {'tempout': tempout});
@@ -129,6 +137,7 @@ exports.update = function(req, res) {
 		}
 		if (updaterequest.type == 'equipment') {
 			//check for differences... if different, then update systemjson
+			console.log(updaterequest)
 			
 		}
 		if (updaterequest.type == 'brew') {

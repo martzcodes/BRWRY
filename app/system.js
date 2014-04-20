@@ -51,6 +51,7 @@ exports.initSystem = function(socketio) {
 	socket = socketio.sockets;
 	system.loadSystemJson(function(systemdata){
 		systemjson = systemdata;
+		sensorLength = systemjson.sensorLength;
 		if (!systemjson.sensorInterval) {
 			sensorInterval = setInterval(sensorCheck,3000);
 		} else {
