@@ -2,6 +2,7 @@ var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
+var system = require('./app/system.js');
 
 var app = express();
 var server = http.createServer(app);
@@ -34,12 +35,14 @@ app.get('/', routes.index);
 app.get('/api/system', routes.system.all);
 app.get('/api/sensors', routes.system.sensors);
 app.get('/api/equipment', routes.system.equipment);
+app.get('/api/internal', routes.system.internal);
 app.put('/api/system', routes.system.update);
 
-app.get('/api/brews', routes.brew.all);
-app.post('/api/brews', routes.brew.create);
-app.put('/api/brews/:brewId', routes.brew.update);
-app.del('/api/brews/:brewId', routes.brew.destroy);
+
+//app.get('/api/brews', routes.brew.all);
+//app.post('/api/brews', routes.brew.create);
+//app.put('/api/brews/:brewId', routes.brew.update);
+//app.del('/api/brews/:brewId', routes.brew.destroy);
 
 /*
 app.get('/api/sensors', routes.sensor.all);
@@ -69,6 +72,8 @@ io.sockets.on('connection',routes.connect)
 
 server.listen(app.get('theport'),app.get('theip'), function() {
 	console.log('BRWRY running on ' + app.get('theip') + ':' + app.get('theport'));
+
+	system.initSystem(io);
 });
 
 process.stdin.resume();//so the program will not close instantly

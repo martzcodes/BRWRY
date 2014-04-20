@@ -110,7 +110,6 @@ exports.checkUpdate = function(systemjson,updaterequest,callback) {
 			}
 		})
 	}
-
 }
 
 function checkSensors(systemjson,callback){
@@ -174,28 +173,30 @@ exports.checkSensors = function(systemjson,callback) {
 	checkSensors(systemjson,callback);
 }
 
-function checkTemp(socket,Sensor) {
-	Sensor.find({},function(err, sensors) {
-		sensors.forEach(function(tempSensor) {
-			sense.temperature(tempSensor.address, function(err, value) {
-				var newReading = value+tempSensor.calibration;
-				Sensor.update({address:tempSensor.address},{lastValue:tempSensor.value,
-					value:newReading,date:Date()}, function(err, numberAffected, raw) {
-  					if (err) console.log('Error:',err);
-				});
-			});
+function checkTemp(sensors,callback) {
+	var tempout = [];
+	async.each(sensors,function(sensor,cb){
+		sense.temperature(sensor.sensoraddress, function(err,value){
+			var newReading = value + sensor.sensorcalibration;
+			tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date()})
 		})
-	});
-	Sensor.find({},function(err,sensors){
-		if (socket) socket.emit('tempout', {'tempout': sensors});
+		cb();
+	},function(err){
+		if( err ) {
+			// One of the iterations produced an error.
+			// All processing will now stop.
+			console.log('Err happened',err);
+		} else {
+			callback(tempout);
+		}
 	})
 }
 
-
-exports.checkTemp = function(socket,Sensor) {
-	checkTemp(socket,Sensor);
+exports.checkTemp = function(sensors,callback) {
+	checkTemp(sensors,callback);
 }
 
+/*
 exports.updateSensor = function(socket,Sensor,sensor) {
 	Sensor.update({address:sensor.address},{active:sensor.active,
 		calibration:sensor.calibration},function (err, numberAffected, raw) {
@@ -208,7 +209,9 @@ exports.updateSensor = function(socket,Sensor,sensor) {
 	});
 	checkTemp(socket,Sensor);
 }
+*/
 
+/*
 exports.updateSensors = function(socket,Sensor,sensors) {
 	sensors.forEach(function(sensor){
 			Sensor.update({address:sensor.address},{active:sensor.active, name:sensor.name, location:sensor.location,
@@ -223,3 +226,4 @@ exports.updateSensors = function(socket,Sensor,sensors) {
 		});
 		checkTemp(socket,Sensor);
 }
+*/

@@ -1,17 +1,15 @@
 var sensors = require('../app/sensors.js');
+var system = require('../app/system.js');
 var fs = require('fs');
-
-/*
-Address
-Name
-Location
-Enabled?
-Calibration
-*/
-
 
 exports.id = function(req, res, next, id) {
 	
+}
+
+exports.internal = function(req,res) {
+	system.getInternalTemperature(function(data){
+		
+	})
 }
 
 var getSensors = function(cb) {

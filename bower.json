@@ -8,6 +8,7 @@
     "bootstrap": "~3.1.1",
     "d3": "~3.4.4",
     "angular-ui-router": "~0.2.10",
-    "angular-resource": "~1.2.16"
+    "angular-resource": "~1.2.16",
+    "font-awesome": "~4.0.3"
   }
 }

@@ -3,7 +3,26 @@ var sensors = require('../app/sensors.js');
 var equipment = require('../app/equipment.js');
 var fs = require('fs');
 var path = require('path');
-var async = require('async');
+//var async = require('async');
+
+var socket;
+var lasttempout;
+
+exports.setSocket = function(socketio) {
+	socket = socketio;
+}
+
+exports.lastTempOut = function() {
+	socket.emit('tempout', {'tempout': lasttempout});
+}
+
+exports.checkTemp = function(sensorsjson,callback) {
+	sensors.checkTemp(sensorsjson,function(tempout){
+		socket.emit('tempout', {'tempout': tempout});
+		lasttempout = tempout;
+		callback(tempout);
+	})
+}
 
 var writeSystemJson = function(newsystemjson,cb) {
 	fs.writeFile(path.normalize(__dirname+'/../data/system.json'), JSON.stringify(newsystemjson, null, 2), function (err) {
@@ -31,6 +50,9 @@ var loadSystemJson = function(cb) {
 				brewername:'Awesome Brwr',
 				currentbrew:'',
 				brewstate:'',
+				sensorLength:120,
+				sensorInterval:3000,
+				sensorStoreInterval:30000,
 				equipment:[],
 				sensors:[],
 			};
@@ -41,6 +63,11 @@ var loadSystemJson = function(cb) {
 			})
 		}
 	});
+}
+exports.loadSystemJson = function(cb) {
+	loadSystemJson(function(systemjson){
+		cb(systemjson);
+	})
 }
 
 exports.all = function(req, res) {
@@ -55,6 +82,12 @@ exports.sensors = function(req, res) {
 	})
 }
 
+exports.internal = function(req,res) {
+	system.getInternalTemperature(function(data){
+		res.jsonp(data);
+	})
+}
+
 exports.equipment = function(req, res) {
 	loadSystemJson(function(systemjson){
 		res.jsonp(systemjson.equipment);
@@ -66,31 +99,35 @@ exports.update = function(req, res) {
 	loadSystemJson(function(systemjson){
 		if (updaterequest.type == 'basic') {
 			if (updaterequest.systemname != systemjson.systemname || updaterequest.brewername != systemjson.brewername) {
-				console.log('system or brewer name changed');
 				systemjson.systemname = updaterequest.systemname;
 				systemjson.brewername = updaterequest.brewername;
 				writeSystemJson(systemjson,function(newsystemjson){
 					console.log(newsystemjson)
+					socket.emit('basic', newsystemjson);
 				})
 			}
 		}
 		if (updaterequest.type == 'sensor') {
-			var sensorcheck = false;
 			//check for differences... if different, then update systemjson
 			//i.e. don't write if nothing has changed
-
+			if (updaterequest.sensorLength != systemjson.sensorLength || updaterequest.sensorInterval != systemjson.sensorInterval || updaterequest.sensorStoreInterval != systemjson.sensorStoreInterval) {
+				systemjson.sensorLength = updaterequest.sensorLength;
+				systemjson.sensorInterval = updaterequest.sensorInterval;
+				systemjson.sensorStoreInterval = updaterequest.sensorStoreInterval;
+				sensorSystemChange = true;
+			}
 			sensors.checkUpdate(systemjson,updaterequest,function(changed,changedsystemjson){
-				console.log('changed',changed)
-				if (changed) {
-					writeSystemJson(changedsystemjson,function(newsystemjson){
+				if (changed || sensorSystemChange) {
+					systemjson.sensors = changedsystemjson.sensors;
+					writeSystemJson(systemjson,function(newsystemjson){
 						console.log(newsystemjson)
+						socket.emit('sensor', newsystemjson);
 					})
 				}
 			})
 
 		}
 		if (updaterequest.type == 'equipment') {
-			var equipmentcheck = false;
 			//check for differences... if different, then update systemjson
 			
 		}

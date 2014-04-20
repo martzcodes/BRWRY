@@ -1,12 +1,18 @@
-exports.sensor = require('./sensor.js');
-exports.brew = require('./brew.js');
-exports.system = require('./system.js');
-exports.equipment = require('./equipment.js');
+var sensor = require('./sensor.js');
+var brew = require('./brew.js');
+var system = require('./system.js');
+var equipment = require('./equipment.js');
 
-var sio;
+exports.sensor = sensor;
+exports.brew = brew;
+exports.system = system;
+exports.equipment = equipment;
+
+var socket;
 
 exports.socketio = function(io){
-	sio = io.sockets;
+	socket = io.sockets;
+	system.setSocket(io.sockets);
 }
 
 // Main application view
@@ -14,8 +20,8 @@ exports.index = function(req, res) {
 	res.render('index');
 };
 
-exports.connect = function(socket) {
-
+exports.connect = function() {
+	system.lastTempOut();
 	/*
 	system.loadSystem(sio,System);
 

@@ -1,125 +1,67 @@
-function emitSystem(socket,system) {
-	socket.emit('system', {
-		systemname: system.systemname,
-		brewer:system.brewer,
-		state:system.state,
-		currentbrew:system.currentbrew
-	});
-	console.log('system: ',system)
-}
+var system = require('../routes/system.js');
+var async = require('async');
 
-function newSystem(socket,System) {
-	System.create({
-		systemname: 'New System Name',
-		brewer: 'New Brewer',
-		state: 0,
-		currentbrew: '',
-		currentbrewid: ''
-	},function(err,system){
-		if (err) {
-			console.log('error:',err);
-		} else {
-			console.log('Created new system');
-			emitSystem(socket,system);
-		}
-	});
-}
+var sensorLength;
+var sensorInterval;
+var sensorStoreInterval;
+var systemjson;
+var temperatureData = {datetime:[]};
+var socket;
+var lasttempout;
 
-exports.updateSystem = function(socket,System,data) {
-	System.findOne({},function (err, system) {
-		if (!system) {
-			System.create({
-				systemname: data.systemname,
-				brewer: data.brewer,
-				state: 0,
-				currentbrew: '',
-				currentbrewid: ''
-			},function(err,newsystem){
-				if (err) {
-					console.log('error:',err);
-				} else {
-					console.log('Created new system');
-					emitSystem(socket,newsystem);
-				}
-			});
-		} else {
-			System.findOneAndUpdate({},{
-				systemname: data.systemname,
-				brewer: data.brewer,
-			},function (err, updatedsystem) {
-				console.log('updated system');
-				emitSystem(socket,updatedsystem);
-			});
-		}
-	})
-}
-exports.newBrew = function(socket,System,data) {
-	System.findOne({},function (err, system) {
-		if (!system) {
-			System.create({
-				systemname: data.systemname,
-				brewer: data.brewer,
-				state: 1,
-				currentbrew: data.currentbrew,
-				currentbrewid: ''
-			},function(err,newsystem){
-				if (err) {
-					console.log('error:',err);
-				} else {
-					console.log('Created new system, started brew');
-					emitSystem(socket,newsystem);
-				}
-			});
-		} else {
-			System.findOneAndUpdate({},{
-				state: 1,
-				currentbrew: data.currentbrew
-			},function (err, updatedsystem) {
-				console.log('started brew');
-				emitSystem(socket,updatedsystem);
-			});
-		}
-	})
-}
-exports.stopBrew = function(socket,System,data) {
-	System.findOne({},function (err, system) {
-		if (!system) {
-			System.create({
-				systemname: data.systemname,
-				brewer: data.brewer,
-				state: 0,
-				currentbrew: '',
-				currentbrewid: ''
-			},function(err,newsystem){
-				if (err) {
-					console.log('error:',err);
-				} else {
-					console.log('Created new system, stopped brew');
-					emitSystem(socket,newsystem);
-				}
-			});
-		} else {
-			System.findOneAndUpdate({},{
-				state: 0,
-				currentbrew: '',
-				currentbrewid: ''
-			},function (err, updatedsystem) {
-				console.log('stopped brew');
-				emitSystem(socket,updatedsystem);
-			});
-		}
+var sensorCheck = function() {
+	var sensors = systemjson.sensors;
+	system.checkTemp(sensors,function(tempout){
+		lasttempout = tempout;
+		if (!sensorLength) sensorLength = 120;
+		if (temperatureData.datetime.length == sensorLength) {
+			temperatureData.datetime.shift();
+		};
+		temperatureData.datetime.push(Date());
+		async.each(tempout,function(temperature,cb){
+			if (temperatureData[temperature.sensoraddress]) {
+				if (temperatureData[temperature.sensoraddress].length == sensorLength) {
+					temperatureData[temperature.sensoraddress].shift();
+				};
+				temperatureData[temperature.sensoraddress].push(temperature.temperature);
+			} else {
+				temperatureData[temperature.sensoraddress] = [temperature.temperature];
+			}
+			cb();
+		},function(err){
+			if( err ) {
+				console.log('Err happened',err);
+			} else {
+				//console.log('tempdata',temperatureData);
+			}
+		})
 	})
 }
 
-exports.loadSystem = function(socket,System) {
-	System.findOne({}, function(err, system) {
-		if (err) {
-			console.log("error: ",error)
-		}
-		if (!system) {
-			newSystem(socket,System);
+var sensorStore = function() {
+	//store the last value
+
+}
+
+exports.getInternalTemperature = function(callback) {
+	callback(temperatureData);
+}
+
+exports.initSystem = function(socketio) {
+	socket = socketio.sockets;
+	system.loadSystemJson(function(systemdata){
+		systemjson = systemdata;
+		if (!systemjson.sensorInterval) {
+			sensorInterval = setInterval(sensorCheck,3000);
 		} else {
-			emitSystem(socket,system);
+			sensorInterval = setInterval(sensorCheck,systemjson.sensorInterval);
 		}
-	});
+		/*
+		if (!systemjson.sensorStoreInterval) {
+			sensorStoreInterval = setInterval(sensorStore,3000);
+		} else {
+			sensorStoreInterval = setInterval(sensorStore,systemjson.sensorInterval);
+		}
+		*/
+	})
 }

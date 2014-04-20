@@ -1,20 +1,40 @@
 'use strict';
 angular.module('brwryApp.controllers')
-	.controller('BrewCtrl', ['$scope','socket', 'System', function ($scope,socket,System) {
+	.controller('BrewCtrl', ['$scope','$http','socket','System', function ($scope,$http,socket,System) {
 		var tempout = "";
+
+		$scope.alerts = [];
+
+		$scope.closeAlert = function(index) {
+			$scope.alerts.splice(index, 1);
+		};
 
 		System.get({},function(data){
 			$scope.system = data;
 		})
 
+		$scope.getInternal = function(callback) {
+			$http({method: 'GET', url: '/api/internal'})
+				.success(function(responsedata, status, headers, config) {
+				// this callback will be called asynchronously
+				// when the response is available
+					callback(responsedata);
+				})
+				.error(function(responsedata, status, headers, config) {
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+					callback({});
+				});
+		}
 
-		socket.on('system', function (data) {
+		socket.on('basic', function (data) {
 			$scope.system = {
 				systemname:data.systemname,
 				brewername:data.brewername,
 				currentbrew:data.currentbrew,
 				brewstate:data.brewstate
 			}
+			$scope.alerts.push({ type: 'success', msg: 'Updated Information!' });
 		});
 
 		socket.on('brewdata', function (data){
@@ -77,12 +97,31 @@ angular.module('brwryApp.controllers')
 	}])
 	.controller('BrewSetupCtrl', ['$scope','socket', 'System', function ($scope,socket,System) {
 
+		$scope.alerts = [];
+
+		$scope.closeAlert = function(index) {
+			$scope.alerts.splice(index, 1);
+		};
+
 		System.get({},function(data){
 			$scope.system = data;
 		})
 
 		socket.on('tempout', function (data) {
 			$scope.temperatures = data.tempout;
+		});
+
+		socket.on('basic', function (data) {
+			$scope.system = data;
+			$scope.alerts.push({ type: 'success', msg: 'Updated Information!' });
+		});
+		socket.on('sensor', function (data) {
+			$scope.system.sensors = data.sensors;
+			$scope.alerts.push({ type: 'success', msg: 'Updated Sensors!' });
+		});
+		socket.on('equipment', function (data) {
+			$scope.equipment = data.equipment;
+			$scope.alerts.push({ type: 'success', msg: 'Updated Equipment!' });
 		});
 
 		socket.on('checksensors', function (data) {
