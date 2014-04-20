@@ -1,7 +1,57 @@
 //var gpio = require('rpi-gpio');
 var gpio = require('./fakerpi-gpio.js') //when testing on something other than a pi
+var async = require('async');
 
 var allowablePins = [11,12,13,15,16,18];
+
+exports.addEquipment = function(systemjson,newPin,callback) {
+	var existcheck = false;
+	async.each(systemjson.equipment,function(equipment,cb){
+		if (equipment.address == newPin.address) {
+			existcheck = true;
+		}
+		cb();
+	},function(err){
+		if (existcheck == false) {
+			if (!newPin.safeValue) {
+				newPin.safeValue = 0;
+			}
+			if (!newPin.value) {
+				newPin.value = 0;
+			}
+			systemjson.equipment.push(newPin)
+			callback(true,systemjson)
+		} else {
+			callback(false)
+		}
+	})
+}
+
+exports.removeEquipment = function(systemjson,gpioPin,callback) {
+	var existcheck = false;
+	async.each(systemjson.equipment,function(equipment,cb){
+		if (equipment.address == gpioPin.address) {
+			existcheck = true;
+			for (var i = 0; i < systemjson.equipment.length; i++) {
+				if (systemjson.equipment[i].address == gpioPin.address) {
+					systemjson.equipment.splice(i,1);
+				}
+			}
+		}
+		cb();
+	},function(err){
+		if (existcheck == true) {
+			callback(true,systemjson)
+		} else {
+			callback(false)
+		}
+
+	})
+}
+
+exports.updateEquipment = function(systemjson,callback) {
+
+}
 
 exports.allowablePins = function(socket) {
 	socket.emit('allowablepins',{'allowablepins':allowablePins});

@@ -104,14 +104,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="gpioPin in gpioPins">
+					<tr ng-repeat="gpioPin in system.equipment">
 						<td>{{gpioPin.address}}</td>
 						<td><input type="text" ng-model="gpioPin.name"></td>
 						<td><input type="text" ng-model="gpioPin.type"></td>
-						<td><input type="text" ng-model="newPin.location"></td>
+						<td><input type="text" ng-model="gpioPin.location"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="gpioPin.value" ng-checked="gpioPin.value"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="gpioPin.safeValue" ng-checked="gpioPin.safeValue"></td>
-						<td><button class="btn btn-danger" ng-click="removeGPIO(gpioPin)">Remove</button></td>
+						<td><button class="btn btn-danger" ng-click="removeGPIO(system,gpioPin)">Remove</button></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -129,7 +129,7 @@
 						<td><input type="text" ng-model="newPin.location"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newPin.value" ng-checked="newPin.value"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newPin.safeValue" ng-checked="newPin.safeValue"></td>
-						<td><button class="btn btn-success" ng-click="updateGPIO(newPin)">Add</button></td>
+						<td><button class="btn btn-success" ng-click="newGPIO(system,newPin)">Add</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -137,7 +137,7 @@
 			<div class="panel-body">
 				<div class="btn-group btn-group-justified">
 					<div class="btn-group">
-						<button type="button" class="btn btn-primary" data-ng-click="updateAllGPIO(gpioPins)">Update All Pins</span></button>
+						<button type="button" class="btn btn-primary" data-ng-click="updateAllGPIO(system)">Update All Pins</span></button>
 					</div>
 				</div>
 			</div>

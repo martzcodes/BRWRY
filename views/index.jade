@@ -36,12 +36,12 @@ html(lang='en',ng-app='brwryApp')
 							li
 								a(href='#/setup') Setup
 						ul.nav.navbar-nav.navbar-right
+							li(ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address")
+								button.btn.navbar-btn(href='#/' ng-click="toggleGPIO(gpioPin)") {{gpioPin.address}} - 
+									span(ng-show="gpioPin.state") Off
+									span(ng-hide="gpioPin.state") On
 							li(ng-repeat="temperature in temperatures")
 								a(href='#/' tooltip-placement="bottom" tooltip="{{temperature.sensorname}}") {{temperature.temperature}} &deg;C
 							li
 								button.btn.btn-danger.navbar-btn(href='#/' ng-click="toggleAllGPIO()") All Off!
-							li(ng-repeat="gpioPin in gpioPins | orderBy:gpioPin.address")
-								a(href='#/' ng-click="toggleGPIO(gpioPin)") {{gpioPin.address}} - 
-									span(ng-show="gpioPin.state") Off
-									span(ng-hide="gpioPin.state") On
 			div(data-ui-view)

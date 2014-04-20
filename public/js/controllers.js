@@ -120,7 +120,7 @@ angular.module('brwryApp.controllers')
 			$scope.alerts.push({ type: 'success', msg: 'Updated Sensors!' });
 		});
 		socket.on('equipment', function (data) {
-			$scope.equipment = data.equipment;
+			$scope.system.equipment = data.equipment;
 			$scope.alerts.push({ type: 'success', msg: 'Updated Equipment!' });
 		});
 
@@ -144,19 +144,26 @@ angular.module('brwryApp.controllers')
 		*/
 		$scope.updateSensors = function(system) {
 			system.type = 'sensor'
-			socket.emit('send:updateSensors', system.sensors);
 			System.update({},system)
 		}
-		$scope.updateGPIO = function(gpioPin) {
+		$scope.newGPIO = function(system,newPin) {
+			var data = {type:'addequipment',system:system,newPin:newPin}
+			
 			//console.log('toggled in ctrler',gpioPin);
-			socket.emit('send:updateGPIO', gpioPin);
+			//socket.emit('send:updateGPIO', gpioPin);
+			System.update({},data)
 		}
-		$scope.updateAllGPIO = function(gpioPins) {
+		$scope.updateAllGPIO = function(system) {
 			//console.log('toggled in ctrler',gpioPin);
-			socket.emit('send:updateAllGPIO', gpioPins);
+			//socket.emit('send:updateAllGPIO', gpioPins);
+			var data = {type:'updateequipment',system:system}
+			System.update({},data)
 		}
-		$scope.removeGPIO = function(gpioPin) {
+		$scope.removeGPIO = function(system,gpioPin) {
+			var data = {type:'removeequipment',system:system,gpioPin:gpioPin}
+			
 			//console.log('toggled in ctrler',gpioPin);
-			socket.emit('send:removeGPIO', gpioPin);
+			//socket.emit('send:updateGPIO', gpioPin);
+			System.update({},data)
 		}
 	}]);

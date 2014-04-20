@@ -109,7 +109,7 @@ angular.module('brwryApp.directives', [])
 				var data = [];
       			scope.getInternal(function(internaldata){
       				//Date format: Sun Apr 20 2014 00:46:39 GMT+0000 (UTC)
-      				for(var key in internaldata) {
+      				/*for(var key in internaldata) {
       					if (key != 'datetime') {
       						var values = [];
       						for (var i = 0; i < internaldata['datetime'].length; i++) {
@@ -117,6 +117,12 @@ angular.module('brwryApp.directives', [])
       						}
 							data.push({name: key, values: values});
 						}
+					}*/
+					for (var i = 0; i < internaldata.length; i++) {
+						for (var k = 0; k < internaldata[i].values.length; k++) {
+							internaldata[i].values[k].date = Date.parse(internaldata[i].values[k].date);
+						}
+						data.push({name:internaldata[i].name,values:internaldata[i].values})
 					}
 					chartdata(data);
       			})
@@ -127,7 +133,7 @@ angular.module('brwryApp.directives', [])
 					}
 					for (var i = 0; i < data.length; i++) {
 						for (var j = 0; j < newVal.length; j++) {
-							if (data[i].name == newVal[j].sensoraddress) {
+							if (data[i].name == newVal[j].sensorname) {
 								data[i].values.push({date:Date.parse(newVal[j].datetime),temperature:newVal[j].temperature})
 							}
 						}

@@ -2,7 +2,16 @@
   "systemname": "Martz BRWRY",
   "currentbrew": "",
   "brewstate": "",
-  "equipment": [],
+  "equipment": [
+    {
+      "address": 1,
+      "name": "asdf",
+      "type": "asdf",
+      "location": "asdf",
+      "safeValue": 0,
+      "value": 0
+    }
+  ],
   "sensors": [
     {
       "sensoraddress": "test-address",

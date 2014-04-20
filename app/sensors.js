@@ -10,6 +10,7 @@ exports.checkUpdate = function(systemjson,updaterequest,callback) {
 				sensorloc:updatesensor.sensorloc,
 				sensorstatus:updatesensor.sensorstatus,
 				sensorcalibration:updatesensor.sensorcalibration,
+				sensortarget:0,
 				sensorlastchange:Date()
 			})
 			cb();
@@ -121,6 +122,7 @@ function checkSensors(systemjson,callback){
 					sensorloc:'',
 					sensorstatus:'',
 					sensorcalibration:'',
+					sensortarget:0,
 					sensorlastchange:Date()
 				})
 				cb();
@@ -150,6 +152,7 @@ function checkSensors(systemjson,callback){
 							sensorloc:'',
 							sensorstatus:'',
 							sensorcalibration:'',
+							sensortarget:0,
 							sensorlastchange:Date()
 						})
 					}
@@ -178,7 +181,7 @@ function checkTemp(sensors,callback) {
 	async.each(sensors,function(sensor,cb){
 		sense.temperature(sensor.sensoraddress, function(err,value){
 			var newReading = value + sensor.sensorcalibration;
-			tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date()})
+			tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date(),sensortarget:sensor.sensortarget})
 		})
 		cb();
 	},function(err){
