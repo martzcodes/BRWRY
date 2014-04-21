@@ -26,6 +26,14 @@
       "location": "pin3",
       "safeValue": 0,
       "value": 0
+    },
+    {
+      "address": 4,
+      "name": "pin4",
+      "type": "pin4",
+      "location": "pin4",
+      "safeValue": "1",
+      "value": "1"
     }
   ],
   "sensors": [

@@ -101,8 +101,16 @@ angular.module('brwryApp.controllers')
 			$scope.alerts.splice(index, 1);
 		};
 
-		$scope.getEquipmentClass = function(state) {
-			if(state) {
+		$scope.getEquipmentStatus = function(gpioPin) {
+			if(gpioPin.value != gpioPin.safeValue) {
+				return "On"
+			} else {
+				return "Off"
+			}
+		}
+
+		$scope.getEquipmentClass = function(gpioPin) {
+			if(gpioPin.value != gpioPin.safeValue) {
 				return "btn-danger"
 			} else {
 				return "btn-success"

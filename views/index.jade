@@ -37,9 +37,7 @@ html(lang='en',ng-app='brwryApp')
 								a(href='#/setup') Setup
 						ul.nav.navbar-nav.navbar-right
 							li(ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address")
-								button.btn.navbar-btn(href='#/' data-ng-click="toggleGPIO(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin.value)") {{gpioPin.address}} - 
-									span(ng-hide="gpioPin.value") Off
-									span(ng-show="gpioPin.value") On
+								button.btn.navbar-btn(href='#/' data-ng-click="toggleGPIO(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin)") {{gpioPin.address}} - {{getEquipmentStatus(gpioPin)}}
 							li(ng-repeat="temperature in temperatures")
 								a(href='#/' tooltip-placement="bottom" tooltip="{{temperature.sensorname}}") {{temperature.temperature}} &deg;C
 							li
