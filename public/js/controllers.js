@@ -157,7 +157,7 @@ angular.module('brwryApp.controllers')
 		}
 		*/
 		$scope.updateSensors = function(system) {
-			system.type = 'sensor'
+			system.type = 'sensor';
 			System.update({},system)
 		}
 		$scope.newGPIO = function(system,newPin) {

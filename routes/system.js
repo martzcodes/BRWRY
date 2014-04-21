@@ -152,7 +152,6 @@ exports.update = function(req, res) {
 		}
 		if (updaterequest.type == 'removeequipment') {
 			//check for differences... if different, then update systemjson
-			console.log(updaterequest)
 			//updaterequest.gpioPin and updaterequest.system available
 			equipment.removeEquipment(systemjson,updaterequest.gpioPin,function(changed,changedsystemjson){
 				if (changed) {
@@ -163,13 +162,19 @@ exports.update = function(req, res) {
 					})
 				}
 			})
-			
 		}
 		if (updaterequest.type == 'updateequipment') {
 			//check for differences... if different, then update systemjson
-			console.log(updaterequest)
 			//updaterequest.system available
-			
+			equipment.updateEquipment(systemjson,updaterequest.system.equipment,function(changed,changedsystemjson){
+				if (changed) {
+					systemjson.equipment = changedsystemjson.equipment;
+					writeSystemJson(systemjson,function(newsystemjson){
+						console.log(newsystemjson)
+						socket.emit('equipment',newsystemjson);
+					})
+				}
+			})
 		}
 		if (updaterequest.type == 'toggle') {
 			loadSystemJson(function(systemjson){

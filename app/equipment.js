@@ -27,6 +27,48 @@ exports.addEquipment = function(systemjson,newPin,callback) {
 	})
 }
 
+exports.updateEquipment = function(systemjson,updateequipment,callback) {
+	var changecheck = false;
+	async.each(systemjson.equipment,function(equipment,cb){
+		async.each(updateequipment,function(updateequip,cb2){
+			if (equipment.address == updateequip.address) {
+				//check to see what, if anything, changed
+				if (equipment.name != updateequip.name) {
+					equipment.name = updateequip.name;
+					changecheck = true;
+				}
+				if (equipment.type != updateequip.type) {
+					equipment.type = updateequip.type;
+					changecheck = true;
+				}
+				if (equipment.location != updateequip.location) {
+					equipment.location = updateequip.location;
+					changecheck = true;
+				}
+				if (equipment.value != updateequip.value) {
+					equipment.value = updateequip.value;
+					changecheck = true;
+				}
+				if (equipment.safeValue != updateequip.safeValue) {
+					equipment.safeValue = updateequip.safeValue;
+					changecheck = true;
+				}
+			}
+			cb2();
+		},
+		function(err){
+			cb();
+		})
+	},function(err){
+		if (changecheck == true) {
+			callback(true,systemjson)
+		} else {
+			callback(false)
+		}
+
+	})
+}
+
 exports.removeEquipment = function(systemjson,gpioPin,callback) {
 	var existcheck = false;
 	async.each(systemjson.equipment,function(equipment,cb){
@@ -47,10 +89,6 @@ exports.removeEquipment = function(systemjson,gpioPin,callback) {
 		}
 
 	})
-}
-
-exports.updateEquipment = function(systemjson,callback) {
-
 }
 
 exports.allowablePins = function(socket) {
