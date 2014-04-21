@@ -9,7 +9,23 @@
       "type": "asdf",
       "location": "asdf",
       "safeValue": 0,
-      "value": 1
+      "value": 0
+    },
+    {
+      "address": 2,
+      "name": "asdfff",
+      "type": "asdffff",
+      "location": "asdffffff",
+      "safeValue": 0,
+      "value": 0
+    },
+    {
+      "address": 3,
+      "name": "pin3",
+      "type": "pin3",
+      "location": "pin3",
+      "safeValue": 0,
+      "value": 0
     }
   ],
   "sensors": [

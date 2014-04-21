@@ -172,10 +172,8 @@ exports.update = function(req, res) {
 			
 		}
 		if (updaterequest.type == 'toggle') {
-			console.log('toggled')
 			loadSystemJson(function(systemjson){
 				equipment.togglePin(systemjson,updaterequest.gpioPin,function(changed,changedsystemjson){
-					console.log('toggle',changedsystemjson.equipment)
 					if (changed) {
 						systemjson.equipment = changedsystemjson.equipment;
 						writeSystemJson(systemjson,function(newsystemjson){
@@ -183,6 +181,16 @@ exports.update = function(req, res) {
 							socket.emit('equipment', newsystemjson);
 						})
 					}
+				})
+			})
+		}
+		if (updaterequest.type == 'toggleall') {
+			loadSystemJson(function(systemjson){
+				equipment.toggleAll(systemjson,function(changedsystemjson){
+					systemjson.equipment = changedsystemjson.equipment;
+					writeSystemJson(systemjson,function(newsystemjson){
+						socket.emit('equipment', newsystemjson);
+					})
 				})
 			})
 		}

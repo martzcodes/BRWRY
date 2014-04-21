@@ -82,11 +82,6 @@ angular.module('brwryApp.controllers')
 			$scope.gpioPins = data.gpiopinout;
 		});
 
-		$scope.toggleAllGPIO = function() {
-		  	//console.log('toggled in ctrler',gpioPin);
-		  	socket.emit('send:toggleAllGPIO');
-		}
-
 		$scope.newBrew = function(system) {
 			system.type = 'brew';
 			socket.emit('send:newBrew', system);
@@ -168,8 +163,14 @@ angular.module('brwryApp.controllers')
 		$scope.toggleGPIO = function(system,gpioPin) {
 		  	//console.log('toggled in ctrler',gpioPin);
 		  	//socket.emit('send:toggleGPIO', gpioPin);
-		  	console.log(gpioPin)
 		  	var data = {type:'toggle',system:system,gpioPin:gpioPin}
+		  	System.update({},data);
+		}
+
+		$scope.toggleAllGPIO = function() {
+		  	//console.log('toggled in ctrler',gpioPin);
+		  	//socket.emit('send:toggleAllGPIO');
+		  	var data = {type:'toggleall'}
 		  	System.update({},data);
 		}
 

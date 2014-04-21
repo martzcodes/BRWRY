@@ -103,32 +103,7 @@ exports.initPins = function(socket,Equipment) {
 		})
 	});
 }
-/*
-exports.togglePin = function(socket,Equipment,gpioPin) {
-	var currentState = gpioPin.state;
-	var newState, newValue;
-	if (currentState == 0) {
-		//pin is off, turn it on
-		newState = 1;
-		newValue = 1;
-	} else if (currentState >= 1) {
-		//pin is on or in PID mode, turn it off
-		newState = 0;
-		newValue = 0;
-	}
-	//Update the database
-	Equipment.update({address:gpioPin.address},{value:newValue,
-		state:newState,date:Date(),lastState:Date()},function (err, numberAffected, raw) {
-			if (err) console.log('Error:',err);
-			//console.log('The raw response from Mongo was ', raw);
-			pinStates(socket,Equipment);
-	});
-	gpio.write(gpioPin.address,newValue,function(err){
-		if(err) console.log('Error:',err);
-		console.log('Pin',gpioPin.address,'turned',gpioPin.modes[newState]);
-	});
-}
-*/
+
 exports.togglePin = function(systemjson,gpioPin,callback) {
 	var existcheck = false;
 	async.each(systemjson.equipment,function(equipment,cb){
@@ -156,7 +131,17 @@ exports.togglePin = function(systemjson,gpioPin,callback) {
 		}
 	})
 }
-
+exports.toggleAll = function(systemjson,callback) {
+	async.each(systemjson.equipment,function(equipment,cb){
+		gpio.write(equipment.address,equipment.safeValue,function(err){
+			equipment.value = equipment.safeValue;
+			cb();
+		});
+	},function(err){
+		callback(systemjson)
+	})
+}
+/*
 exports.toggleAllPin = function(socket,Equipment) {
 	//Turn all pins off
 	Equipment.find({},function (err, equipment){
@@ -173,7 +158,7 @@ exports.toggleAllPin = function(socket,Equipment) {
 		pinStates(socket,Equipment);
 	})
 }
-
+*/
 exports.updatePin = function(socket,Equipment,gpioPin) {
 	//Check if it's in the database
 	Equipment.findOne({address:gpioPin.address},function (err, equipment) {
