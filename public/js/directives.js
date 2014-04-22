@@ -60,6 +60,12 @@ angular.module('brwryApp.directives', [])
 						.interpolate("basis")
 					    .x(function(d) { return x(d.date); })
 					    .y(function(d) { return y(d.temperature); });
+					
+					var area = d3.svg.area()
+						.interpolate("basis")
+						.x(function(d) { return x(d.date); })
+						.y0(height)
+						.y1(function(d) { return y(d.temperature); });
 
 					color.domain(data[0])
 
@@ -88,6 +94,10 @@ angular.module('brwryApp.directives', [])
 					      .data(data)
 					    .enter().append("g")
 					      .attr("class", "sensor");
+
+					  sensor.append("path")
+						.attr("class", "area")
+						.attr("d", function(d) { return area(data); });
 
 					  sensor.append("path")
 					      .attr("class", "line")
