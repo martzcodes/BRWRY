@@ -36,7 +36,7 @@ angular.module('brwryApp.directives', [])
 				    .orient("left");
 
 				var color = d3.scale.category10();
-				
+
 				var svg = d3.select("d3").append("svg")
 					//.attr("viewBox", "0 0 "+vbwidth+" "+vbheight)
 					.attr("width", vbwidth+"px")
@@ -57,14 +57,14 @@ angular.module('brwryApp.directives', [])
 					svg.selectAll('*').remove();
 
 					var line = d3.svg.line()
-						.interpolate("basis")
+						//.interpolate("basis")
 					    .x(function(d) { return x(d.date); })
 					    .y(function(d) { return y(d.temperature); });
 					
 					var area = d3.svg.area()
-						.interpolate("basis")
+						//.interpolate("basis")
 						.x(function(d) { return x(d.date); })
-						.y0(height)
+						.y0(function(d) { return y(d.temperature-10); })
 						.y1(function(d) { return y(d.temperature); });
 
 					color.domain(data[0])
@@ -90,19 +90,60 @@ angular.module('brwryApp.directives', [])
 						.style("text-anchor", "end")
 						.text("Temperature C");
 
+					var hackyFill = function(d,i) {
+						for (var j = 0; j < data.length; j++) {
+							
+							if (data[j].values[i].date == d.date && data[j].values[i].temperature == d.temperature) {
+								return color(data[j].name);
+							}
+						}
+					}
+
 					var sensor = svg.selectAll(".sensor")
 					      .data(data)
 					    .enter().append("g")
 					      .attr("class", "sensor");
 
 					  sensor.append("path")
-						.attr("class", "area")
-						.attr("d", function(d) { return area(data); });
-
-					  sensor.append("path")
 					      .attr("class", "line")
 					      .attr("d", function(d) { return line(d.values); })
 					      .style("stroke", function(d) { return color(d.name); });
+
+/*
+					  sensor.append("clipPath")
+					      .attr("id", "clip-below")
+					    .append("path")
+					      .attr("d", area.y0(height));
+
+					  sensor.append("clipPath")
+					      .attr("id", "clip-above")
+					    .append("path")
+					      .attr("d", area.y0(0));
+
+					  sensor.append("path")
+					      .attr("class", "area above")
+					      .attr("clip-path", "url(#clip-above)")
+					      .attr("d", area.y0(function(d) { return y(d["San Francisco"]); }));
+
+					  sensor.append("path")
+					      .attr("class", "area below")
+					      .attr("clip-path", "url(#clip-below)")
+					      .attr("d", area);
+*/
+/*
+					  sensor.append("path")
+					      .attr("class", "area")
+    					  .attr("d", function(d) { return area(d.values); });
+*/
+
+					  sensor.selectAll("circle")
+					      .data(function(d) {return d.values;})
+					    .enter().append("circle")
+					      .attr("class","dot")
+					      .attr("r", 2.5)
+					      .attr("cx", function(d) { return x(d.date); })
+					      .attr("cy", function(d) { return y(d.temperature); })
+					      .style("fill", function(d,i) { return hackyFill(d,i);});
 
 					/*
 					  sensor.append("text")
@@ -156,125 +197,8 @@ angular.module('brwryApp.directives', [])
 							}
 						}
 					}
-					chartdata(data);
+					//chartdata(data);
 				})
-
-/*
-      			scope.$watch('temperaturehistory', function (newVal, oldVal) {
-      				svg.selectAll('*').remove();
-
-      				// if 'val' is undefined, exit
-			        if (!newVal) {
-			          return;
-			        }
-
-					var line = d3.svg.line()
-						.interpolate("basis")
-					    .x(function(d) { return x(d.time); })
-					    .y(function(d) { return y(d.value); });
-
-					var data = scope.temperaturehistory;
-					data.forEach(function(d) {
-						//console.log(d.time);
-						//d.time = parseTime(d.time);
-						d.value = +d.value;
-					});
-
-					x.domain(d3.extent(data, function(d) { return d.time; }));
-					//y.domain(d3.extent(data, function(d) { return d.value; }));
-
-					svg.append("g")
-						.attr("class", "x axis")
-						.attr("transform", "translate(0," + height + ")")
-						.call(xAxis);
-
-					svg.append("g")
-						.attr("class", "y axis")
-						.call(yAxis)
-					.append("text")
-						.attr("transform", "rotate(-90)")
-						.attr("y", 6)
-						.attr("dy", ".71em")
-						.style("text-anchor", "end")
-						.text("Temperature C");
-
-					svg.append("path")
-						.datum(data)
-						.attr("class", "line")
-						.attr("d", line);
-				},true);
-*/
-
-/*
-				scope.$watch('temperaturesecond', function (newVal, oldVal) {
-      				svg.selectAll('*').remove();
-
-      				// if 'val' is undefined, exit
-			        if (!newVal) {
-			          return;
-			        }
-
-					var line = d3.svg.line()
-						.interpolate("basis")
-					    .x(function(d) { return x(d.time); })
-					    .y(function(d) { return y(d.value); });
-
-					var data = scope.temperaturesecond;
-//need to limit the size of temperaturesecond
-					
-					var keys = d3.set();
-
-					data.forEach(function(d) {
-						d3.keys(d).forEach(function(key) {
-							if (key != "time") {
-								if (!d3.set(keys).has(key)) {
-									keys.add(key);
-								}	
-							}
-						});
-						//console.log(d.time);
-						//d.time = parseTime(d.time);
-						//d.value = +d.value;
-					});
-
-//NEED TO FIX THIS PART:
-					color.domain(keys);
-
-					var temps = color.domain().map(function(name) {
-						return {
-							name: name,
-							values: data.map(function(d) {
-								return {time: d.time, temperature: +d[name]};
-							})
-						};
-					});
-					console.log(temps);
-					*/
-					/*
-					x.domain(d3.extent(data, function(d) { return d.time; }));
-					//y.domain(d3.extent(data, function(d) { return d.value; }));
-
-					svg.append("g")
-						.attr("class", "x axis")
-						.attr("transform", "translate(0," + height + ")")
-						.call(xAxis);
-
-					svg.append("g")
-						.attr("class", "y axis")
-						.call(yAxis)
-					.append("text")
-						.attr("transform", "rotate(-90)")
-						.attr("y", 6)
-						.attr("dy", ".71em")
-						.style("text-anchor", "end")
-						.text("Temperature C");
-
-					svg.append("path")
-						.datum(data)
-						.attr("class", "line")
-						.attr("d", line);
-					*/
-				//},true);
       		}
     	};
 	});
