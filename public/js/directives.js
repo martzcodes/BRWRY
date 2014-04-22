@@ -5,13 +5,17 @@ angular.module('brwryApp.directives', [])
 		return {
       		restrict: 'E',
       		link: function (scope, element, attrs) {
-				var margin = {top: 10, right: 20, bottom: 30, left: 30};
+				var margin = {top: 10, right: 40, bottom: 30, left: 30};
 				//var width = 960 - margin.left - margin.right;
-				var width = $window.document.getElementById("d3chart").getBoundingClientRect().width - margin.left - margin.right;
-				var aspect = 500 / 900;
-				var height = (width * aspect) - margin.top - margin.bottom;
-				//var height = 500 - margin.top - margin.bottom;
-
+				var vbwidth = $window.document.getElementById("d3chart").getBoundingClientRect().width;
+				var width = vbwidth - margin.left - margin.right;
+				if (width > 800) {
+					width = 800;
+				}
+				var vbheight = 400;
+				$window.document.getElementById("d3chart").style.height = vbheight
+				var height = vbheight - margin.top - margin.bottom;
+				
 				//var parseTime = d3.time.format("%X").parse;
 
 				var x = d3.time.scale()
@@ -32,29 +36,21 @@ angular.module('brwryApp.directives', [])
 				    .orient("left");
 
 				var color = d3.scale.category10();
-
-				/*
-				var svg = d3.select("d3").append("svg")
-				    .attr("width", width + margin.left + margin.right)
-				    .attr("height", height + margin.top + margin.bottom)
-				  .append("g")
-				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-				*/
 				
 				var svg = d3.select("d3").append("svg")
-					.attr("preserveAspectRatio", "xMaxYMin")
-					.attr("viewBox", "0 0 "+(900 + margin.left + margin.right)+" "+(500 + margin.top + margin.bottom))
-				  .append("g")
-				  	.attr("width", width + margin.left + margin.right)
-					.attr("height", (width * aspect) + margin.top + margin.bottom)
-				    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+					//.attr("viewBox", "0 0 "+vbwidth+" "+vbheight)
+					.attr("width", vbwidth+"px")
+					.attr("height", vbheight+"px")
+					//.attr("preserveAspectRatio", "none")
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+				/*
 				angular.element($window).bind('resize', function() {
 					var rewidth = $window.document.getElementById("d3chart").getBoundingClientRect().width;
-					svg.attr("width", rewidth + margin.left + margin.right);
-					svg.attr("height", (rewidth * aspect) + margin.top + margin.bottom);
 					scope.$apply();
 				});
+				*/
 
 
 				var chartdata = function(data) {
@@ -65,7 +61,7 @@ angular.module('brwryApp.directives', [])
 					    .x(function(d) { return x(d.date); })
 					    .y(function(d) { return y(d.temperature); });
 
-					color.domain(d3.keys(data[0]).filter(function(key) { return key === "name"; }));
+					color.domain(data[0])
 
 					//x.domain(d3.extent(data, function(d) {return d.date}));
 					x.domain([
@@ -98,26 +94,38 @@ angular.module('brwryApp.directives', [])
 					      .attr("d", function(d) { return line(d.values); })
 					      .style("stroke", function(d) { return color(d.name); });
 
+					/*
 					  sensor.append("text")
 					      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
 					      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
 					      .attr("x", 3)
 					      .attr("dy", ".35em")
 					      .text(function(d) { return d.name; });
+					*/
+
+					var legend = svg.selectAll(".legend")
+						.data(color.domain())
+					  .enter().append("g")
+						.attr("class", "legend")
+						.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+					legend.append("rect")
+						.attr("x", width - 18)
+						.attr("width", 18)
+						.attr("height", 18)
+						.style("fill", color);
+
+					legend.append("text")
+						.attr("x", width - 24)
+						.attr("y", 9)
+						.attr("dy", ".35em")
+						.style("text-anchor", "end")
+						.text(function(d) { return d; });
 				}
 
 				var data = [];
       			scope.getInternal(function(internaldata){
       				//Date format: Sun Apr 20 2014 00:46:39 GMT+0000 (UTC)
-      				/*for(var key in internaldata) {
-      					if (key != 'datetime') {
-      						var values = [];
-      						for (var i = 0; i < internaldata['datetime'].length; i++) {
-      							values.push({date:Date.parse(internaldata['datetime'][i]),temperature:internaldata[key][i]})
-      						}
-							data.push({name: key, values: values});
-						}
-					}*/
 					for (var i = 0; i < internaldata.length; i++) {
 						for (var k = 0; k < internaldata[i].values.length; k++) {
 							internaldata[i].values[k].date = Date.parse(internaldata[i].values[k].date);

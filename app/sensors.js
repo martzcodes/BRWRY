@@ -71,19 +71,20 @@ exports.checkUpdate = function(systemjson,updaterequest,callback) {
 							}
 						}
 					],
-					// optional callback
 					function(err){
 						// if (detailchange) set changeexist to true
 						if (detailchange) {
 							changeexist = true;
 							systemsensor.sensorlastchange = Date();
 							cb();
+						} else {
+							cb();
 						}
-						// the results array will equal ['one','two'] even though
-						// the second function had a shorter timeout.
 					});
+				} else {
+					cb();
 				}
-				updatecb()
+				
 			},function(jsonerr){
 				if (sensorexist == false) {
 					systemjson.sensors.push({sensoraddress:updatesensor.sensoraddress,
@@ -94,10 +95,12 @@ exports.checkUpdate = function(systemjson,updaterequest,callback) {
 						sensorlastchange:Date()
 					})
 					changeexist = true;
+					updatecb();
 				} else {
 					if (detailchange) {
 						changeexist = true;
 					}
+					updatecb();
 				}
 			})
 		},function(err){
@@ -121,7 +124,7 @@ function checkSensors(systemjson,callback){
 					sensorname:'',
 					sensorloc:'',
 					sensorstatus:'',
-					sensorcalibration:'',
+					sensorcalibration:0,
 					sensortarget:0,
 					sensorlastchange:Date()
 				})
@@ -141,7 +144,7 @@ function checkSensors(systemjson,callback){
 			async.each(ids,function(sensorid,cb){
 				var idexist = false;
 				async.each(systemjson.sensors,function(jsonsensorid,jsoncb){
-					if (sensorid == jsonsensorid) {
+					if (sensorid.address == jsonsensorid.address) {
 						idexist = true;
 					}
 					jsoncb()
@@ -151,7 +154,7 @@ function checkSensors(systemjson,callback){
 							sensorname:'',
 							sensorloc:'',
 							sensorstatus:'',
-							sensorcalibration:'',
+							sensorcalibration:0,
 							sensortarget:0,
 							sensorlastchange:Date()
 						})

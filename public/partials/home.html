@@ -1,4 +1,3 @@
-<alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 <div class="row">
 	<div class="col-md-4">
 		<div class="panel panel-primary">
@@ -38,7 +37,7 @@
 			<div class="panel-heading"><h3 class="panel-title">GPIO Pin Control</h3></div>
 			<div class="panel-body">
 				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address"><button class="btn btn-primary" ng-click="toggleGPIO(system,gpioPin)">Toggle</button> GPIO Pin {{gpioPin.address}} has a value of {{gpioPin.value}}. Last changed: {{gpioPin.date}}</li>
+					<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address"><button class="btn btn-primary" ng-click="toggleGPIO(system,gpioPin)">Toggle</button> GPIO Pin {{gpioPin.address}} has a value of {{gpioPin.value}}</li>
 				</ul>
 			</div>
 		</div>
@@ -51,9 +50,10 @@
 			<div class="panel-heading"><h3 class="panel-title">Chart</h3></div>
 			<div class="panel-body">
 				<div class="row">
-					<d3 class="col-xs-9" id="d3chart">
-					</d3>
-					<div class="col-xs-3">
+					<div class="col-xs-9" id="d3chart">
+						<d3></d3>
+					</div>
+					<div class="col-xs-3" id="d3legend">
 					asdf
 					</div>
 				</div>

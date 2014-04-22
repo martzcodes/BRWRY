@@ -45,21 +45,6 @@ angular.module('brwryApp.controllers')
 			$scope.alerts.push({ type: 'success', msg: 'Updated Information!' });
 		});
 
-		socket.on('brewdata', function (data){
-			$scope.temperaturesecond = data.temperaturesecond;
-			$scope.temperatureminute = data.temperatureminute;
-			$scope.dataequipment = data.dataequipment;
-		})
-		socket.on('brewdatasecond', function (data){
-			$scope.temperaturesecond = data.temperaturesecond;
-		})
-		socket.on('brewdataminute', function (data){
-			$scope.temperatureminute = data.temperatureminute;
-		})
-		socket.on('brewdataequipment', function (data){
-			$scope.dataequipment = data.dataequipment;
-		})
-
 		socket.on('tempout', function (data) {
 			$scope.temperatures = data.tempout;
 			var tempObj = {time:Date.parse(data.tempout[0].date),value:data.tempout[0].value,name:data.tempout[0].name};
@@ -74,14 +59,6 @@ angular.module('brwryApp.controllers')
 			$scope.checksensors = data.checksensors;
 		});
 
-		socket.on('allowablepins', function (data) {
-			$scope.allowablepins = data.allowablepins;
-		});
-
-		socket.on('gpiopinout', function (data) {
-			$scope.gpioPins = data.gpiopinout;
-		});
-
 		$scope.newBrew = function(system) {
 			system.type = 'brew';
 			socket.emit('send:newBrew', system);
@@ -94,12 +71,21 @@ angular.module('brwryApp.controllers')
 		}
 	}])
 	.controller('BrewSetupCtrl', ['$scope','socket', 'System', function ($scope,socket,System) {
-
 		$scope.alerts = [];
 
 		$scope.closeAlert = function(index) {
 			$scope.alerts.splice(index, 1);
 		};
+
+		$scope.availablePins = [11,12,13,15,16,18];
+
+		$scope.pinSet = function(selectedPin) {
+			if ($scope.newPin) {
+				$scope.newPin.address = selectedPin;
+			} else {
+				$scope.newPin = {address:selectedPin}
+			}
+		}
 
 		$scope.getEquipmentStatus = function(gpioPin) {
 			if(gpioPin.value != gpioPin.safeValue) {
@@ -119,12 +105,23 @@ angular.module('brwryApp.controllers')
 
 		System.get({},function(data){
 			$scope.system = data;
+			for (var i = 0; i < $scope.system.equipment.length; i++) {
+				for (var j = 0; j < $scope.availablePins.length; j++) {
+					if ($scope.system.equipment[i].address == $scope.availablePins[j]) {
+						$scope.availablePins.splice(j,1);
+					}
+				}
+			}
+			if ($scope.newPin) {
+				$scope.newPin.address = $scope.availablePins[0];
+			} else {
+				$scope.newPin = {address:$scope.availablePins[0]}
+			}
 		})
 
 		socket.on('tempout', function (data) {
 			$scope.temperatures = data.tempout;
 		});
-
 		socket.on('basic', function (data) {
 			$scope.system = data;
 			$scope.alerts.push({ type: 'success', msg: 'Updated Information!' });
@@ -137,11 +134,23 @@ angular.module('brwryApp.controllers')
 			$scope.system.equipment = data.equipment;
 			$scope.alerts.push({ type: 'success', msg: 'Updated Equipment!' });
 		});
+		socket.on('toggle', function (data) {
+			$scope.system.equipment = data.equipment;
+			//$scope.alerts.push({ type: 'danger', msg: 'All Equipment Safe!' });
+		});
+		socket.on('togglesafe', function (data) {
+			$scope.system.equipment = data.equipment;
+			$scope.alerts.push({ type: 'danger', msg: 'All Equipment Safe!' });
+		});
+		socket.on('equipmentadd', function (data) {
+			$scope.newPin = {address:$scope.availablePins[0]};
 
+			$scope.system.equipment = data.equipment;
+			$scope.alerts.push({ type: 'success', msg: 'Equipment Added!' });
+		})
 		socket.on('checksensors', function (data) {
 			$scope.checksensors = data.checksensors;
 		});
-
 		socket.on('gpiopinout', function (data) {
 			$scope.gpioPins = data.gpiopinout;
 		});
@@ -151,18 +160,17 @@ angular.module('brwryApp.controllers')
 			socket.emit('send:updateSystem', system);
 			System.update({},system);
 		}
-/*
-		$scope.updateSensor = function(sensor) {
-			socket.emit('send:updateSensor', sensor);
-		}
-		*/
 		$scope.updateSensors = function(system) {
 			system.type = 'sensor';
 			System.update({},system)
 		}
 		$scope.newGPIO = function(system,newPin) {
 			var data = {type:'addequipment',system:system,newPin:newPin}
-			
+			for (var j = 0; j < $scope.availablePins.length; j++) {
+				if (newPin.address == $scope.availablePins[j]) {
+					$scope.availablePins.splice(j,1);
+				}
+			}
 			//console.log('toggled in ctrler',gpioPin);
 			//socket.emit('send:updateGPIO', gpioPin);
 			System.update({},data)
@@ -190,9 +198,16 @@ angular.module('brwryApp.controllers')
 		}
 		$scope.removeGPIO = function(system,gpioPin) {
 			var data = {type:'removeequipment',system:system,gpioPin:gpioPin}
-			
 			//console.log('toggled in ctrler',gpioPin);
 			//socket.emit('send:updateGPIO', gpioPin);
+			if ($scope.availablePins.length == 0) {
+				if ($scope.newPin) {
+					$scope.newPin.address = gpioPin.address;
+				} else {
+					$scope.newPin = {address: gpioPin.address};
+				}
+			}
+			$scope.availablePins.push(gpioPin.address)
 			System.update({},data)
 		}
 	}]);

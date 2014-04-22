@@ -4,46 +4,63 @@
   "brewstate": "",
   "equipment": [
     {
-      "address": 1,
+      "address": 13,
+      "name": "pin13",
+      "type": "pin13",
+      "location": "pin13",
+      "safeValue": 0,
+      "value": 0
+    },
+    {
+      "address": 11,
       "name": "asdf",
-      "type": "asdfasfasdfasf",
+      "type": "asdf",
       "location": "asdf",
       "safeValue": 0,
       "value": 0
     },
     {
-      "address": 2,
-      "name": "asdfff",
-      "type": "asdffff",
-      "location": "asdffffff",
+      "address": 15,
+      "name": "asdf",
+      "type": "asdf",
+      "location": "asdf",
       "safeValue": 0,
       "value": 0
     },
     {
-      "address": 3,
-      "name": "pin3",
-      "type": "pin3",
-      "location": "pin3",
+      "address": 16,
+      "name": "asdf",
+      "type": "asdf",
+      "location": "asdf",
       "safeValue": 0,
       "value": 0
     },
     {
-      "address": 4,
-      "name": "pin4",
-      "type": "pin4",
-      "location": "pin4",
-      "safeValue": "1",
-      "value": "1"
+      "address": 18,
+      "name": "asdf",
+      "type": "adsf",
+      "location": "asdf",
+      "safeValue": 0,
+      "value": 0
     }
   ],
   "sensors": [
     {
       "sensoraddress": "test-address",
       "sensorname": "asdf",
-      "sensorloc": "new location",
+      "sensorloc": "first location",
       "sensorstatus": "1",
-      "sensorcalibration": "",
-      "sensorlastchange": "Sat Apr 19 2014 21:04:10 GMT+0000 (UTC)"
+      "sensorcalibration": 0,
+      "sensorlastchange": "Tue Apr 22 2014 01:25:09 GMT+0000 (UTC)"
+    },
+    {
+      "sensoraddress": "test-address-two",
+      "sensorname": "sensor 2",
+      "sensorloc": "other location",
+      "sensorstatus": "1",
+      "sensorcalibration": 0,
+      "sensortarget": 0,
+      "sensorlastchange": "Tue Apr 22 2014 01:25:09 GMT+0000 (UTC)"
     }
   ],
   "brewername": "asdf",

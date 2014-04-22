@@ -1,4 +1,3 @@
-<alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 <div class="row">
 	<div class="col-md-4">
 		<div class="panel panel-primary">
@@ -69,7 +68,7 @@
 						<td><input type="text" ng-model="temperature.sensorname"></td>
 						<td><input type="text" ng-model="temperature.sensorloc"></td>
 						<td><input type="checkbox" ng-model="temperature.sensorstatus" ng-true-value="1" ng-false-value="0" ng-checked="temperature.sensorstatus"></td>
-						<td><input type="number" ng-model="temperature.calibration"></td>
+						<td><input type="number" ng-model="temperature.sensorcalibration"></td>
 						<td>{{temperature.sensorlastchange}}</td>
 					</tr>
 				</tbody>
@@ -104,7 +103,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="gpioPin in system.equipment">
+					<tr data-ng-repeat="gpioPin in system.equipment | orderBy:'address'">
 						<td>{{gpioPin.address}}</td>
 						<td><input type="text" ng-model="gpioPin.name"></td>
 						<td><input type="text" ng-model="gpioPin.type"></td>
@@ -113,7 +112,7 @@
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="gpioPin.safeValue" ng-checked="gpioPin.safeValue"></td>
 						<td><button class="btn btn-danger" ng-click="removeGPIO(system,gpioPin)">Remove</button></td>
 					</tr>
-					<tr>
+					<tr data-ng-if="availablePins.length > 0">
 						<td></td>
 						<td></td>
 						<td></td>
@@ -122,8 +121,15 @@
 						<td></td>
 						<td></td>
 					</tr>
-					<tr>
-						<td><input type="number" ng-model="newPin.address"></td>
+					<tr data-ng-if="availablePins.length > 0">
+						<td><div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							{{newPin.address}} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li data-ng-repeat="availablePin in availablePins"><a data-ng-click="pinSet(availablePin)">{{availablePin}}</a></li>
+							</ul>
+						</div></td>
 						<td><input type="text" ng-model="newPin.name"></td>
 						<td><input type="text" ng-model="newPin.type"></td>
 						<td><input type="text" ng-model="newPin.location"></td>

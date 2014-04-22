@@ -49,7 +49,16 @@ var loadSystemJson = function(cb) {
 					console.log('Error: ' + err);
 					return;
 				}
-				cb(JSON.parse(systemjson));
+				systemjson = JSON.parse(systemjson)
+				sensors.checkSensors(systemjson, function(sensorsystemjson){
+					if (sensorsystemjson.sensors != systemjson.sensors) {
+						writeSystemJson(sensorsystemjson,function(newsystemjson){
+							cb(newsystemjson);
+						})
+					} else {
+						cb(systemjson);
+					}
+				})
 			});
 		} else {
 			//configuration file doesn't exist, so make one
@@ -118,6 +127,7 @@ exports.update = function(req, res) {
 		if (updaterequest.type == 'sensor') {
 			//check for differences... if different, then update systemjson
 			//i.e. don't write if nothing has changed
+			var sensorSystemChange = false;
 			if (updaterequest.sensorLength != systemjson.sensorLength || updaterequest.sensorInterval != systemjson.sensorInterval || updaterequest.sensorStoreInterval != systemjson.sensorStoreInterval) {
 				systemjson.sensorLength = updaterequest.sensorLength;
 				systemjson.sensorInterval = updaterequest.sensorInterval;
@@ -144,7 +154,7 @@ exports.update = function(req, res) {
 					systemjson.equipment = changedsystemjson.equipment;
 					writeSystemJson(systemjson,function(newsystemjson){
 						console.log(newsystemjson)
-						socket.emit('equipment',newsystemjson);
+						socket.emit('equipmentadd',newsystemjson);
 					})
 				}
 			})
@@ -183,7 +193,7 @@ exports.update = function(req, res) {
 						systemjson.equipment = changedsystemjson.equipment;
 						writeSystemJson(systemjson,function(newsystemjson){
 							console.log(newsystemjson)
-							socket.emit('equipment', newsystemjson);
+							socket.emit('toggle', newsystemjson);
 						})
 					}
 				})
@@ -194,7 +204,7 @@ exports.update = function(req, res) {
 				equipment.toggleAll(systemjson,function(changedsystemjson){
 					systemjson.equipment = changedsystemjson.equipment;
 					writeSystemJson(systemjson,function(newsystemjson){
-						socket.emit('equipment', newsystemjson);
+						socket.emit('togglesafe', newsystemjson);
 					})
 				})
 			})
@@ -203,5 +213,6 @@ exports.update = function(req, res) {
 			//start or stop brew
 			
 		}
+		res.render('OK', { status: 200 });
 	})
 }

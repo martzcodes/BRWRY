@@ -3,7 +3,7 @@
 //generates a random "temperature" every time it's called
 
 var sensors = function(callback) {
-	var parts = ["test-address"];
+	var parts = ["test-address","test-address-two"];
 	callback(null, parts);
 }
 exports.sensors = sensors;
