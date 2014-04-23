@@ -1,4 +1,5 @@
 var system = require('../routes/system.js');
+var equipment = require('./equipment.js');
 var async = require('async');
 
 var sensorLength;
@@ -104,6 +105,9 @@ exports.initSystem = function(socketio) {
 		} else {
 			sensorInterval = setInterval(sensorCheck,systemjson.sensorInterval);
 		}
+		equipment.initPins(systemdata.equipment,function(){
+			console.log('Pins Initialized.')
+		})
 		/*
 		if (!systemjson.sensorStoreInterval) {
 			sensorStoreInterval = setInterval(sensorStore,3000);
@@ -111,5 +115,11 @@ exports.initSystem = function(socketio) {
 			sensorStoreInterval = setInterval(sensorStore,systemjson.sensorInterval);
 		}
 		*/
+	})
+}
+exports.shutItDown = function() {
+	equipment.killPins(systemjson.equipment,function(){
+		console.log('Shutdown Complete.');
+		return process.exit(0);
 	})
 }

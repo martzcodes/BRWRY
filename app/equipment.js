@@ -71,6 +71,10 @@ exports.updateEquipment = function(systemjson,updateequipment,callback) {
 
 exports.removeEquipment = function(systemjson,gpioPin,callback) {
 	var existcheck = false;
+	gpio.write(gpioPin.address,gpioPin.safeValue,function(err){
+		if(err) console.log('Error:',err);
+		console.log('Pin',gpioPin.address,'made safe.');
+	});
 	async.each(systemjson.equipment,function(equipment,cb){
 		if (equipment.address == gpioPin.address) {
 			existcheck = true;
@@ -95,51 +99,26 @@ exports.allowablePins = function(socket) {
 	socket.emit('allowablepins',{'allowablepins':allowablePins});
 }
 
-function pinStates(socket,Equipment){
-	Equipment.find({}, function(err,equipment){
-		socket.emit('gpiopinout',{'gpiopinout':equipment});
-	});
-}
-
-exports.pinStates = function(socket,Equipment) {
-	pinStates(socket,Equipment);
-}
-
-exports.logPins = function(Equipment,brew) {
-	Equipment.find({}, function(err,equipment){
-		brew.equipmentLog(equipment);
-	});	
-}
-
-exports.devPin = function(socket,Equipment) {
-	Equipment.create({
-		name: 'Test Light 1',
-		type: 'LED',
-		address: 16,
-		location: 'Development', //Description of where it is in the process
-		modes: ['on','off'],
-		value: 1,
-		state: 1,
-		date: Date(),
-		pidtime: 1,
-		laststate: Date(),
-		safeValue: 1,
-		linked: []
-	});
-	console.log('Created dev equipment!')
-}
-
-exports.initPins = function(socket,Equipment) {
-	Equipment.find({},function (err, equipment) {
-		equipment.forEach(function(gpioPin){
-			gpio.setup(gpioPin.address, gpio.DIR_OUT, function(){
-				gpio.write(gpioPin.address,gpioPin.value,function(err){
+exports.initPins = function(equipment,callback) {
+	async.each(allowablePins,function(gpioPin,acb){
+		gpio.setup(gpioPin.address, gpio.DIR_OUT, function(){
+			//go through equipment and see if it exists/what the value should be, otherwise turn it off
+			var writeValue = 0;
+			async.each(equipment,function(item,cb){
+				if (item.address == gpioPin) {
+					writeValue = item.value;
+				}
+				cb();
+			},function(err){
+				gpio.write(gpioPin,writeValue,function(err){
 					if (err) console.log('Error:',err)
 					console.log('Pin',gpioPin.address,'initialized and turned',gpioPin.modes[gpioPin.state]);
 				})
-			});
-		})
-	});
+			})
+		});
+	},function(err){
+		callback();
+	})
 }
 
 exports.togglePin = function(systemjson,gpioPin,callback) {
@@ -179,145 +158,26 @@ exports.toggleAll = function(systemjson,callback) {
 		callback(systemjson)
 	})
 }
-/*
-exports.toggleAllPin = function(socket,Equipment) {
-	//Turn all pins off
-	Equipment.find({},function (err, equipment){
-		equipment.forEach(function(gpioPin){
-			Equipment.update({address:gpioPin.address},{value:gpioPin.safeValue,
-				state:gpioPin.safeValue,date:Date(),lastState:Date()},function (err, numberAffected, raw) {
-					if (err) console.log('Error:',err);
-					gpio.write(gpioPin.address,gpioPin.safeValue,function(err){
-						console.log('Error:',err);
-					});
-					//console.log('The raw response from Mongo was ', raw);
-			});
-		})
-		pinStates(socket,Equipment);
-	})
-}
-*/
-exports.updatePin = function(socket,Equipment,gpioPin) {
-	//Check if it's in the database
-	Equipment.findOne({address:gpioPin.address},function (err, equipment) {
-		var newValue;
-		var safeValue;
-		console.log('gpioPin:',gpioPin)
-		if (gpioPin.value == true) {
-			newValue = 1;
-		} else if (gpioPin.value == false) {
-			newValue = 0;
-		} else {
-			newValue = gpioPin.value;
-		}
-		if (gpioPin.safeValue == true) {
-			safeValue = 1;
-		} else if (gpioPin.safeValue == false) {
-			safeValue = 0;
-		} else {
-			safeValue = gpioPin.safeValue;
-		}
-		if (!equipment) {
-			allowablePins.forEach(function(allowablePin){
-				if (allowablePin == gpioPin.address){
-					Equipment.create({
-						name: 'unnamed',
-						type: 'LED',
-						address: gpioPin.address,
-						location: 'Development', //Description of where it is in the process
-						modes: ['on','off'],
-						value: newValue,
-						state: newValue,
-						date: Date(),
-						pidtime: 1,
-						laststate: Date(),
-						safeValue: safeValue,
-						linked: []
-					},function(err,equipment){
-						pinStates(socket,Equipment);
-						gpio.setup(gpioPin.address, gpio.DIR_OUT, function(){
-							gpio.write(gpioPin.address,gpioPin.value,function(err){
-								if (err) console.log('Error:',err)
-								console.log('Pin',equipment.address,'initialized and turned',equipment.modes[equipment.state]);
-							})
-						});
-					});
-				}
+
+exports.killPins = function(equipment,callback) {
+	async.each(allowablePins,function(gpioPin,acb){
+		var writeValue = 0;
+		async.each(equipment,function(item,cb){
+			if (item.address == gpioPin) {
+				writeValue = item.safeValue;
+			}
+			cb();
+		},function(err){
+			gpio.write(gpioPin,writeValue,function(err){
+				if (err) console.log('Error:',err)
+				console.log('Pin',gpioPin.address,'initialized and turned',gpioPin.modes[gpioPin.state]);
 			})
-		} else {
-			//equipment exists
-			newValue = gpioPin.value;
-			Equipment.update({address:gpioPin.address},{value:newValue,safeValue:safeValue,
-				state:newValue,date:Date(),lastState:Date()},function (err, numberAffected, raw) {
-					if (err) console.log('Error:',err);
-					gpio.write(gpioPin.address,newValue,function(err){
-						console.log('Error:',err);
-					});
-					pinStates(socket,Equipment);
-					//console.log('The raw response from Mongo was ', raw);
-			});
-		}
-	})
-}
-
-exports.updateAllPin = function(socket,Equipment,gpioPins) {
-	//Check if it's in the database
-	gpioPins.forEach(function(gpioPin){
-		Equipment.findOne({address:gpioPin.address},function (err, equipment) {
-			var newValue;
-			var safeValue;
-			console.log('gpioPin:',gpioPin)
-			if (gpioPin.value == true) {
-				newValue = 1;
-			} else if (gpioPin.value == false) {
-				newValue = 0;
-			} else {
-				newValue = gpioPin.value;
-			}
-			if (gpioPin.safeValue == true) {
-				safeValue = 1;
-			} else if (gpioPin.safeValue == false) {
-				safeValue = 0;
-			} else {
-				safeValue = gpioPin.safeValue;
-			}
-			//equipment exists
-			newValue = gpioPin.value;
-			Equipment.update({address:gpioPin.address},{value:newValue,safeValue:safeValue,
-				state:newValue,date:Date(),lastState:Date()},function (err, numberAffected, raw) {
-					if (err) console.log('Error:',err);
-					gpio.write(gpioPin.address,newValue,function(err){
-						console.log('Error:',err);
-					});
-					pinStates(socket,Equipment);
-					//console.log('The raw response from Mongo was ', raw);
-			});
 		})
-	})
-}
-
-exports.removePin = function(socket,Equipment,gpioPin) {
-	//Make it safe...
-	gpio.write(gpioPin.address,gpioPin.safeValue,function(err){
-		if(err) console.log('Error:',err);
-		console.log('Pin',gpioPin.address,'made safe.');
-	});
-	//remove from database:
-	Equipment.remove({address:gpioPin.address}, function (err) {
-		console.log('removePin err:',err);
-		pinStates(socket,Equipment);
-	});
-}
-
-exports.killPins = function(Equipment) {
-	Equipment.find({},function (err, equipment) {
-		equipment.forEach(function(gpioPin){
-			gpio.write(gpioPin.address, gpioPin.safeValue);
-			console.log('All pins safe.')
-		})
+	},function(err){
 		gpio.destroy(function() {
 			console.log('All pins unexported.');
-			return process.exit(0);
+			callback();
+			
 		})
 	})
 }

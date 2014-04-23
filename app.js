@@ -82,8 +82,8 @@ process.on('exit', function (){
 });
 process.on('SIGINT', function () {
 	console.log('Got SIGINT.  Exiting...');
-	routes.killPins();
+	system.shutItDown();
 	setTimeout(function(){
 		process.exit();	
-	}, 1000);
+	}, 10000);
 });
