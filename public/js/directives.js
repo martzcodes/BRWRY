@@ -197,7 +197,7 @@ angular.module('brwryApp.directives', [])
 							}
 						}
 					}
-					//chartdata(data);
+					chartdata(data);
 				})
       		}
     	};

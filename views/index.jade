@@ -42,5 +42,4 @@ html(lang='en',ng-app='brwryApp')
 								a(href='#/' tooltip-placement="bottom" tooltip="{{temperature.sensorname}}") {{temperature.temperature}} &deg;C
 							li
 								button.btn.btn-danger.navbar-btn(href='#/' data-ng-click="toggleAllGPIO()") All Off!
-			alert(data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 			div(data-ui-view)

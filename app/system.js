@@ -10,6 +10,11 @@ var temperatureData = [];
 var socket;
 var lasttempout;
 
+exports.updateSystem = function(newsystemjson) {
+	systemjson = newsystemjson;
+	sensorCheck();
+}
+
 var sensorCheck = function() {
 	var sensors = systemjson.sensors;
 	system.checkTemp(sensors,function(tempout){

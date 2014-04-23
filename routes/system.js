@@ -36,6 +36,7 @@ var writeSystemJson = function(newsystemjson,cb) {
 	fs.writeFile(path.normalize(__dirname+'/../data/system.json'), JSON.stringify(newsystemjson, null, 2), function (err) {
 		if (err) throw err;
 		cb(newsystemjson);
+		system.updateSystem(newsystemjson);
 	});
 }
 

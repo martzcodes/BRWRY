@@ -1,3 +1,4 @@
+<alert data-ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 <div class="row">
 	<div class="col-md-4">
 		<div class="panel panel-primary">
@@ -67,7 +68,7 @@
 						<td>{{temperature.sensoraddress}}</td>
 						<td><input type="text" ng-model="temperature.sensorname"></td>
 						<td><input type="text" ng-model="temperature.sensorloc"></td>
-						<td><input type="checkbox" ng-model="temperature.sensorstatus" ng-true-value="1" ng-false-value="0" ng-checked="temperature.sensorstatus"></td>
+						<td><input type="checkbox" data-ng-model="temperature.sensorstatus" data-ng-true-value="1" data-ng-false-value="0"></td>
 						<td><input type="number" ng-model="temperature.sensorcalibration"></td>
 						<td>{{temperature.sensorlastchange}}</td>
 					</tr>

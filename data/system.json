@@ -4,22 +4,6 @@
   "brewstate": "",
   "equipment": [
     {
-      "address": 13,
-      "name": "pin13",
-      "type": "pin13",
-      "location": "pin13",
-      "safeValue": 0,
-      "value": 0
-    },
-    {
-      "address": 11,
-      "name": "asdf",
-      "type": "asdf",
-      "location": "asdf",
-      "safeValue": 0,
-      "value": 0
-    },
-    {
       "address": 15,
       "name": "asdf",
       "type": "asdf",
@@ -31,14 +15,6 @@
       "address": 16,
       "name": "asdf",
       "type": "asdf",
-      "location": "asdf",
-      "safeValue": 0,
-      "value": 0
-    },
-    {
-      "address": 18,
-      "name": "asdf",
-      "type": "adsf",
       "location": "asdf",
       "safeValue": 0,
       "value": 0
@@ -56,11 +32,11 @@
     {
       "sensoraddress": "test-address-two",
       "sensorname": "sensor 2",
-      "sensorloc": "other location",
+      "sensorloc": "test location2",
       "sensorstatus": "1",
       "sensorcalibration": 0,
       "sensortarget": 0,
-      "sensorlastchange": "Tue Apr 22 2014 01:25:09 GMT+0000 (UTC)"
+      "sensorlastchange": "Wed Apr 23 2014 00:07:11 GMT+0000 (UTC)"
     }
   ],
   "brewername": "asdf",
