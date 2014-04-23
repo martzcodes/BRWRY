@@ -73,6 +73,7 @@ var loadSystemJson = function(cb) {
 				sensorStoreInterval:30000,
 				equipment:[],
 				sensors:[],
+				brews:[]
 			};
 			sensors.checkSensors(templatejson, function(systemjson){
 				writeSystemJson(systemjson,function(newsystemjson){

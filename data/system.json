@@ -33,10 +33,10 @@
       "sensoraddress": "test-address-two",
       "sensorname": "sensor 2",
       "sensorloc": "test location2",
-      "sensorstatus": "1",
+      "sensorstatus": "0",
       "sensorcalibration": 0,
       "sensortarget": 0,
-      "sensorlastchange": "Wed Apr 23 2014 00:07:11 GMT+0000 (UTC)"
+      "sensorlastchange": "Wed Apr 23 2014 01:14:04 GMT+0000 (UTC)"
     }
   ],
   "brewername": "asdf",

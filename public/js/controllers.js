@@ -47,12 +47,6 @@ angular.module('brwryApp.controllers')
 
 		socket.on('tempout', function (data) {
 			$scope.temperatures = data.tempout;
-			var tempObj = {time:Date.parse(data.tempout[0].date),value:data.tempout[0].value,name:data.tempout[0].name};
-			if (!$scope.temperaturehistory) {
-				$scope.temperaturehistory = [tempObj];
-			} else {
-				$scope.temperaturehistory.push(tempObj);
-			}
 		});
 
 		socket.on('checksensors', function (data) {

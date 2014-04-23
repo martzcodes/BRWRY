@@ -101,7 +101,7 @@ exports.allowablePins = function(socket) {
 
 exports.initPins = function(equipment,callback) {
 	async.each(allowablePins,function(gpioPin,acb){
-		gpio.setup(gpioPin.address, gpio.DIR_OUT, function(){
+		gpio.setup(gpioPin, gpio.DIR_OUT, function(){
 			//go through equipment and see if it exists/what the value should be, otherwise turn it off
 			var writeValue = 0;
 			async.each(equipment,function(item,cb){
@@ -112,7 +112,7 @@ exports.initPins = function(equipment,callback) {
 			},function(err){
 				gpio.write(gpioPin,writeValue,function(err){
 					if (err) console.log('Error:',err)
-					console.log('Pin',gpioPin.address,'initialized and turned',gpioPin.modes[gpioPin.state]);
+					console.log('Pin',gpioPin,'initialized and turned to ',writeValue);
 				})
 			})
 		});
@@ -170,7 +170,7 @@ exports.killPins = function(equipment,callback) {
 		},function(err){
 			gpio.write(gpioPin,writeValue,function(err){
 				if (err) console.log('Error:',err)
-				console.log('Pin',gpioPin.address,'initialized and turned',gpioPin.modes[gpioPin.state]);
+				console.log('Pin',gpioPin,'initialized and made safe.');
 			})
 		})
 	},function(err){

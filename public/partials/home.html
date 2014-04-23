@@ -48,7 +48,7 @@
 				
 			</div>
 			<ul class="list-group">
-				<li class="list-group-item" ng-repeat="temperature in temperatures">{{temperature.sensorname}} at {{temperature.datetime | date:'mediumTime'}}<span class="badge">{{temperature.temperature}}</span></li>
+				<li class="list-group-item" ng-repeat="temperature in temperatures">{{temperature.sensorname}} at {{temperature.time | date:'mediumTime'}}<span class="badge">{{temperature.temperature}}</span></li>
 			</ul>
 		</div>
 	</div>

@@ -182,11 +182,10 @@ exports.checkSensors = function(systemjson,callback) {
 function checkTemp(sensors,callback) {
 	var tempout = [];
 	async.each(sensors,function(sensor,cb){
-		console.log(sensor.sensorname,'-',sensor.sensorstatus)
 		if (sensor.sensorstatus == '1') {
 			sense.temperature(sensor.sensoraddress, function(err,value){
 				var newReading = value + sensor.sensorcalibration;
-				tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date(),sensortarget:sensor.sensortarget})
+				tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date(),time:Date.now(),sensortarget:sensor.sensortarget})
 			})
 		}
 		cb();
