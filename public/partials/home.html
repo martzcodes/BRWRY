@@ -59,7 +59,7 @@
 				
 			</div>
 			<ul class="list-group">
-				<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address"><button class="btn btn-primary" ng-click="toggleGPIO(system,gpioPin)">Toggle</button> GPIO Pin {{gpioPin.address}} <span class="badge">{{gpioPin.value}}</span></li>
+				<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address"><button class="btn btn-primary" ng-click="toggleGPIO(system,gpioPin)">Toggle</button> GPIO Pin {{gpioPin.address}} - {{gpioPin.name}} <span data-ng-class="getEquipmentClass(gpioPin)" class="badge">{{getEquipmentStatus(gpioPin)}}</span></li>
 			</ul>
 		</div>
 	</div>

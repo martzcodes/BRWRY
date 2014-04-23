@@ -41,7 +41,6 @@ var writeSystemJson = function(newsystemjson,cb) {
 }
 
 var loadSystemJson = function(cb) {
-	//console.log('test path:',path.normalize(__dirname+'/../data/system.json'))
 	fs.exists(path.normalize(__dirname+'/../data/system.json'), function(exists) {
 		if (exists) {
 			//system configuration file exits
@@ -211,8 +210,13 @@ exports.update = function(req, res) {
 				})
 			})
 		}
-		if (updaterequest.type == 'brew') {
-			//start or stop brew
+		if (updaterequest.type == 'startbrew') {
+			//start brew
+			system.startBrew(updaterequest)
+			
+		}
+		if (updaterequest.type == 'stopbrew') {
+			//stop brew
 			
 		}
 		res.render('OK', { status: 200 });

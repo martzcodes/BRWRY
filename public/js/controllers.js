@@ -54,13 +54,13 @@ angular.module('brwryApp.controllers')
 		});
 
 		$scope.newBrew = function(system) {
-			system.type = 'brew';
-			socket.emit('send:newBrew', system);
+			system.type = 'startbrew';
+			//socket.emit('send:newBrew', system);
 			System.update({},system);
 		}
 		$scope.stopBrew = function() {
-			socket.emit('send:stopBrew');
-			system.type = 'brew';
+			system.type = 'stopbrew';
+			//socket.emit('send:stopBrew');
 			System.update({},system);
 		}
 	}])

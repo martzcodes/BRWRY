@@ -6,7 +6,7 @@ var sensorLength;
 var sensorInterval;
 var sensorStoreInterval;
 var systemjson;
-//var temperatureData = {datetime:[]};
+var brewjson;
 var temperatureData = [];
 var socket;
 var lasttempout;
@@ -49,43 +49,25 @@ var sensorCheck = function() {
 	})
 }
 
-/*
-var sensorCheck = function() {
-	var sensors = systemjson.sensors;
-	system.checkTemp(sensors,function(tempout){
-		lasttempout = tempout;
-		if (!sensorLength) sensorLength = 120;
-		for (var k; k < temperatureData.length; k++) {
-			if (temperatureData)
+var readCurrentBrew = function(brew,callback) {
+	fs.readFile(path.normalize(__dirname+'/../data/'+brew), 'utf8', function (err, brewjson) {
+		if (err) {
+			console.log('Error: ' + err);
+			return;
 		}
-//		if (temperatureData.datetime.length == sensorLength) {
-//			temperatureData.datetime.shift();
-//		};
-		temperatureData.datetime.push(Date());
-		for (var i; i < temperatureData.datetime.length; i++) {
-
-		}
-
-		async.each(tempout,function(temperature,cb){
-			if (temperatureData[temperature.sensoraddress]) {
-				if (temperatureData[temperature.sensoraddress].length == sensorLength) {
-					temperatureData[temperature.sensoraddress].shift();
-				};
-				temperatureData[temperature.sensoraddress].push({temperature:temperature.temperature,sensortarget:temperature.sensortarget});
-			} else {
-				temperatureData[temperature.sensoraddress] = [temperature.temperature];
-			}
-			cb();
-		},function(err){
-			if( err ) {
-				console.log('Err happened',err);
-			} else {
-				//console.log('tempdata',temperatureData);
-			}
-		})
-	})
+		brewjson = JSON.parse(brewjson)
+		callback()
+	});
 }
-*/
+
+exports.startBrew = function(newbrew) {
+
+}
+
+exports.stopBrew = function(oldbrew) {
+	
+}
+
 var sensorStore = function() {
 	//store the last value
 
@@ -108,13 +90,16 @@ exports.initSystem = function(socketio) {
 		equipment.initPins(systemdata.equipment,function(){
 			console.log('Pins Initialized.')
 		})
-		/*
-		if (!systemjson.sensorStoreInterval) {
-			sensorStoreInterval = setInterval(sensorStore,3000);
-		} else {
-			sensorStoreInterval = setInterval(sensorStore,systemjson.sensorInterval);
+		if (systemjson.brewstate != "") {
+			//should be brewing, so load and continue storing data
+			readCurrentBrew(systemjson.brewstate,function(){
+				if (!systemjson.sensorStoreInterval) {
+					sensorStoreInterval = setInterval(sensorStore,3000);
+				} else {
+					sensorStoreInterval = setInterval(sensorStore,systemjson.sensorInterval);
+				}
+			})
 		}
-		*/
 	})
 }
 exports.shutItDown = function() {
