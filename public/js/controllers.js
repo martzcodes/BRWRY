@@ -71,7 +71,14 @@ angular.module('brwryApp.controllers')
 			}
 			$scope.alerts.push({ type: 'success', msg: 'Updated Information!' });
 		});
-
+		socket.on('startbrew', function (data) {
+			$scope.system = data.system;
+			$scope.alerts.push({ type: 'success', msg: 'Brew Started!' });
+		});
+		socket.on('stopbrew', function (data) {
+			$scope.system = data.system;
+			$scope.alerts.push({ type: 'success', msg: 'Brew Stopped!' });
+		});
 		socket.on('tempout', function (data) {
 			$scope.temperatures = data.tempout;
 		});
@@ -85,15 +92,15 @@ angular.module('brwryApp.controllers')
 			$scope.alerts.push({ type: 'danger', msg: 'All Equipment Safe!' });
 		});
 
-		$scope.newBrew = function(system) {
-			system.type = 'startbrew';
+		$scope.newBrew = function(currentbrew) {
+			var data = {type:'startbrew',currentbrew:currentbrew}
 			
-			System.update({},system);
+			System.update({},data);
 		}
 		$scope.stopBrew = function() {
-			system.type = 'stopbrew';
+			var data = {type:'stopbrew'};
 			
-			System.update({},system);
+			System.update({},data);
 		}
 	}])
 	.controller('BrewSetupCtrl', ['$scope','socket', 'System', function ($scope,socket,System) {
@@ -151,6 +158,14 @@ angular.module('brwryApp.controllers')
 		socket.on('basic', function (data) {
 			$scope.system = data;
 			$scope.alerts.push({ type: 'success', msg: 'Updated Information!' });
+		});
+		socket.on('startbrew', function (data) {
+			$scope.system = data;
+			$scope.alerts.push({ type: 'success', msg: 'Brew Started!' });
+		});
+		socket.on('stopbrew', function (data) {
+			$scope.system = data;
+			$scope.alerts.push({ type: 'success', msg: 'Brew Stopped!' });
 		});
 		socket.on('sensor', function (data) {
 			$scope.system.sensors = data.sensors;

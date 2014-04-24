@@ -25,7 +25,7 @@
       "sensoraddress": "test-address",
       "sensorname": "asdf",
       "sensorloc": "first location",
-      "sensorstatus": "1",
+      "sensorstatus": "0",
       "sensorcalibration": 0,
       "sensorlastchange": "Tue Apr 22 2014 01:25:09 GMT+0000 (UTC)"
     },

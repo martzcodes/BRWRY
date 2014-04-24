@@ -148,7 +148,6 @@ exports.update = function(req, res) {
 		}
 		if (updaterequest.type == 'addequipment') {
 			//check for differences... if different, then update systemjson
-			console.log(updaterequest)
 			//updaterequest.newPin and updaterequest.system available
 			equipment.addEquipment(systemjson,updaterequest.newPin,function(changed,changedsystemjson){
 				if (changed) {
@@ -188,36 +187,50 @@ exports.update = function(req, res) {
 			})
 		}
 		if (updaterequest.type == 'toggle') {
-			loadSystemJson(function(systemjson){
-				equipment.togglePin(systemjson,updaterequest.gpioPin,updaterequest.pinaction,function(changed,changedsystemjson){
-					if (changed) {
-						systemjson.equipment = changedsystemjson.equipment;
-						writeSystemJson(systemjson,function(newsystemjson){
-							console.log(newsystemjson)
-							socket.emit('toggle', newsystemjson);
-						})
-					}
-				})
+			equipment.togglePin(systemjson,updaterequest.gpioPin,updaterequest.pinaction,function(changed,changedsystemjson){
+				if (changed) {
+					systemjson.equipment = changedsystemjson.equipment;
+					writeSystemJson(systemjson,function(newsystemjson){
+						system.equipmentLog(systemjson,updaterequest.gpioPin,updaterequest.pinaction);
+						socket.emit('toggle', newsystemjson);
+					})
+				}
 			})
 		}
 		if (updaterequest.type == 'toggleall') {
-			loadSystemJson(function(systemjson){
-				equipment.toggleAll(systemjson,function(changedsystemjson){
-					systemjson.equipment = changedsystemjson.equipment;
-					writeSystemJson(systemjson,function(newsystemjson){
-						socket.emit('togglesafe', newsystemjson);
-					})
+			equipment.toggleAll(systemjson,function(changedsystemjson){
+				systemjson.equipment = changedsystemjson.equipment;
+				writeSystemJson(systemjson,function(newsystemjson){
+					socket.emit('togglesafe', newsystemjson);
 				})
 			})
 		}
 		if (updaterequest.type == 'startbrew') {
 			//start brew
-			system.startBrew(updaterequest)
-			
+			//console.log(Date.now()+'.brwry')
+			if (updaterequest.currentbrew != '') { //has a name
+				if (systemjson.brewstate == '' && systemjson.currentbrew == '') { //not currently brewing
+					systemjson.brewstate = 'brew-'+Date.now()+'.brwry';  //new data file name
+					systemjson.currentbrew = updaterequest.currentbrew;
+					writeSystemJson(systemjson,function(newsystemjson){
+						//socket.emit('togglesafe', newsystemjson);
+						system.startBrew(newsystemjson);
+					})
+				}
+			} else {
+				//send back error... name must not be blank
+			}
 		}
 		if (updaterequest.type == 'stopbrew') {
 			//stop brew
-			
+			if (systemjson.brewstate != '' && systemjson.currentbrew != '') {
+				systemjson.brewstate = '';
+				systemjson.currentbrew = '';
+				writeSystemJson(systemjson,function(newsystemjson){
+					//socket.emit('togglesafe', newsystemjson);
+					system.stopBrew(newsystemjson);
+				})
+			}
 		}
 		res.render('OK', { status: 200 });
 	})
