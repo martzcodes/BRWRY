@@ -121,16 +121,45 @@ exports.initPins = function(equipment,callback) {
 	})
 }
 
-exports.togglePin = function(systemjson,gpioPin,callback) {
+exports.togglePin = function(systemjson,gpioPin,pinaction,callback) {
 	var existcheck = false;
+	var changevalue = false;
 	async.each(systemjson.equipment,function(equipment,cb){
 		if (equipment.address == gpioPin.address) {
 			existcheck = true;
-			console.log('checked = true')
-			if (equipment.value == 1) {
-				equipment.value = 0;
-			} else {
-				equipment.value = 1;
+			if (pinaction == "toggle") {
+				changevalue = true;
+				if (equipment.value == 1) {
+					equipment.value = 0;
+				} else {
+					equipment.value = 1;
+				}
+			}
+			if (pinaction == "on") {
+				if (equipment.safeValue == 1) {
+					if (equipment.value == 1) {
+						changevalue = true;
+					}
+					equipment.value = 0;
+				} else {
+					if (equipment.value == 0) {
+						changevalue = true;
+					}
+					equipment.value = 1;
+				}
+			}
+			if (pinaction == "off") {
+				if (equipment.safeValue == 1) {
+					if (equipment.value == 0) {
+						changevalue = true;
+					}
+					equipment.value = 1;
+				} else {
+					if (equipment.value == 1) {
+						changevalue = true;
+					}
+					equipment.value = 0;
+				}
 			}
 			gpio.write(equipment.address,equipment.value,function(err){
 				console.log('Error:',err);
@@ -141,7 +170,7 @@ exports.togglePin = function(systemjson,gpioPin,callback) {
 		}
 		
 	},function(err){
-		if (existcheck == true) {
+		if (existcheck == true && changevalue == true) {
 			callback(true,systemjson)
 		} else {
 			callback(false)

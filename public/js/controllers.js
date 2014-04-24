@@ -13,11 +13,38 @@ angular.module('brwryApp.controllers')
 			$scope.system = data;
 		})
 
-		$scope.toggleGPIO = function(system,gpioPin) {
-		  	//console.log('toggled in ctrler',gpioPin);
-		  	//socket.emit('send:toggleGPIO', gpioPin);
-		  	console.log(gpioPin)
-		  	var data = {type:'toggle',system:system,gpioPin:gpioPin}
+		$scope.getEquipmentStatus = function(gpioPin) {
+			if(gpioPin.value != gpioPin.safeValue) {
+				return "On"
+			} else {
+				return "Off"
+			}
+		}
+
+		$scope.getEquipmentClass = function(gpioPin) {
+			if(gpioPin.value != gpioPin.safeValue) {
+				return "btn-danger"
+			} else {
+				return "btn-success"
+			}
+		}
+
+		$scope.gpioToggle = function(system,gpioPin) {
+		  	var data = {type:'toggle',pinaction:'toggle',system:system,gpioPin:gpioPin}
+		  	System.update({},data);
+		}
+
+		$scope.gpioOff = function(system,gpioPin) {
+		  	var data = {type:'toggle',pinaction:'off',system:system,gpioPin:gpioPin}
+		  	System.update({},data);
+		}
+		$scope.gpioOn = function(system,gpioPin) {
+		  	var data = {type:'toggle',pinaction:'on',system:system,gpioPin:gpioPin}
+		  	System.update({},data);
+		}
+
+		$scope.gpioAll = function() {
+		  	var data = {type:'toggleall'}
 		  	System.update({},data);
 		}
 
@@ -49,18 +76,23 @@ angular.module('brwryApp.controllers')
 			$scope.temperatures = data.tempout;
 		});
 
-		socket.on('checksensors', function (data) {
-			$scope.checksensors = data.checksensors;
+		socket.on('toggle', function (data) {
+			$scope.system.equipment = data.equipment;
+			//$scope.alerts.push({ type: 'danger', msg: 'All Equipment Safe!' });
+		});
+		socket.on('togglesafe', function (data) {
+			$scope.system.equipment = data.equipment;
+			$scope.alerts.push({ type: 'danger', msg: 'All Equipment Safe!' });
 		});
 
 		$scope.newBrew = function(system) {
 			system.type = 'startbrew';
-			//socket.emit('send:newBrew', system);
+			
 			System.update({},system);
 		}
 		$scope.stopBrew = function() {
 			system.type = 'stopbrew';
-			//socket.emit('send:stopBrew');
+			
 			System.update({},system);
 		}
 	}])
@@ -145,9 +177,6 @@ angular.module('brwryApp.controllers')
 		socket.on('checksensors', function (data) {
 			$scope.checksensors = data.checksensors;
 		});
-		socket.on('gpiopinout', function (data) {
-			$scope.gpioPins = data.gpiopinout;
-		});
 
 		$scope.updateSystem = function(system) {
 			system.type = 'basic';
@@ -165,35 +194,20 @@ angular.module('brwryApp.controllers')
 					$scope.availablePins.splice(j,1);
 				}
 			}
-			//console.log('toggled in ctrler',gpioPin);
-			//socket.emit('send:updateGPIO', gpioPin);
 			System.update({},data)
 		}
 
-		$scope.toggleGPIO = function(system,gpioPin) {
-		  	//console.log('toggled in ctrler',gpioPin);
-		  	//socket.emit('send:toggleGPIO', gpioPin);
+		$scope.gpioToggle = function(system,gpioPin) {
 		  	var data = {type:'toggle',system:system,gpioPin:gpioPin}
 		  	System.update({},data);
 		}
 
-		$scope.toggleAllGPIO = function() {
-		  	//console.log('toggled in ctrler',gpioPin);
-		  	//socket.emit('send:toggleAllGPIO');
-		  	var data = {type:'toggleall'}
-		  	System.update({},data);
-		}
-
 		$scope.updateAllGPIO = function(system) {
-			//console.log('toggled in ctrler',gpioPin);
-			//socket.emit('send:updateAllGPIO', gpioPins);
 			var data = {type:'updateequipment',system:system}
 			System.update({},data)
 		}
 		$scope.removeGPIO = function(system,gpioPin) {
 			var data = {type:'removeequipment',system:system,gpioPin:gpioPin}
-			//console.log('toggled in ctrler',gpioPin);
-			//socket.emit('send:updateGPIO', gpioPin);
 			if ($scope.availablePins.length == 0) {
 				if ($scope.newPin) {
 					$scope.newPin.address = gpioPin.address;

@@ -189,7 +189,7 @@ exports.update = function(req, res) {
 		}
 		if (updaterequest.type == 'toggle') {
 			loadSystemJson(function(systemjson){
-				equipment.togglePin(systemjson,updaterequest.gpioPin,function(changed,changedsystemjson){
+				equipment.togglePin(systemjson,updaterequest.gpioPin,updaterequest.pinaction,function(changed,changedsystemjson){
 					if (changed) {
 						systemjson.equipment = changedsystemjson.equipment;
 						writeSystemJson(systemjson,function(newsystemjson){

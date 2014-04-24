@@ -9,7 +9,26 @@
 						<d3></d3>
 					</div>
 					<div class="col-xs-3" id="d3legend">
-					asdf
+						<h3>(Future Use)</h3>
+						<p>But for now...</p>
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="temperature in temperatures">{{temperature.sensorname}} at {{temperature.time | date:'mediumTime'}}<span class="badge">{{temperature.temperature}}</span></li>
+							<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address">
+								<div class="btn-group">
+									<button type="button"  data-ng-click="gpioToggle(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin)" class="btn"> {{gpioPin.address}} <span class="badge">{{getEquipmentStatus(gpioPin)}}</span></button>
+									<button type="button" data-ng-class="getEquipmentClass(gpioPin)" class="btn dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#" data-ng-click="gpioOn(system,gpioPin)">On</a></li>
+										<li><a href="#">PID</a></li>
+										<li><a href="#" data-ng-click="gpioOff(system,gpioPin)">Off</a></li>
+									</ul>
+								</div>
+								{{gpioPin.name}}
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -44,9 +63,6 @@
 	<div class="col-md-4">
 		<div class="panel panel-warning">
 			<div class="panel-heading"><h3 class="panel-title">Temperature Data</h3></div>
-			<div class="panel-body">
-				
-			</div>
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat="temperature in temperatures">{{temperature.sensorname}} at {{temperature.time | date:'mediumTime'}}<span class="badge">{{temperature.temperature}}</span></li>
 			</ul>
@@ -55,25 +71,23 @@
 	<div class="col-md-4">
 		<div class="panel panel-danger">
 			<div class="panel-heading"><h3 class="panel-title">GPIO Pin Control</h3></div>
-			<div class="panel-body">
-				
-			</div>
 			<ul class="list-group">
-				<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address"><button class="btn btn-primary" ng-click="toggleGPIO(system,gpioPin)">Toggle</button> GPIO Pin {{gpioPin.address}} - {{gpioPin.name}} <span data-ng-class="getEquipmentClass(gpioPin)" class="badge">{{getEquipmentStatus(gpioPin)}}</span></li>
+				<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address">
+					<div class="btn-group">
+						<button type="button"  data-ng-click="gpioToggle(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin)" class="btn"> {{gpioPin.address}} <span class="badge">{{getEquipmentStatus(gpioPin)}}</span></button>
+						<button type="button" data-ng-class="getEquipmentClass(gpioPin)" class="btn dropdown-toggle" data-toggle="dropdown">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#" data-ng-click="gpioOn(system,gpioPin)">On</a></li>
+							<li><a href="#">PID</a></li>
+							<li><a href="#" data-ng-click="gpioOff(system,gpioPin)">Off</a></li>
+						</ul>
+					</div>
+					{{gpioPin.name}}
+				</li>
 			</ul>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-xs-12">
-		<div class="panel panel-info">
-			<div class="panel-heading"><h2 class="panel-title">Debug</h2></div>
-			<div class="panel-body">
-			<pre>{{temperatureminute}}</pre>
-			<pre>{{temperaturesecond}}</pre>
-			<pre>{{dataequipment}}</pre>
-			</div>
 		</div>
 	</div>
 </div>

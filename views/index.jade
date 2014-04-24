@@ -20,7 +20,7 @@ html(lang='en',ng-app='brwryApp')
 		script(src='/lib/d3/d3.min.js')
 	body
 		div.container
-			div.navbar.navbar-default(role='navigation' data-ng-controller="BrewSetupCtrl")
+			div.navbar.navbar-default(role='navigation' data-ng-controller="BrewCtrl")
 				div.container-fluid
 					div.navbar-header
 						button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
@@ -36,10 +36,21 @@ html(lang='en',ng-app='brwryApp')
 							li
 								a(href='#/setup') Setup
 						ul.nav.navbar-nav.navbar-right
-							li(ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address")
-								button.btn.navbar-btn(href='#/' data-ng-click="toggleGPIO(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin)") {{gpioPin.address}} - {{getEquipmentStatus(gpioPin)}}
 							li(ng-repeat="temperature in temperatures")
 								a(href='#/' tooltip-placement="bottom" tooltip="{{temperature.sensorname}}") {{temperature.temperature}} &deg;C
+							li(ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address")
+								div.btn-group.navbar-btn-group
+									button.btn.navbar-btn(type="button" data-ng-click="gpioToggle(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin)") {{gpioPin.address}} <span class="badge">{{getEquipmentStatus(gpioPin)}}</span>
+									button.btn.dropdown-toggle.navbar-btn(type="button" data-ng-class="getEquipmentClass(gpioPin)" data-toggle="dropdown")
+										span.caret
+										span.sr-only Toggle Dropdown
+									ul.dropdown-menu(role="menu")
+										li
+											a(href="#" data-ng-click="gpioOn(system,gpioPin)") On
+										li
+											a(href="#") PID
+										li
+											a(href="#" data-ng-click="gpioOff(system,gpioPin)") Off
 							li
-								button.btn.btn-danger.navbar-btn(href='#/' data-ng-click="toggleAllGPIO()") All Off!
+								button.btn.btn-danger.navbar-btn(href='#/' data-ng-click="gpioAll()") All Off!
 			div(data-ui-view)

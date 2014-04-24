@@ -27,3 +27,11 @@
 .area.below {
   fill: rgb(145,207,96);
 }
+
+.navbar-btn{
+  margin-left:10px;
+}
+
+.navbar-btn-group{
+  margin-left:10px;
+}
