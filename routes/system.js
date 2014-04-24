@@ -3,7 +3,7 @@ var sensors = require('../app/sensors.js');
 var equipment = require('../app/equipment.js');
 var fs = require('fs');
 var path = require('path');
-//var async = require('async');
+var async = require('async');
 
 var socket;
 var lasttempout;
@@ -212,6 +212,7 @@ exports.update = function(req, res) {
 				if (systemjson.brewstate == '' && systemjson.currentbrew == '') { //not currently brewing
 					systemjson.brewstate = 'brew-'+Date.now()+'.brwry';  //new data file name
 					systemjson.currentbrew = updaterequest.currentbrew;
+					systemjson.brews.push({brewname:systemjson.currentbrew,brewfile:systemjson.brewstate,brewstart:Date.now()})
 					writeSystemJson(systemjson,function(newsystemjson){
 						//socket.emit('togglesafe', newsystemjson);
 						system.startBrew(newsystemjson);
@@ -224,11 +225,18 @@ exports.update = function(req, res) {
 		if (updaterequest.type == 'stopbrew') {
 			//stop brew
 			if (systemjson.brewstate != '' && systemjson.currentbrew != '') {
-				systemjson.brewstate = '';
-				systemjson.currentbrew = '';
-				writeSystemJson(systemjson,function(newsystemjson){
-					//socket.emit('togglesafe', newsystemjson);
-					system.stopBrew(newsystemjson);
+				async.each(systemjson.brews,function(brew,cb){
+					if (brew.brewfile == systemjson.brewstate) {
+						brew.brewend = Date.now();
+					}
+					cb();
+				},function(err){
+					systemjson.brewstate = '';
+					systemjson.currentbrew = '';
+					writeSystemJson(systemjson,function(newsystemjson){
+						//socket.emit('togglesafe', newsystemjson);
+						system.stopBrew(newsystemjson);
+					})
 				})
 			}
 		}

@@ -19,8 +19,8 @@ var updateSystem = function(newsystemjson,callback) {
 	systemjson = newsystemjson;
 	sensorCheck(temperatureData,'internal',function(newTemperatureData){
 		temperatureData = newTemperatureData;
+		callback();
 	});
-	callback();
 }
 exports.updateSystem = function(newsystemjson) {
 	updateSystem(newsystemjson,function(){
@@ -30,42 +30,54 @@ exports.updateSystem = function(newsystemjson) {
 
 var sensorCheck = function(tempData,checktype,callback) {
 	
-	var sensors = systemjson.sensors;
-	system.checkTemp(sensors,function(tempoutall){
-		lasttempout = tempoutall;
-		if (checktype == 'internal') {
-			if (!sensorLength) sensorLength = 120;
-		}
-		async.each(tempoutall,function(tempout,allcb){
-			var sensorupdated = false;
-			if (tempData.length == 0) {
-				tempData.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature}]})
-				allcb();
-			} else {
-				async.each(tempData,function(temperature,cb){
-					if (tempout.sensorname == temperature.name) {
-						if (checktype == 'internal') {
-							if (temperature.values.length == sensorLength) {
-								temperature.values.shift();
-							}
-						}
-						temperature.values.push({date:Date(),temperature:tempout.temperature})
-						sensorupdated=true;
-					}
-					cb();
-				},function(err){
-					if( err ) {
-						console.log('Err happened',err);
-					} else {
-						if (sensorupdated == false) {
-							tempData.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature}]})
-						}
-						allcb();
-					}
-				})
+	var temperatureDataMod = [];
+	async.each(systemjson.sensors,function(sensor,syscb){
+		async.each(temperatureData,function(tD,cb){
+			if (tD.name == sensor.sensorname && sensor.sensorstatus == "1") {
+				temperatureDataMod.push(tD);
 			}
+			cb();
 		},function(err){
-			callback(tempData);
+			syscb();
+		})
+	},function(err){
+		var sensors = systemjson.sensors;
+		system.checkTemp(sensors,function(tempoutall){
+			lasttempout = tempoutall;
+			if (checktype == 'internal') {
+				if (!sensorLength) sensorLength = 120;
+			}
+			async.each(tempoutall,function(tempout,allcb){
+				var sensorupdated = false;
+				if (temperatureDataMod.length == 0) {
+					temperatureDataMod.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature}]})
+					allcb();
+				} else {
+					async.each(temperatureDataMod,function(temperature,cb){
+						if (tempout.sensorname == temperature.name) {
+							if (checktype == 'internal') {
+								if (temperature.values.length == sensorLength) {
+									temperature.values.shift();
+								}
+							}
+							temperature.values.push({date:Date(),temperature:tempout.temperature})
+							sensorupdated=true;
+						}
+						cb();
+					},function(err){
+						if( err ) {
+							console.log('Err happened',err);
+						} else {
+							if (sensorupdated == false) {
+								temperatureDataMod.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature}]})
+							}
+							allcb();
+						}
+					})
+				}
+			},function(err){
+				callback(temperatureDataMod);
+			})
 		})
 	})
 }
