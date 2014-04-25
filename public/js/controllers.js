@@ -48,7 +48,7 @@ angular.module('brwryApp.controllers')
 		  	System.update({},data);
 		}
 		$scope.gpioPID = function(gpioPin,targetname,targetvalue) {
-		  	var data = {type:'toggle',pinaction:'pid',gpioPin:gpioPin,pinaddress:gpioPin.address,targetname:targetname,targetvalue:targetvalue}
+		  	var data = {type:'toggle',pinaction:'pid',gpioPin:gpioPin,targetname:targetname,targetvalue:targetvalue}
 		  	System.update({},data);
 		}
 		$scope.gpioAll = function() {

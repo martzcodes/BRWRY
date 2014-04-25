@@ -18,10 +18,13 @@ var activePIDs = [];
 
 var updateSystem = function(newsystemjson,callback) {
 	systemjson = newsystemjson;
+	/*
 	sensorCheck(temperatureData,'internal',function(newTemperatureData){
 		temperatureData = newTemperatureData;
 		callback();
 	});
+	*/
+	callback();
 }
 exports.updateSystem = function(newsystemjson) {
 	updateSystem(newsystemjson,function(){
@@ -43,7 +46,7 @@ var sensorCheck = function(tempData,checktype,callback) {
 		})
 	},function(err){
 		var sensors = systemjson.sensors;
-		system.checkTemp(sensors,function(tempoutall){
+		system.checkTemp(sensors,activePIDs,function(tempoutall){
 			lasttempout = tempoutall;
 			if (checktype == 'internal') {
 				if (!sensorLength) sensorLength = 120;
@@ -51,7 +54,7 @@ var sensorCheck = function(tempData,checktype,callback) {
 			async.each(tempoutall,function(tempout,allcb){
 				var sensorupdated = false;
 				if (temperatureDataMod.length == 0) {
-					temperatureDataMod.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature}]})
+					temperatureDataMod.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature,sensortarget:tempout.sensortarget}]})
 					allcb();
 				} else {
 					async.each(temperatureDataMod,function(temperature,cb){
@@ -203,7 +206,83 @@ exports.getInternalTemperature = function(callback) {
 
 var checkPID = function() {
 	if (activePIDs.length > 0){
-		
+		var changed;
+		var modsystemjson = systemjson;
+		async.each(activePIDs,function(activePID,callback){
+			var tempCheck = function(tempone,temptwo) {
+				equipment.pinValue(systemjson.equipment,activePID.pinaddress,function(pinstate){
+					if (tempone >= temptwo) {
+						//console.log('Activate Activate Activate Activate Activate Activate Activate ')
+						if (pinstate != 1) {
+							//pin needs changing
+							equipment.togglePin(modsystemjson,{address:activePID.pinaddress},'on',function(mod,newsystemjson){
+								modsystemjson.equipment = newsystemjson.equipment;
+							})
+							changed = true;
+						}
+					} else {
+						//console.log('Deactivate Deactivate Deactivate Deactivate Deactivate Deactivate Deactivate ')
+						if (pinstate != 0) {
+							equipment.togglePin(modsystemjson,{address:activePID.pinaddress},'off',function(mod,newsystemjson){
+								modsystemjson.equipment = newsystemjson.equipment;
+							})
+							//pin needs changing
+							changed = true;
+						}
+					}
+				})
+				callback();
+			}
+			var HeatCool = function() {
+				var usetemp;
+				async.each(lasttempout,function(lasttemp,tcb){
+					if (lasttemp.sensorname == activePID.targetname) {
+						usetemp = lasttemp.temperature;
+						activePID.lasttime = lasttemp.datetime;
+					}
+					tcb();
+
+				},function(err){
+					if (activePID.pintype == 'Cool') {
+						tempCheck(usetemp,activePID.targetvalue)
+						//console.log('Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool ')
+					}
+					if (activePID.pintype == 'Heat') {
+						tempCheck(activePID.targetvalue,usetemp)
+						//console.log('Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat ')
+					}
+					if (activePID.pintype != 'Cool' && activePID.pintype != 'Heat') {
+						callback();
+					}
+				})
+			}
+			if (activePID.lasttime) {
+				if (activePID.lasttime != lasttempout.datetime) {
+					HeatCool();
+				} else {
+					//temperature is not updating
+					console.log('Temp not updating')
+					callback();
+				}
+			} else {
+				HeatCool()
+			}
+		},function(err){
+			if (changed) {
+				system.writeSystemJson(modsystemjson,function(newsystemjson){
+					socket.emit('toggle', {'equipment': systemjson.equipment})
+				})
+			}
+		})
+		/*lasttempout format
+{ sensoraddress: 'test-address',
+    temperature: '37.400',
+    sensorname: 'asdf',
+    datetime: 'Fri Apr 25 2014 20:58:34 GMT+0000 (UTC)',
+    time: 1398459514805,
+    sensortarget: undefined }
+		*/
+		//{pinaddress:pinaddress,pintype:pintype,targetname:targetname,targetvalue:targetvalue}
 	}
 }
 
@@ -233,7 +312,7 @@ var updatePIDs = function(pinaddress,targetname,targetvalue,cb) {
 	})
 }
 
-exports.initPID = function(pinaddress,targetname,targetvalue,callback) {
+exports.initPID = function(pinaddress,pintype,targetname,targetvalue,callback) {
 	if (activePIDs.length > 0) {
 		var pidcheck = false;
 		var changecheck = false;
@@ -251,7 +330,12 @@ exports.initPID = function(pinaddress,targetname,targetvalue,callback) {
 			}
 		},function(err){
 			if (!pidcheck) {
-				activePIDs.push({pinaddress:pinaddress,targetname:targetname,targetvalue:targetvalue})
+				activePIDs.push({
+					pinaddress:pinaddress,
+					pintype:pintype,
+					targetname:targetname,
+					targetvalue:targetvalue
+				})
 				updatePIDs(pinaddress,targetname,targetvalue,function(newsystemjson){
 					callback(true,newsystemjson);
 				})
@@ -266,11 +350,20 @@ exports.initPID = function(pinaddress,targetname,targetvalue,callback) {
 			}
 		})
 	} else {
-		activePIDs.push({pinaddress:pinaddress,targetname:targetname,targetvalue:targetvalue})
+		activePIDs.push({
+			pinaddress:pinaddress,
+			pintype:pintype,
+			targetname:targetname,
+			targetvalue:targetvalue
+		})
 		updatePIDs(pinaddress,targetname,targetvalue,function(newsystemjson){
 			callback(true,newsystemjson);
 		})
 	}
+}
+
+exports.clearPIDs = function() {
+	activePIDs = [];
 }
 
 exports.stopPID = function(pinaddress,callback) {
@@ -325,7 +418,12 @@ exports.initSystem = function(socketio) {
 			for (var j = 0; j < systemjson.equipment[i].targets.length; j++) {
 				var targetdata = systemjson.equipment[i].targets[j];
 				if (targetdata.targetvalue != '') {
-					activePIDs.push({pinaddress:targetdata.pinaddress,targetname:targetdata.targetname,targetvalue:targetdata.targetvalue})
+					activePIDs.push({
+						pinaddress:systemjson.equipment[i].address,
+						pintype:systemjson.equipment[i].type,
+						targetname:targetdata.targetname,
+						targetvalue:targetdata.targetvalue
+					})
 				}
 			}
 		}

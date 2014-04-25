@@ -238,7 +238,7 @@ angular.module('brwryApp.directives', [])
 					for (var i = 0; i < data.length; i++) {
 						for (var j = 0; j < newVal.length; j++) {
 							if (data[i].name == newVal[j].sensorname) {
-								data[i].values.push({date:Date.parse(newVal[j].datetime),temperature:newVal[j].temperature})
+								data[i].values.push({date:Date.parse(newVal[j].datetime),temperature:newVal[j].temperature,sensortarget:newVal[j].sensortarget})
 							}
 						}
 					}

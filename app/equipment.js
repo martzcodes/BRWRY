@@ -99,6 +99,25 @@ exports.removeEquipment = function(systemjson,gpioPin,callback) {
 	})
 }
 
+exports.pinValue = function(equipment,pinNum,callback) {
+	var value;
+	async.each(equipment,function(equipmentitem,cb){
+		if (equipmentitem.address==pinNum) {
+			if (equipmentitem.value == equipmentitem.safeValue) {
+				value = 0;
+				cb();
+			} else {
+				value = 1;
+				cb();
+			}
+		} else {
+			cb();
+		}
+	},function(err){
+		callback(value);
+	})
+}
+
 exports.allowablePins = function(socket) {
 	socket.emit('allowablepins',{'allowablepins':allowablePins});
 }

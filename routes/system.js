@@ -24,8 +24,8 @@ exports.checkEquipment = function(sensorsjson,callback) {
 	checkEquipment(sensorsjson, callback);
 }
 
-exports.checkTemp = function(sensorsjson,callback) {
-	sensors.checkTemp(sensorsjson,function(tempout){
+exports.checkTemp = function(sensorsjson,activePIDs,callback) {
+	sensors.checkTemp(sensorsjson,activePIDs,function(tempout){
 		socket.emit('tempout', {'tempout': tempout});
 		lasttempout = tempout;
 		callback(tempout);
@@ -38,6 +38,11 @@ var writeSystemJson = function(newsystemjson,cb) {
 		cb(newsystemjson);
 		system.updateSystem(newsystemjson);
 	});
+}
+exports.writeSystemJson = function(newsystemjson,cb){
+	writeSystemJson(newsystemjson,function(updatedsystemjson){
+		cb(updatedsystemjson);
+	})
 }
 
 var loadSystemJson = function(cb) {
@@ -188,7 +193,7 @@ exports.update = function(req, res) {
 		}
 		if (updaterequest.type == 'toggle') {
 			if (updaterequest.pinaction == 'pid') {
-				system.initPID(updaterequest.pinaddress,updaterequest.targetname,updaterequest.targetvalue,function(changed,changedsystemjson){
+				system.initPID(updaterequest.gpioPin.address,updaterequest.gpioPin.type,updaterequest.targetname,updaterequest.targetvalue,function(changed,changedsystemjson){
 					if (changed){
 						systemjson.equipment = changedsystemjson.equipment;
 						writeSystemJson(systemjson,function(newsystemjson){
@@ -247,6 +252,7 @@ exports.update = function(req, res) {
 			equipment.toggleAll(systemjson,function(changedsystemjson){
 				systemjson.equipment = changedsystemjson.equipment;
 				writeSystemJson(systemjson,function(newsystemjson){
+					system.clearPIDs();
 					async.each(systemjson.equipment,function(equipmentitem,cb){
 						system.equipmentLog(systemjson,equipmentitem,'off');
 						cb();

@@ -179,16 +179,30 @@ exports.checkSensors = function(systemjson,callback) {
 	checkSensors(systemjson,callback);
 }
 
-function checkTemp(sensors,callback) {
+function checkTemp(sensors,activePIDs,callback) {
 	var tempout = [];
 	async.each(sensors,function(sensor,cb){
+		var target;
 		if (sensor.sensorstatus == '1') {
-			sense.temperature(sensor.sensoraddress, function(err,value){
-				var newReading = value + sensor.sensorcalibration;
-				tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date(),time:Date.now(),sensortarget:sensor.sensortarget})
+			async.each(activePIDs,function(activePID,acb){
+				if (activePID.targetname == sensor.sensorname) {
+					target = activePID.targetvalue;
+					acb();
+				} else {
+					acb();
+				}
+
+			},function(err){
+				sense.temperature(sensor.sensoraddress, function(err,value){
+					var newReading = value + sensor.sensorcalibration;
+					if (!target) target = newReading;
+					tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date(),time:Date.now(),sensortarget:target})
+					cb();
+				})
 			})
+		} else {
+			cb();
 		}
-		cb();
 	},function(err){
 		if( err ) {
 			// One of the iterations produced an error.
@@ -200,8 +214,8 @@ function checkTemp(sensors,callback) {
 	})
 }
 
-exports.checkTemp = function(sensors,callback) {
-	checkTemp(sensors,callback);
+exports.checkTemp = function(sensors,activePIDs,callback) {
+	checkTemp(sensors,activePIDs,callback);
 }
 
 /*
