@@ -36,9 +36,9 @@ html(lang='en',ng-app='brwryApp')
 							li
 								a(href='#/setup') Setup
 						ul.nav.navbar-nav.navbar-right
-							li(ng-repeat="temperature in temperatures")
+							li(data-ng-repeat="temperature in temperatures")
 								a(href='#/' tooltip-placement="bottom" tooltip="{{temperature.sensorname}}") {{temperature.temperature}} &deg;C
-							li(ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address")
+							li(data-ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address")
 								div.btn-group.navbar-btn-group
 									button.btn.navbar-btn(type="button" data-ng-click="gpioToggle(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin)") {{gpioPin.address}} <span class="badge">{{getEquipmentStatus(gpioPin)}}</span>
 									button.btn.dropdown-toggle.navbar-btn(type="button" data-ng-class="getEquipmentClass(gpioPin)" data-toggle="dropdown")
@@ -47,8 +47,9 @@ html(lang='en',ng-app='brwryApp')
 									ul.dropdown-menu(role="menu")
 										li
 											a(href="#" data-ng-click="gpioOn(system,gpioPin)") On
-										li
-											a(href="#") PID
+										li(data-ng-repeat="target in gpioPin.targets")
+											a(data-ng-click="gpioPID(system,gpioPin)") PID {{target.targetname}} 
+												input(numbers-only ng-enter="gpioPID(system,gpioPin)" stop-event="click" type="number" data-ng-model="target.targetvalue")
 										li
 											a(href="#" data-ng-click="gpioOff(system,gpioPin)") Off
 							li

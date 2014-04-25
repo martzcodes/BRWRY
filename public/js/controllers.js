@@ -42,6 +42,11 @@ angular.module('brwryApp.controllers')
 		  	var data = {type:'toggle',pinaction:'on',system:system,gpioPin:gpioPin}
 		  	System.update({},data);
 		}
+		$scope.gpioPID = function(system,gpioPin) {
+		  	var data = {type:'toggle',pinaction:'pid',system:system,gpioPin:gpioPin}
+		  	console.log(data);
+		  	System.update({},data);
+		}
 
 		$scope.gpioAll = function() {
 		  	var data = {type:'toggleall'}
@@ -117,6 +122,29 @@ angular.module('brwryApp.controllers')
 				$scope.newPin.address = selectedPin;
 			} else {
 				$scope.newPin = {address:selectedPin}
+			}
+		}
+
+		$scope.pinTypes = ['Heat','Cool','Pump','Valve'];
+
+		$scope.pinTypeSet = function(pin,pintype) {
+			pin.type = pintype;
+		}
+
+		$scope.pinTargetSet = function(pin,pintarget) {
+			if (pin.targets) {
+				var sliced = false;
+				for (var i = 0; i < pin.targets.length; i++) {
+					if (pin.targets[i].targetname == pintarget) {
+						pin.targets.splice(i,1);
+						sliced = true;
+					}
+				}
+				if (!sliced) {
+					pin.targets.push({targetname:pintarget})
+				}
+			} else {
+				pin.targets = [{targetname:pintarget}];
 			}
 		}
 

@@ -30,8 +30,7 @@
 			<div class="panel-heading"><h3 class="panel-title">Temp Sensor Setup</h3></div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-xs-4">Temp Sensor description, blah blah blah</div>
-					<div class="col-xs-8">
+					<div class="col-xs-6">
 						<div class="input-group">
 							<span class="input-group-addon">Sensor Memory Buffer (temporary):</span>
 							<input type="text" class="form-control" data-ng-model="system.sensorLength">
@@ -50,6 +49,7 @@
 							<span class="input-group-addon">milliseconds</span>
 						</div>	
 					</div>
+					<div class="col-xs-6"><p><b>Memory Buffer</b> is how many points will be stored in memory (not to a brew file).</p><p><b>Sensor Interval</b> is how frequent the sensor checks the temperature.</p><p><b>Sensor Storage Interval</b> is how often points are stored in the brew file.</p></div>
 				</div>
 			</div>
 			<table class="table table-striped table-condensed">
@@ -97,6 +97,7 @@
 						<th>Pin</th>
 						<th>Name</th>
 						<th>Type</th>
+						<th>Targets</th>
 						<th>Location</th>
 						<th>Status</th>
 						<th>Safe Value</th>
@@ -107,7 +108,24 @@
 					<tr data-ng-repeat="gpioPin in system.equipment | orderBy:'address'">
 						<td>{{gpioPin.address}}</td>
 						<td><input type="text" ng-model="gpioPin.name"></td>
-						<td><input type="text" ng-model="gpioPin.type"></td>
+						<td><div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							{{gpioPin.type}} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li data-ng-repeat="pinType in pinTypes"><a data-ng-click="pinTypeSet(gpioPin,pinType)">{{pinType}}</a></li>
+							</ul>
+						</div></td>
+						<td><div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								<span data-ng-repeat="targetname in gpioPin.targets">
+									{{ targetname.targetname }} <span ng-show=" ! $last ">, </span>
+								</span> <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li data-ng-repeat="temperature in system.sensors"><a data-ng-click="pinTargetSet(gpioPin,temperature.sensorname)">{{temperature.sensorname}}</a></li>
+							</ul>
+						</div></td>
 						<td><input type="text" ng-model="gpioPin.location"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="gpioPin.value" ng-checked="gpioPin.value"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="gpioPin.safeValue" ng-checked="gpioPin.safeValue"></td>
@@ -132,7 +150,22 @@
 							</ul>
 						</div></td>
 						<td><input type="text" ng-model="newPin.name"></td>
-						<td><input type="text" ng-model="newPin.type"></td>
+						<td><div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							{{newPin.type}} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li data-ng-repeat="pinType in pinTypes"><a data-ng-click="pinTypeSet(newPin,pinType)">{{pinType}}</a></li>
+							</ul>
+						</div></td>
+						<td><div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							{{gpioPin.targets}} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li data-ng-repeat="temperature in system.sensors"><a data-ng-click="pinTargetSet(newPin,temperature.sensorname)">{{temperature.sensorname}}</a></li>
+							</ul>
+						</div></td>
 						<td><input type="text" ng-model="newPin.location"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newPin.value" ng-checked="newPin.value"></td>
 						<td><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="newPin.safeValue" ng-checked="newPin.safeValue"></td>

@@ -22,7 +22,7 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="#" data-ng-click="gpioOn(system,gpioPin)">On</a></li>
-										<li><a href="#">PID</a></li>
+										<li data-ng-repeat="target in gpioPin.targets"><a data-ng-click="gpioPID(system,gpioPin)">PID {{target.targetname}} <input numbers-only ng-enter="gpioPID(system,gpioPin)" stop-event="click" type="number" data-ng-model="target.targetvalue"></a></li>
 										<li><a href="#" data-ng-click="gpioOff(system,gpioPin)">Off</a></li>
 									</ul>
 								</div>
@@ -73,16 +73,16 @@
 			<div class="panel-heading"><h3 class="panel-title">GPIO Pin Control</h3></div>
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat="gpioPin in system.equipment | orderBy:gpioPin.address">
-					<div class="btn-group">
+					<div class="btn-group dropup">
 						<button type="button"  data-ng-click="gpioToggle(system,gpioPin)" data-ng-class="getEquipmentClass(gpioPin)" class="btn"> {{gpioPin.address}} <span class="badge">{{getEquipmentStatus(gpioPin)}}</span></button>
 						<button type="button" data-ng-class="getEquipmentClass(gpioPin)" class="btn dropdown-toggle" data-toggle="dropdown">
 							<span class="caret"></span>
 							<span class="sr-only">Toggle Dropdown</span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#" data-ng-click="gpioOn(system,gpioPin)">On</a></li>
-							<li><a href="#">PID</a></li>
-							<li><a href="#" data-ng-click="gpioOff(system,gpioPin)">Off</a></li>
+							<li><a data-ng-click="gpioOn(system,gpioPin)">On</a></li>
+							<li data-ng-repeat="target in gpioPin.targets"><a data-ng-click="gpioPID(system,gpioPin)">PID {{target.targetname}} <input numbers-only ng-enter="gpioPID(system,gpioPin)" stop-event="click" type="number" data-ng-model="target.targetvalue"></a></li>
+							<li><a data-ng-click="gpioOff(system,gpioPin)">Off</a></li>
 						</ul>
 					</div>
 					{{gpioPin.name}}

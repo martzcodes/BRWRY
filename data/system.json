@@ -6,18 +6,31 @@
     {
       "address": 15,
       "name": "asdf",
-      "type": "asdf",
-      "location": "asdf",
+      "type": "Cool",
+      "location": "somewhere else",
       "safeValue": 0,
-      "value": 0
+      "value": 0,
+      "targets": [
+        {
+          "targetname": "asdf"
+        }
+      ]
     },
     {
       "address": 16,
       "name": "asdf",
-      "type": "asdf",
-      "location": "asdf",
+      "type": "Heat",
+      "location": "somewhere",
       "safeValue": 0,
-      "value": 0
+      "value": 0,
+      "targets": [
+        {
+          "targetname": "sensor 2"
+        },
+        {
+          "targetname": "asdf"
+        }
+      ]
     }
   ],
   "sensors": [
@@ -33,10 +46,10 @@
       "sensoraddress": "test-address-two",
       "sensorname": "sensor 2",
       "sensorloc": "test location2",
-      "sensorstatus": "0",
+      "sensorstatus": "1",
       "sensorcalibration": 0,
       "sensortarget": 0,
-      "sensorlastchange": "Thu Apr 24 2014 03:18:54 GMT+0000 (UTC)"
+      "sensorlastchange": "Fri Apr 25 2014 12:50:07 GMT+0000 (UTC)"
     }
   ],
   "brews": [

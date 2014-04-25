@@ -41,6 +41,10 @@ exports.updateEquipment = function(systemjson,updateequipment,callback) {
 					equipment.type = updateequip.type;
 					changecheck = true;
 				}
+				if (equipment.targets != updateequip.targets) {
+					equipment.targets = updateequip.targets;
+					changecheck = true;
+				}
 				if (equipment.location != updateequip.location) {
 					equipment.location = updateequip.location;
 					changecheck = true;

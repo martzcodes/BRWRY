@@ -103,16 +103,18 @@ var writeBrew = function(brew,newbrewjson,callback) {
 }
 
 exports.equipmentLog = function(newsystemjson,gpioPin,pinaction) {
-	async.each(brewjson.equipmentdata,function(equipment,callback){
-		if (equipment.eaddress == gpioPin.address) {
-			equipment.values.push({date:Date(),evalue:equipment.value})
-		}
-		callback();
-	},function(err){
-		writeBrew(systemjson.brewstate,brewjson,function(){
-			console.log('equipment logged',gpioPin)
+	if (brewing) {
+		async.each(brewjson.equipmentdata,function(equipment,callback){
+			if (equipment.eaddress == gpioPin.address) {
+				equipment.values.push({date:Date(),evalue:equipment.value})
+			}
+			callback();
+		},function(err){
+			writeBrew(systemjson.brewstate,brewjson,function(){
+				console.log('equipment logged',gpioPin)
+			})
 		})
-	})
+	}
 }
 
 var initEquipmentLog = function(callback) {

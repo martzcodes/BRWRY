@@ -1,10 +1,55 @@
 'use strict';
 
 angular.module('brwryApp.directives', [])
-	.directive('d3', function($window){
+	.directive('stopEvent', function () {
 		return {
-      		restrict: 'E',
-      		link: function (scope, element, attrs) {
+			restrict: 'A',
+			link: function (scope, element, attr) {
+				element.bind(attr.stopEvent, function (e) {
+					e.stopPropagation();
+				});
+			}
+		};
+	}).directive('ngEnter', function () {
+		return function (scope, element, attrs) {
+			element.bind("keydown keypress", function (event) {
+				if(event.which === 13) {
+					scope.$apply(function (){
+						scope.$eval(attrs.ngEnter);
+					});
+
+					event.preventDefault();
+				}
+			});
+		};
+	}).directive('numbersOnly', function () {
+		return  {
+			restrict: 'A',
+			link: function (scope, elm, attrs, ctrl) {
+				elm.on('keydown', function (event) {
+					if ([8, 13, 27, 37, 38, 39, 40].indexOf(event.which) > -1) {
+						// backspace, enter, escape, arrows
+						return true;
+					} else if (event.which >= 48 && event.which <= 57) {
+						// numbers
+						return true;
+					} else if (event.which >= 96 && event.which <= 105) {
+						// numpad number
+						return true;
+					} else if ([110, 190].indexOf(event.which) > -1) {
+						// dot and numpad dot
+						return true;
+					}else {
+						event.preventDefault();
+						return false;
+					}
+				});
+			}
+		}
+	}).directive('d3', function($window){
+		return {
+			restrict: 'E',
+			link: function (scope, element, attrs) {
 				var margin = {top: 10, right: 40, bottom: 30, left: 30};
 				//var width = 960 - margin.left - margin.right;
 				var vbwidth = $window.document.getElementById("d3chart").getBoundingClientRect().width;
@@ -19,21 +64,21 @@ angular.module('brwryApp.directives', [])
 				//var parseTime = d3.time.format("%X").parse;
 
 				var x = d3.time.scale()
-				    .range([0, width]);
+					.range([0, width]);
 
 				var y = d3.scale.linear()
-				    .range([height, 0])
-				    .domain([0,100]);
+					.range([height, 0])
+					.domain([15,105]);
 
 				var color = d3.scale.category10();
 
 				var xAxis = d3.svg.axis()
-				    .scale(x)
-				    .orient("bottom");
+					.scale(x)
+					.orient("bottom");
 
 				var yAxis = d3.svg.axis()
-				    .scale(y)
-				    .orient("left");
+					.scale(y)
+					.orient("left");
 
 				var color = d3.scale.category10();
 
@@ -58,8 +103,8 @@ angular.module('brwryApp.directives', [])
 
 					var line = d3.svg.line()
 						//.interpolate("basis")
-					    .x(function(d) { return x(d.date); })
-					    .y(function(d) { return y(d.temperature); });
+						.x(function(d) { return x(d.date); })
+						.y(function(d) { return y(d.temperature); });
 					
 					var area = d3.svg.area()
 						//.interpolate("basis")
@@ -100,58 +145,58 @@ angular.module('brwryApp.directives', [])
 					}
 
 					var sensor = svg.selectAll(".sensor")
-					      .data(data)
-					    .enter().append("g")
-					      .attr("class", "sensor");
+						  .data(data)
+						.enter().append("g")
+						  .attr("class", "sensor");
 
 					  sensor.append("path")
-					      .attr("class", "line")
-					      .attr("d", function(d) { return line(d.values); })
-					      .style("stroke", function(d) { return color(d.name); });
+						  .attr("class", "line")
+						  .attr("d", function(d) { return line(d.values); })
+						  .style("stroke", function(d) { return color(d.name); });
 
 /*
 					  sensor.append("clipPath")
-					      .attr("id", "clip-below")
-					    .append("path")
-					      .attr("d", area.y0(height));
+						  .attr("id", "clip-below")
+						.append("path")
+						  .attr("d", area.y0(height));
 
 					  sensor.append("clipPath")
-					      .attr("id", "clip-above")
-					    .append("path")
-					      .attr("d", area.y0(0));
+						  .attr("id", "clip-above")
+						.append("path")
+						  .attr("d", area.y0(0));
 
 					  sensor.append("path")
-					      .attr("class", "area above")
-					      .attr("clip-path", "url(#clip-above)")
-					      .attr("d", area.y0(function(d) { return y(d["San Francisco"]); }));
+						  .attr("class", "area above")
+						  .attr("clip-path", "url(#clip-above)")
+						  .attr("d", area.y0(function(d) { return y(d["San Francisco"]); }));
 
 					  sensor.append("path")
-					      .attr("class", "area below")
-					      .attr("clip-path", "url(#clip-below)")
-					      .attr("d", area);
+						  .attr("class", "area below")
+						  .attr("clip-path", "url(#clip-below)")
+						  .attr("d", area);
 */
 /*
 					  sensor.append("path")
-					      .attr("class", "area")
-    					  .attr("d", function(d) { return area(d.values); });
+						  .attr("class", "area")
+						  .attr("d", function(d) { return area(d.values); });
 */
 
 					  sensor.selectAll("circle")
-					      .data(function(d) {return d.values;})
-					    .enter().append("circle")
-					      .attr("class","dot")
-					      .attr("r", 2.5)
-					      .attr("cx", function(d) { return x(d.date); })
-					      .attr("cy", function(d) { return y(d.temperature); })
-					      .style("fill", function(d,i) { return hackyFill(d,i);});
+						  .data(function(d) {return d.values;})
+						.enter().append("circle")
+						  .attr("class","dot")
+						  .attr("r", 2.5)
+						  .attr("cx", function(d) { return x(d.date); })
+						  .attr("cy", function(d) { return y(d.temperature); })
+						  .style("fill", function(d,i) { return hackyFill(d,i);});
 
 					/*
 					  sensor.append("text")
-					      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-					      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
-					      .attr("x", 3)
-					      .attr("dy", ".35em")
-					      .text(function(d) { return d.name; });
+						  .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+						  .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")"; })
+						  .attr("x", 3)
+						  .attr("dy", ".35em")
+						  .text(function(d) { return d.name; });
 					*/
 
 					var legend = svg.selectAll(".legend")
@@ -175,8 +220,8 @@ angular.module('brwryApp.directives', [])
 				}
 
 				var data = [];
-      			scope.getInternal(function(internaldata){
-      				//Date format: Sun Apr 20 2014 00:46:39 GMT+0000 (UTC)
+				scope.getInternal(function(internaldata){
+					//Date format: Sun Apr 20 2014 00:46:39 GMT+0000 (UTC)
 					for (var i = 0; i < internaldata.length; i++) {
 						for (var k = 0; k < internaldata[i].values.length; k++) {
 							internaldata[i].values[k].date = Date.parse(internaldata[i].values[k].date);
@@ -184,7 +229,7 @@ angular.module('brwryApp.directives', [])
 						data.push({name:internaldata[i].name,values:internaldata[i].values})
 					}
 					chartdata(data);
-      			})
+				})
 
 				scope.$watch('temperatures',function(newVal, oldVal) {
 					if (!newVal) {
@@ -199,6 +244,6 @@ angular.module('brwryApp.directives', [])
 					}
 					chartdata(data);
 				})
-      		}
-    	};
+			}
+		};
 	});
