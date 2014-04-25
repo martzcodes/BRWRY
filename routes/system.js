@@ -187,21 +187,72 @@ exports.update = function(req, res) {
 			})
 		}
 		if (updaterequest.type == 'toggle') {
-			equipment.togglePin(systemjson,updaterequest.gpioPin,updaterequest.pinaction,function(changed,changedsystemjson){
-				if (changed) {
-					systemjson.equipment = changedsystemjson.equipment;
-					writeSystemJson(systemjson,function(newsystemjson){
-						system.equipmentLog(systemjson,updaterequest.gpioPin,updaterequest.pinaction);
-						socket.emit('toggle', newsystemjson);
-					})
-				}
-			})
+			if (updaterequest.pinaction == 'pid') {
+				system.initPID(updaterequest.pinaddress,updaterequest.targetname,updaterequest.targetvalue,function(changed,changedsystemjson){
+					if (changed){
+						systemjson.equipment = changedsystemjson.equipment;
+						writeSystemJson(systemjson,function(newsystemjson){
+							system.equipmentLog(newsystemjson,updaterequest.gpioPin,updaterequest.targetvalue);
+							socket.emit('toggle', newsystemjson);
+						})
+					}
+				})
+			} else {
+				var waspid = false;
+				async.each(updaterequest.gpioPin.targets,function(gpiopintarget,cb){
+					if (gpiopintarget.targetvalue != '') {
+						waspid = true;
+						cb();
+					} else {
+						cb();
+					}
+				},function(err){
+					if (waspid) {
+						system.stopPID(updaterequest.gpioPin.address,function(changed,changedsystemjson){
+							var pinaction = updaterequest.pinaction;
+							if (updaterequest.pinaction == 'toggle'){
+								pinaction = 'off'
+							}
+							equipment.togglePin(changedsystemjson,updaterequest.gpioPin,pinaction,function(changed,togglesystemjson){
+								if (changed) {
+									systemjson.equipment = togglesystemjson.equipment;
+									writeSystemJson(systemjson,function(newsystemjson){
+										system.equipmentLog(newsystemjson,updaterequest.gpioPin,updaterequest.pinaction);
+										socket.emit('toggle', newsystemjson);
+									})
+								} else {
+									systemjson.equipment = changedsystemjson.equipment
+									writeSystemJson(systemjson,function(newsystemjson){
+										system.equipmentLog(newsystemjson,updaterequest.gpioPin,updaterequest.pinaction);
+										socket.emit('toggle', newsystemjson);
+									})
+								}
+							})
+						})
+					} else {
+						equipment.togglePin(systemjson,updaterequest.gpioPin,updaterequest.pinaction,function(changed,changedsystemjson){
+							if (changed) {
+								systemjson.equipment = changedsystemjson.equipment;
+								writeSystemJson(systemjson,function(newsystemjson){
+									system.equipmentLog(newsystemjson,updaterequest.gpioPin,updaterequest.pinaction);
+									socket.emit('toggle', newsystemjson);
+								})
+							}
+						})
+					}
+				})
+			}
 		}
 		if (updaterequest.type == 'toggleall') {
 			equipment.toggleAll(systemjson,function(changedsystemjson){
 				systemjson.equipment = changedsystemjson.equipment;
 				writeSystemJson(systemjson,function(newsystemjson){
-					socket.emit('togglesafe', newsystemjson);
+					async.each(systemjson.equipment,function(equipmentitem,cb){
+						system.equipmentLog(systemjson,equipmentitem,'off');
+						cb();
+					},function(err){
+						socket.emit('togglesafe',newsystemjson)
+					})
 				})
 			})
 		}

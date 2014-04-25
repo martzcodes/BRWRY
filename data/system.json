@@ -12,7 +12,8 @@
       "value": 0,
       "targets": [
         {
-          "targetname": "asdf"
+          "targetname": "asdf",
+          "targetvalue": ""
         }
       ]
     },
@@ -25,10 +26,12 @@
       "value": 0,
       "targets": [
         {
-          "targetname": "sensor 2"
+          "targetname": "sensor 2",
+          "targetvalue": ""
         },
         {
-          "targetname": "asdf"
+          "targetname": "asdf",
+          "targetvalue": ""
         }
       ]
     }
@@ -52,14 +55,7 @@
       "sensorlastchange": "Fri Apr 25 2014 12:50:07 GMT+0000 (UTC)"
     }
   ],
-  "brews": [
-    {
-      "brewname": "asdf",
-      "brewfile": "brew-1398308577112.brwry",
-      "brewstart": 1398308577112,
-      "brewend": 1398308688947
-    }
-  ],
+  "brews": [],
   "brewername": "Martz",
   "sensorLength": "60",
   "sensorInterval": "3000",

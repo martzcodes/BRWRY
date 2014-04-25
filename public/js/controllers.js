@@ -14,6 +14,11 @@ angular.module('brwryApp.controllers')
 		})
 
 		$scope.getEquipmentStatus = function(gpioPin) {
+			for (var i = 0; i < gpioPin.targets.length; i++) {
+				if (gpioPin.targets[i].targetvalue != '') {
+					return gpioPin.targets[i].targetvalue;
+				}
+			}
 			if(gpioPin.value != gpioPin.safeValue) {
 				return "On"
 			} else {
@@ -42,12 +47,10 @@ angular.module('brwryApp.controllers')
 		  	var data = {type:'toggle',pinaction:'on',system:system,gpioPin:gpioPin}
 		  	System.update({},data);
 		}
-		$scope.gpioPID = function(system,gpioPin) {
-		  	var data = {type:'toggle',pinaction:'pid',system:system,gpioPin:gpioPin}
-		  	console.log(data);
+		$scope.gpioPID = function(gpioPin,targetname,targetvalue) {
+		  	var data = {type:'toggle',pinaction:'pid',gpioPin:gpioPin,pinaddress:gpioPin.address,targetname:targetname,targetvalue:targetvalue}
 		  	System.update({},data);
 		}
-
 		$scope.gpioAll = function() {
 		  	var data = {type:'toggleall'}
 		  	System.update({},data);

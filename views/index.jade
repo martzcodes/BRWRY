@@ -48,8 +48,8 @@ html(lang='en',ng-app='brwryApp')
 										li
 											a(href="#" data-ng-click="gpioOn(system,gpioPin)") On
 										li(data-ng-repeat="target in gpioPin.targets")
-											a(data-ng-click="gpioPID(system,gpioPin)") PID {{target.targetname}} 
-												input(numbers-only ng-enter="gpioPID(system,gpioPin)" stop-event="click" type="number" data-ng-model="target.targetvalue")
+											a(data-ng-click="gpioPID(gpioPin,target.targetname,target.targetvalue)") PID {{target.targetname}} 
+												input(numbers-only ng-enter="gpioPID(gpioPin,target.targetname,target.targetvalue)" stop-event="click" type="number" data-ng-model="target.targetvalue")
 										li
 											a(href="#" data-ng-click="gpioOff(system,gpioPin)") Off
 							li

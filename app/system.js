@@ -13,6 +13,7 @@ var temperatureData = [];
 var socket;
 var lasttempout;
 var brewing = false;
+var activePIDs = [];
 
 
 var updateSystem = function(newsystemjson,callback) {
@@ -102,7 +103,7 @@ var writeBrew = function(brew,newbrewjson,callback) {
 	});
 }
 
-exports.equipmentLog = function(newsystemjson,gpioPin,pinaction) {
+var equipmentLog = function(newsystemjson,gpioPin,pinaction) {
 	if (brewing) {
 		async.each(brewjson.equipmentdata,function(equipment,callback){
 			if (equipment.eaddress == gpioPin.address) {
@@ -116,6 +117,7 @@ exports.equipmentLog = function(newsystemjson,gpioPin,pinaction) {
 		})
 	}
 }
+exports.equipmentLog = equipmentLog;
 
 var initEquipmentLog = function(callback) {
 	var equipmentlog = [];
@@ -199,6 +201,106 @@ exports.getInternalTemperature = function(callback) {
 	}
 }
 
+var checkPID = function() {
+	if (activePIDs.length > 0){
+		
+	}
+}
+
+var updatePIDs = function(pinaddress,targetname,targetvalue,cb) {
+	var newsystemjson = systemjson;
+	async.each(newsystemjson.equipment,function(systemequipment,syscb){
+		if (systemequipment.address == pinaddress) {
+			async.each(systemequipment.targets,function(equipmenttarget,tarcb){
+				if (equipmenttarget.targetname == targetname) {
+					equipmenttarget.targetvalue = targetvalue;
+				} else {
+					equipmenttarget.targetvalue = '';
+				}
+				tarcb();
+
+			},function(err){
+				syscb();
+			})
+		} else {
+			syscb();
+		}
+	},function(err){
+		updateSystem(newsystemjson,function(){
+			console.log('newsystemjson',newsystemjson)
+			cb(newsystemjson);
+		})
+	})
+}
+
+exports.initPID = function(pinaddress,targetname,targetvalue,callback) {
+	if (activePIDs.length > 0) {
+		var pidcheck = false;
+		var changecheck = false;
+		async.each(activePIDs,function(activePID,cb){
+			if (activePID.pinaddress == pinaddress) {
+				if (activePID.targetname != targetname || activePID.targetvalue != targetvalue) {
+					activePID.targetname = targetname;
+					activePID.targetvalue = targetvalue;
+					changecheck = true;
+				}
+				pidcheck = true;
+				cb();
+			} else {
+				cb();
+			}
+		},function(err){
+			if (!pidcheck) {
+				activePIDs.push({pinaddress:pinaddress,targetname:targetname,targetvalue:targetvalue})
+				updatePIDs(pinaddress,targetname,targetvalue,function(newsystemjson){
+					callback(true,newsystemjson);
+				})
+			} else {
+				if (changecheck) {
+					updatePIDs(pinaddress,targetname,targetvalue,function(newsystemjson){
+						callback(true,newsystemjson);
+					})
+				} else {
+					callback(false,null);
+				}
+			}
+		})
+	} else {
+		activePIDs.push({pinaddress:pinaddress,targetname:targetname,targetvalue:targetvalue})
+		updatePIDs(pinaddress,targetname,targetvalue,function(newsystemjson){
+			callback(true,newsystemjson);
+		})
+	}
+}
+
+exports.stopPID = function(pinaddress,callback) {
+	var changedsystemjson = systemjson;
+	if (activePIDs.length > 0) {
+		async.series([
+		    function(cb){
+		        for (var i = 0; i < activePIDs.length; i++) {
+		        	if (activePIDs[i].pinaddress == pinaddress) {
+		        		activePIDs.splice(i,1);
+		        		cb();
+		        	}
+		        }
+		    },
+		    function(cb){
+		        updatePIDs(pinaddress,'','',function(newsystemjson){
+		        	changedsystemjson.equipment = newsystemjson.equipment;
+		        	cb();
+				})
+		    }
+		],
+		function(err){
+		    callback(true,changedsystemjson);
+		});
+	} else {
+		console.log('somehow got here?')
+		callback(false,null);
+	}
+}
+
 exports.initSystem = function(socketio) {
 	socket = socketio.sockets;
 	system.loadSystemJson(function(systemdata){
@@ -216,6 +318,17 @@ exports.initSystem = function(socketio) {
 		equipment.initPins(systemdata.equipment,function(){
 			console.log('Pins Initialized.')
 		})
+		setInterval(function(){
+			checkPID();
+		},5000)
+		for (var i = 0; i<systemjson.equipment.length; i++) {
+			for (var j = 0; j < systemjson.equipment[i].targets.length; j++) {
+				var targetdata = systemjson.equipment[i].targets[j];
+				if (targetdata.targetvalue != '') {
+					activePIDs.push({pinaddress:targetdata.pinaddress,targetname:targetdata.targetname,targetvalue:targetdata.targetvalue})
+				}
+			}
+		}
 		if (systemjson.brewstate != "") {
 			//should be brewing, so load and continue storing data
 			readCurrentBrew(systemjson.brewstate,function(){

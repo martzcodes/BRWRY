@@ -183,10 +183,15 @@ exports.togglePin = function(systemjson,gpioPin,pinaction,callback) {
 }
 exports.toggleAll = function(systemjson,callback) {
 	async.each(systemjson.equipment,function(equipment,cb){
-		gpio.write(equipment.address,equipment.safeValue,function(err){
-			equipment.value = equipment.safeValue;
-			cb();
-		});
+		async.each(equipment.targets,function(equipmenttarget,tarcb){
+			equipmenttarget.targetvalue = '';
+			tarcb();
+		},function(err){
+			gpio.write(equipment.address,equipment.safeValue,function(err){
+				equipment.value = equipment.safeValue;
+				cb();
+			});
+		})
 	},function(err){
 		callback(systemjson)
 	})

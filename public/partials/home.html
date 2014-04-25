@@ -22,7 +22,7 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="#" data-ng-click="gpioOn(system,gpioPin)">On</a></li>
-										<li data-ng-repeat="target in gpioPin.targets"><a data-ng-click="gpioPID(system,gpioPin)">PID {{target.targetname}} <input numbers-only ng-enter="gpioPID(system,gpioPin)" stop-event="click" type="number" data-ng-model="target.targetvalue"></a></li>
+										<li data-ng-repeat="target in gpioPin.targets"><a data-ng-click="gpioPID(gpioPin,target.targetname,target.targetvalue)">PID {{target.targetname}} <input numbers-only ng-enter="gpioPID(gpioPin,target.targetname,target.targetvalue)" stop-event="click" type="number" data-ng-model="target.targetvalue"></a></li>
 										<li><a href="#" data-ng-click="gpioOff(system,gpioPin)">Off</a></li>
 									</ul>
 								</div>
@@ -81,7 +81,9 @@
 						</button>
 						<ul class="dropdown-menu" role="menu">
 							<li><a data-ng-click="gpioOn(system,gpioPin)">On</a></li>
-							<li data-ng-repeat="target in gpioPin.targets"><a data-ng-click="gpioPID(system,gpioPin)">PID {{target.targetname}} <input numbers-only ng-enter="gpioPID(system,gpioPin)" stop-event="click" type="number" data-ng-model="target.targetvalue"></a></li>
+							<li data-ng-repeat="target in gpioPin.targets">
+								<a data-ng-click="gpioPID(gpioPin,target.targetname,target.targetvalue)">PID {{target.targetname}} <input numbers-only ng-enter="gpioPID(gpioPin,target.targetname,target.targetvalue)" stop-event="click" type="number" data-ng-model="target.targetvalue"></a>
+							</li>
 							<li><a data-ng-click="gpioOff(system,gpioPin)">Off</a></li>
 						</ul>
 					</div>
