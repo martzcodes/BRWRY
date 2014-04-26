@@ -106,10 +106,16 @@ angular.module('brwryApp.directives', [])
 						.x(function(d) { return x(d.date); })
 						.y(function(d) { return y(d.temperature); });
 					
-					var area = d3.svg.area()
+					var heatarea = d3.svg.area()
 						//.interpolate("basis")
 						.x(function(d) { return x(d.date); })
-						.y0(function(d) { return y(d.temperature-10); })
+						.y0(function(d) { return y(d.heattarget); })
+						.y1(function(d) { return y(d.temperature); });
+
+					var coolarea = d3.svg.area()
+						//.interpolate("basis")
+						.x(function(d) { return x(d.date); })
+						.y0(function(d) { return y(d.cooltarget); })
 						.y1(function(d) { return y(d.temperature); });
 
 					color.domain(data[0])
@@ -150,6 +156,16 @@ angular.module('brwryApp.directives', [])
 						  .attr("class", "sensor");
 
 					  sensor.append("path")
+						  .attr("class", "heatarea")
+						  .attr("d", function(d) { return heatarea(d.values); })
+
+
+					  sensor.append("path")
+						  .attr("class", "coolarea")
+						  .attr("d", function(d) { return coolarea(d.values); })
+
+
+					  sensor.append("path")
 						  .attr("class", "line")
 						  .attr("d", function(d) { return line(d.values); })
 						  .style("stroke", function(d) { return color(d.name); });
@@ -175,11 +191,7 @@ angular.module('brwryApp.directives', [])
 						  .attr("clip-path", "url(#clip-below)")
 						  .attr("d", area);
 */
-/*
-					  sensor.append("path")
-						  .attr("class", "area")
-						  .attr("d", function(d) { return area(d.values); });
-*/
+
 
 					  sensor.selectAll("circle")
 						  .data(function(d) {return d.values;})
@@ -238,7 +250,12 @@ angular.module('brwryApp.directives', [])
 					for (var i = 0; i < data.length; i++) {
 						for (var j = 0; j < newVal.length; j++) {
 							if (data[i].name == newVal[j].sensorname) {
-								data[i].values.push({date:Date.parse(newVal[j].datetime),temperature:newVal[j].temperature,sensortarget:newVal[j].sensortarget})
+								data[i].values.push({
+									date:Date.parse(newVal[j].datetime),
+									temperature:newVal[j].temperature,
+									heattarget:newVal[j].heattarget,
+									cooltarget:newVal[j].cooltarget
+								})
 							}
 						}
 					}

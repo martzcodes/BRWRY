@@ -15,6 +15,16 @@
   fill: steelblue;
 }
 
+.coolarea {
+  fill: steelblue;
+  fill-opacity: 0.5;
+}
+
+.heatarea {
+  fill: crimson;
+  fill-opacity: 0.5;
+}
+
 .dot {
   stroke: #000;
   fill: steelblue;

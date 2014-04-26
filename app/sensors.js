@@ -179,24 +179,91 @@ exports.checkSensors = function(systemjson,callback) {
 	checkSensors(systemjson,callback);
 }
 
-function checkTemp(sensors,activePIDs,callback) {
+function checkTemp(sensors,equipment,callback) {
 	var tempout = [];
 	async.each(sensors,function(sensor,cb){
-		var target;
+		var heattarget, cooltarget;
+		var heattempmod = 0;
+		var cooltempmod = 0;
 		if (sensor.sensorstatus == '1') {
-			async.each(activePIDs,function(activePID,acb){
-				if (activePID.targetname == sensor.sensorname) {
-					target = activePID.targetvalue;
-					acb();
-				} else {
-					acb();
-				}
-
+			async.each(equipment,function(equipmentitem,ecb){
+				var hasPID = false;
+				var hasSensor = false;
+				async.each(equipmentitem.targets,function(activePID,acb){
+					if (activePID.targetname == sensor.sensorname) {
+						hasSensor = true;
+					}
+					if (activePID.targetvalue != "") {
+						hasPID = true;
+						if (activePID.targetname == sensor.sensorname) {
+							if (equipmentitem.type == 'Heat') {
+								heattarget = activePID.targetvalue;
+								acb();
+							}
+							if (equipmentitem.type == 'Cool') {
+								cooltarget = activePID.targetvalue;
+								acb();
+							}
+							if (equipmentitem.type != 'Heat' && equipmentitem.type != 'Cool') {
+								acb();
+							}
+						} else {
+							acb();
+						}
+					} else {
+						acb();
+					}
+				},function(err){
+					if (hasPID) {
+						ecb();
+					} else {
+						if (hasSensor) {
+							if (equipmentitem.safeValue != equipmentitem.value) {
+								if (equipmentitem.type == 'Heat') {
+									heattempmod = 5;
+									ecb();
+								}
+								if (equipmentitem.type == 'Cool') {
+									cooltempmod = -5;
+									ecb();
+								}
+								if (equipmentitem.type != 'Heat' && equipmentitem.type != 'Cool') {
+									ecb();
+								}
+							} else {
+								ecb();
+							}
+						} else {
+							ecb();
+						}
+					}
+				})
 			},function(err){
 				sense.temperature(sensor.sensoraddress, function(err,value){
-					var newReading = value + sensor.sensorcalibration;
-					if (!target) target = newReading;
-					tempout.push({sensoraddress:sensor.sensoraddress,temperature:newReading,sensorname:sensor.sensorname,datetime:Date(),time:Date.now(),sensortarget:target})
+					var newReading = parseFloat(value + sensor.sensorcalibration);
+					if (!cooltarget) {
+						cooltarget = parseFloat(newReading + cooltempmod);
+					} else {
+						if (newReading <= cooltarget) {
+							cooltarget = newReading;
+						}
+					}
+					if (!heattarget) {
+						heattarget = parseFloat(newReading + heattempmod);
+					} else {
+						if (newReading >= heattarget) {
+							heattarget = newReading;
+						}
+					}
+					tempout.push({
+						sensoraddress:sensor.sensoraddress,
+						temperature:newReading,
+						sensorname:sensor.sensorname,
+						datetime:Date(),
+						time:Date.now(),
+						heattarget:heattarget,
+						cooltarget:cooltarget
+					})
 					cb();
 				})
 			})

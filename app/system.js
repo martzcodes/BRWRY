@@ -46,7 +46,7 @@ var sensorCheck = function(tempData,checktype,callback) {
 		})
 	},function(err){
 		var sensors = systemjson.sensors;
-		system.checkTemp(sensors,activePIDs,function(tempoutall){
+		system.checkTemp(sensors,systemjson.equipment,function(tempoutall){
 			lasttempout = tempoutall;
 			if (checktype == 'internal') {
 				if (!sensorLength) sensorLength = 120;
@@ -54,7 +54,15 @@ var sensorCheck = function(tempData,checktype,callback) {
 			async.each(tempoutall,function(tempout,allcb){
 				var sensorupdated = false;
 				if (temperatureDataMod.length == 0) {
-					temperatureDataMod.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature,sensortarget:tempout.sensortarget}]})
+					temperatureDataMod.push({
+						name:tempout.sensorname,
+						values:[{
+							date:Date(),
+							temperature:tempout.temperature,
+							heattarget:tempout.heattarget,
+							cooltarget:tempout.cooltarget
+						}]
+					})
 					allcb();
 				} else {
 					async.each(temperatureDataMod,function(temperature,cb){
@@ -64,7 +72,12 @@ var sensorCheck = function(tempData,checktype,callback) {
 									temperature.values.shift();
 								}
 							}
-							temperature.values.push({date:Date(),temperature:tempout.temperature})
+							temperature.values.push({
+								date:Date(),
+								temperature:tempout.temperature,
+								heattarget:tempout.heattarget,
+								cooltarget:tempout.cooltarget
+							})
 							sensorupdated=true;
 						}
 						cb();
@@ -73,7 +86,15 @@ var sensorCheck = function(tempData,checktype,callback) {
 							console.log('Err happened',err);
 						} else {
 							if (sensorupdated == false) {
-								temperatureDataMod.push({name:tempout.sensorname,values:[{date:Date(),temperature:tempout.temperature}]})
+								temperatureDataMod.push({
+									name:tempout.sensorname,
+									values:[{
+										date:Date(),
+										temperature:tempout.temperature,
+										heattarget:tempout.heattarget,
+										cooltarget:tempout.cooltarget
+									}]
+								})
 							}
 							allcb();
 						}
@@ -235,26 +256,28 @@ var checkPID = function() {
 			}
 			var HeatCool = function() {
 				var usetemp;
-				async.each(lasttempout,function(lasttemp,tcb){
-					if (lasttemp.sensorname == activePID.targetname) {
-						usetemp = lasttemp.temperature;
-						activePID.lasttime = lasttemp.datetime;
-					}
-					tcb();
+				if (lasttempout) {
+					async.each(lasttempout,function(lasttemp,tcb){
+						if (lasttemp.sensorname == activePID.targetname) {
+							usetemp = lasttemp.temperature;
+							activePID.lasttime = lasttemp.datetime;
+						}
+						tcb();
 
-				},function(err){
-					if (activePID.pintype == 'Cool') {
-						tempCheck(usetemp,activePID.targetvalue)
-						//console.log('Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool ')
-					}
-					if (activePID.pintype == 'Heat') {
-						tempCheck(activePID.targetvalue,usetemp)
-						//console.log('Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat ')
-					}
-					if (activePID.pintype != 'Cool' && activePID.pintype != 'Heat') {
-						callback();
-					}
-				})
+					},function(err){
+						if (activePID.pintype == 'Cool') {
+							tempCheck(usetemp,activePID.targetvalue)
+							//console.log('Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool Cool ')
+						}
+						if (activePID.pintype == 'Heat') {
+							tempCheck(activePID.targetvalue,usetemp)
+							//console.log('Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat Heat ')
+						}
+						if (activePID.pintype != 'Cool' && activePID.pintype != 'Heat') {
+							callback();
+						}
+					})
+				}
 			}
 			if (activePID.lasttime) {
 				if (activePID.lasttime != lasttempout.datetime) {

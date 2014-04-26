@@ -24,8 +24,8 @@ exports.checkEquipment = function(sensorsjson,callback) {
 	checkEquipment(sensorsjson, callback);
 }
 
-exports.checkTemp = function(sensorsjson,activePIDs,callback) {
-	sensors.checkTemp(sensorsjson,activePIDs,function(tempout){
+exports.checkTemp = function(sensorsjson,equipment,callback) {
+	sensors.checkTemp(sensorsjson,equipment,function(tempout){
 		socket.emit('tempout', {'tempout': tempout});
 		lasttempout = tempout;
 		callback(tempout);

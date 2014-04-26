@@ -5,35 +5,57 @@
   "equipment": [
     {
       "address": 15,
-      "name": "asdf",
+      "name": "sensor 2 cool",
       "type": "Cool",
       "location": "somewhere else",
       "safeValue": 0,
-      "value": 0,
+      "value": 1,
       "targets": [
         {
-          "targetname": "asdf",
+          "targetname": "sensor 2",
           "targetvalue": ""
         }
       ]
     },
     {
       "address": 16,
-      "name": "asdf",
+      "name": "sensor 2 heat",
       "type": "Heat",
       "location": "somewhere",
       "safeValue": 0,
-      "value": 0,
+      "value": 1,
       "targets": [
         {
           "targetname": "sensor 2",
           "targetvalue": ""
-        },
-        {
-          "targetname": "asdf",
-          "targetvalue": 30
         }
       ]
+    },
+    {
+      "address": 11,
+      "name": "asdf cool",
+      "type": "Cool",
+      "targets": [
+        {
+          "targetname": "asdf",
+          "targetvalue": 50
+        }
+      ],
+      "safeValue": 0,
+      "value": 0
+    },
+    {
+      "address": 12,
+      "name": "asdf heat",
+      "type": "Heat",
+      "targets": [
+        {
+          "targetname": "asdf",
+          "targetvalue": 90
+        }
+      ],
+      "safeValue": 0,
+      "value": 1
     }
   ],
   "sensors": [
