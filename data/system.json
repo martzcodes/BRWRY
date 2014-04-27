@@ -9,7 +9,7 @@
       "type": "Cool",
       "location": "somewhere else",
       "safeValue": 0,
-      "value": 1,
+      "value": 0,
       "targets": [
         {
           "targetname": "sensor 2",
@@ -23,7 +23,7 @@
       "type": "Heat",
       "location": "somewhere",
       "safeValue": 0,
-      "value": 1,
+      "value": 0,
       "targets": [
         {
           "targetname": "sensor 2",
@@ -38,7 +38,7 @@
       "targets": [
         {
           "targetname": "asdf",
-          "targetvalue": 50
+          "targetvalue": ""
         }
       ],
       "safeValue": 0,
@@ -51,11 +51,11 @@
       "targets": [
         {
           "targetname": "asdf",
-          "targetvalue": 90
+          "targetvalue": ""
         }
       ],
       "safeValue": 0,
-      "value": 1
+      "value": 0
     }
   ],
   "sensors": [
@@ -77,7 +77,38 @@
       "sensorlastchange": "Fri Apr 25 2014 12:50:07 GMT+0000 (UTC)"
     }
   ],
-  "brews": [],
+  "brews": [
+    {
+      "brewname": "Test brew",
+      "brewfile": "brew-1398556015776.brwry",
+      "brewstart": 1398556015776,
+      "brewend": 1398556100222
+    },
+    {
+      "brewname": "Test Brew 2",
+      "brewfile": "brew-1398556222706.brwry",
+      "brewstart": 1398556222706,
+      "brewend": 1398556317198
+    },
+    {
+      "brewname": "test 3",
+      "brewfile": "brew-1398556322826.brwry",
+      "brewstart": 1398556322826,
+      "brewend": 1398556331496
+    },
+    {
+      "brewname": "test 4",
+      "brewfile": "brew-1398556868366.brwry",
+      "brewstart": 1398556868366,
+      "brewend": 1398556987051
+    },
+    {
+      "brewname": "test asdf",
+      "brewfile": "brew-1398556996343.brwry",
+      "brewstart": 1398556996343,
+      "brewend": 1398557034812
+    }
+  ],
   "brewername": "Martz",
   "sensorLength": "60",
   "sensorInterval": "3000",

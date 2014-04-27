@@ -36,7 +36,7 @@ var sensorCheck = function(tempData,checktype,callback) {
 	
 	var temperatureDataMod = [];
 	async.each(systemjson.sensors,function(sensor,syscb){
-		async.each(temperatureData,function(tD,cb){
+		async.each(tempData,function(tD,cb){
 			if (tD.name == sensor.sensorname && sensor.sensorstatus == "1") {
 				temperatureDataMod.push(tD);
 			}
@@ -208,6 +208,7 @@ exports.stopBrew = function(newsystemjson) {
 
 var sensorStore = function() {
 	if (brewing) {
+		console.log('brewjson.sensordata',brewjson.sensordata);
 		sensorCheck(brewjson.sensordata,'store',function(newsensordata){
 			brewjson.sensordata = newsensordata;
 			writeBrew(systemjson.brewstate,brewjson,function(){
@@ -297,15 +298,6 @@ var checkPID = function() {
 				})
 			}
 		})
-		/*lasttempout format
-{ sensoraddress: 'test-address',
-    temperature: '37.400',
-    sensorname: 'asdf',
-    datetime: 'Fri Apr 25 2014 20:58:34 GMT+0000 (UTC)',
-    time: 1398459514805,
-    sensortarget: undefined }
-		*/
-		//{pinaddress:pinaddress,pintype:pintype,targetname:targetname,targetvalue:targetvalue}
 	}
 }
 
