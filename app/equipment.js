@@ -2,7 +2,7 @@
 var gpio = require('./fakerpi-gpio.js') //when testing on something other than a pi
 var async = require('async');
 
-var allowablePins = [11,12,13,15,16,18];
+var allowablePins = [11,12,13,15,16,17,18,21,22,23,24];
 
 exports.addEquipment = function(systemjson,newPin,callback) {
 	var existcheck = false;
@@ -191,7 +191,7 @@ exports.togglePin = function(systemjson,gpioPin,pinaction,callback) {
 		} else {
 			cb();
 		}
-		
+
 	},function(err){
 		if (existcheck == true && changevalue == true) {
 			callback(true,systemjson)
@@ -234,7 +234,7 @@ exports.killPins = function(equipment,callback) {
 		gpio.destroy(function() {
 			console.log('All pins unexported.');
 			callback();
-			
+
 		})
 	})
 }
