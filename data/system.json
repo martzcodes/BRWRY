@@ -1,0 +1,78 @@
+{
+  "systemname": "BRWRY",
+  "brewername": "Martz",
+  "currentbrew": "",
+  "brewstate": "",
+  "sensorLength": 120,
+  "sensorInterval": 3000,
+  "sensorStoreInterval": 30000,
+  "equipment": [
+    {
+      "address": 11,
+      "name": "Heating Elements",
+      "type": "Heat",
+      "targets": [
+        {
+          "targetname": "Sensor1",
+          "targetvalue": ""
+        }
+      ],
+      "location": "BK",
+      "safeValue": "0",
+      "value": 0
+    },
+    {
+      "address": 15,
+      "name": "Pump",
+      "type": "Pump",
+      "targets": [
+        {
+          "targetname": "Sensor1",
+          "targetvalue": ""
+        }
+      ],
+      "location": "BK",
+      "safeValue": "0",
+      "value": 0
+    },
+    {
+      "address": 12,
+      "name": "Valve",
+      "type": "Valve",
+      "targets": [
+        {
+          "targetname": "Sensor1",
+          "targetvalue": ""
+        }
+      ],
+      "location": "bk",
+      "safeValue": 0,
+      "value": 0
+    }
+  ],
+  "sensors": [
+    {
+      "sensoraddress": "28-0000050056e6",
+      "sensorname": "Sensor1",
+      "sensorloc": "",
+      "sensorstatus": "1",
+      "sensorcalibration": 0,
+      "sensortarget": 0,
+      "sensorlastchange": "Sat May 10 2014 17:18:45 GMT+0000 (UTC)"
+    }
+  ],
+  "brews": [
+    {
+      "brewname": "Wet Run",
+      "brewfile": "brew-1402164188603.brwry",
+      "brewstart": 1402164188604,
+      "brewend": 1402165219823
+    },
+    {
+      "brewname": "Honey Wheat Beer",
+      "brewfile": "brew-1402165547061.brwry",
+      "brewstart": 1402165547062,
+      "brewend": 1402173399579
+    }
+  ]
+}

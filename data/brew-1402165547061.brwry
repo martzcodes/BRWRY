@@ -1,0 +1,1654 @@
+{
+  "brewname": "Honey Wheat Beer",
+  "brewername": "Martz",
+  "systemname": "BRWRY",
+  "sensordata": [
+    {
+      "name": "Sensor1",
+      "values": [
+        {
+          "date": "Sat Jun 07 2014 18:25:47 GMT+0000 (UTC)",
+          "temperature": 23.937,
+          "heattarget": 23.937,
+          "cooltarget": 23.937
+        },
+        {
+          "date": "Sat Jun 07 2014 18:26:18 GMT+0000 (UTC)",
+          "temperature": 23.937,
+          "heattarget": 100,
+          "cooltarget": 23.937
+        },
+        {
+          "date": "Sat Jun 07 2014 18:26:48 GMT+0000 (UTC)",
+          "temperature": 24,
+          "heattarget": 100,
+          "cooltarget": 24
+        },
+        {
+          "date": "Sat Jun 07 2014 18:27:18 GMT+0000 (UTC)",
+          "temperature": 24.125,
+          "heattarget": 100,
+          "cooltarget": 24.125
+        },
+        {
+          "date": "Sat Jun 07 2014 18:27:48 GMT+0000 (UTC)",
+          "temperature": 24.312,
+          "heattarget": 100,
+          "cooltarget": 24.312
+        },
+        {
+          "date": "Sat Jun 07 2014 18:28:18 GMT+0000 (UTC)",
+          "temperature": 24.5,
+          "heattarget": 100,
+          "cooltarget": 24.5
+        },
+        {
+          "date": "Sat Jun 07 2014 18:28:48 GMT+0000 (UTC)",
+          "temperature": 24.687,
+          "heattarget": 100,
+          "cooltarget": 24.687
+        },
+        {
+          "date": "Sat Jun 07 2014 18:29:18 GMT+0000 (UTC)",
+          "temperature": 24.937,
+          "heattarget": 100,
+          "cooltarget": 24.937
+        },
+        {
+          "date": "Sat Jun 07 2014 18:29:48 GMT+0000 (UTC)",
+          "temperature": 25.125,
+          "heattarget": 100,
+          "cooltarget": 25.125
+        },
+        {
+          "date": "Sat Jun 07 2014 18:30:18 GMT+0000 (UTC)",
+          "temperature": 25.312,
+          "heattarget": 100,
+          "cooltarget": 25.312
+        },
+        {
+          "date": "Sat Jun 07 2014 18:30:48 GMT+0000 (UTC)",
+          "temperature": 25.562,
+          "heattarget": 100,
+          "cooltarget": 25.562
+        },
+        {
+          "date": "Sat Jun 07 2014 18:31:18 GMT+0000 (UTC)",
+          "temperature": 25.812,
+          "heattarget": 100,
+          "cooltarget": 25.812
+        },
+        {
+          "date": "Sat Jun 07 2014 18:31:48 GMT+0000 (UTC)",
+          "temperature": 26.062,
+          "heattarget": 100,
+          "cooltarget": 26.062
+        },
+        {
+          "date": "Sat Jun 07 2014 18:32:18 GMT+0000 (UTC)",
+          "temperature": 26.25,
+          "heattarget": 100,
+          "cooltarget": 26.25
+        },
+        {
+          "date": "Sat Jun 07 2014 18:32:48 GMT+0000 (UTC)",
+          "temperature": 26.562,
+          "heattarget": 100,
+          "cooltarget": 26.562
+        },
+        {
+          "date": "Sat Jun 07 2014 18:33:19 GMT+0000 (UTC)",
+          "temperature": 26.875,
+          "heattarget": 100,
+          "cooltarget": 26.875
+        },
+        {
+          "date": "Sat Jun 07 2014 18:33:49 GMT+0000 (UTC)",
+          "temperature": 27.125,
+          "heattarget": 100,
+          "cooltarget": 27.125
+        },
+        {
+          "date": "Sat Jun 07 2014 18:34:19 GMT+0000 (UTC)",
+          "temperature": 27.437,
+          "heattarget": 100,
+          "cooltarget": 27.437
+        },
+        {
+          "date": "Sat Jun 07 2014 18:34:49 GMT+0000 (UTC)",
+          "temperature": 27.75,
+          "heattarget": 100,
+          "cooltarget": 27.75
+        },
+        {
+          "date": "Sat Jun 07 2014 18:35:19 GMT+0000 (UTC)",
+          "temperature": 28.062,
+          "heattarget": 100,
+          "cooltarget": 28.062
+        },
+        {
+          "date": "Sat Jun 07 2014 18:35:49 GMT+0000 (UTC)",
+          "temperature": 28.375,
+          "heattarget": 100,
+          "cooltarget": 28.375
+        },
+        {
+          "date": "Sat Jun 07 2014 18:36:19 GMT+0000 (UTC)",
+          "temperature": 28.687,
+          "heattarget": 100,
+          "cooltarget": 28.687
+        },
+        {
+          "date": "Sat Jun 07 2014 18:36:49 GMT+0000 (UTC)",
+          "temperature": 29,
+          "heattarget": 100,
+          "cooltarget": 29
+        },
+        {
+          "date": "Sat Jun 07 2014 18:37:19 GMT+0000 (UTC)",
+          "temperature": 29.437,
+          "heattarget": 100,
+          "cooltarget": 29.437
+        },
+        {
+          "date": "Sat Jun 07 2014 18:37:49 GMT+0000 (UTC)",
+          "temperature": 29.812,
+          "heattarget": 100,
+          "cooltarget": 29.812
+        },
+        {
+          "date": "Sat Jun 07 2014 18:38:19 GMT+0000 (UTC)",
+          "temperature": 30.187,
+          "heattarget": 100,
+          "cooltarget": 30.187
+        },
+        {
+          "date": "Sat Jun 07 2014 18:38:49 GMT+0000 (UTC)",
+          "temperature": 30.687,
+          "heattarget": 100,
+          "cooltarget": 30.687
+        },
+        {
+          "date": "Sat Jun 07 2014 18:39:19 GMT+0000 (UTC)",
+          "temperature": 31.125,
+          "heattarget": 100,
+          "cooltarget": 31.125
+        },
+        {
+          "date": "Sat Jun 07 2014 18:39:49 GMT+0000 (UTC)",
+          "temperature": 31.625,
+          "heattarget": 100,
+          "cooltarget": 31.625
+        },
+        {
+          "date": "Sat Jun 07 2014 18:40:19 GMT+0000 (UTC)",
+          "temperature": 32.125,
+          "heattarget": 100,
+          "cooltarget": 32.125
+        },
+        {
+          "date": "Sat Jun 07 2014 18:40:50 GMT+0000 (UTC)",
+          "temperature": 32.687,
+          "heattarget": 100,
+          "cooltarget": 32.687
+        },
+        {
+          "date": "Sat Jun 07 2014 18:41:19 GMT+0000 (UTC)",
+          "temperature": 33.25,
+          "heattarget": 100,
+          "cooltarget": 33.25
+        },
+        {
+          "date": "Sat Jun 07 2014 18:41:49 GMT+0000 (UTC)",
+          "temperature": 33.875,
+          "heattarget": 100,
+          "cooltarget": 33.875
+        },
+        {
+          "date": "Sat Jun 07 2014 18:42:19 GMT+0000 (UTC)",
+          "temperature": 34.625,
+          "heattarget": 100,
+          "cooltarget": 34.625
+        },
+        {
+          "date": "Sat Jun 07 2014 18:42:49 GMT+0000 (UTC)",
+          "temperature": 35.562,
+          "heattarget": 100,
+          "cooltarget": 35.562
+        },
+        {
+          "date": "Sat Jun 07 2014 18:43:19 GMT+0000 (UTC)",
+          "temperature": 36.812,
+          "heattarget": 100,
+          "cooltarget": 36.812
+        },
+        {
+          "date": "Sat Jun 07 2014 18:43:49 GMT+0000 (UTC)",
+          "temperature": 38.312,
+          "heattarget": 100,
+          "cooltarget": 38.312
+        },
+        {
+          "date": "Sat Jun 07 2014 18:44:19 GMT+0000 (UTC)",
+          "temperature": 40.25,
+          "heattarget": 100,
+          "cooltarget": 40.25
+        },
+        {
+          "date": "Sat Jun 07 2014 18:44:49 GMT+0000 (UTC)",
+          "temperature": 42.625,
+          "heattarget": 100,
+          "cooltarget": 42.625
+        },
+        {
+          "date": "Sat Jun 07 2014 18:45:19 GMT+0000 (UTC)",
+          "temperature": 46.187,
+          "heattarget": 100,
+          "cooltarget": 46.187
+        },
+        {
+          "date": "Sat Jun 07 2014 18:45:49 GMT+0000 (UTC)",
+          "temperature": 50.875,
+          "heattarget": 100,
+          "cooltarget": 50.875
+        },
+        {
+          "date": "Sat Jun 07 2014 18:46:19 GMT+0000 (UTC)",
+          "temperature": 57.187,
+          "heattarget": 100,
+          "cooltarget": 57.187
+        },
+        {
+          "date": "Sat Jun 07 2014 18:46:49 GMT+0000 (UTC)",
+          "temperature": 64.312,
+          "heattarget": 100,
+          "cooltarget": 64.312
+        },
+        {
+          "date": "Sat Jun 07 2014 18:47:19 GMT+0000 (UTC)",
+          "temperature": 72.312,
+          "heattarget": 100,
+          "cooltarget": 72.312
+        },
+        {
+          "date": "Sat Jun 07 2014 18:47:49 GMT+0000 (UTC)",
+          "temperature": 78.875,
+          "heattarget": 100,
+          "cooltarget": 78.875
+        },
+        {
+          "date": "Sat Jun 07 2014 18:48:19 GMT+0000 (UTC)",
+          "temperature": 84.875,
+          "heattarget": 100,
+          "cooltarget": 84.875
+        },
+        {
+          "date": "Sat Jun 07 2014 18:48:49 GMT+0000 (UTC)",
+          "temperature": 89.437,
+          "heattarget": 100,
+          "cooltarget": 89.437
+        },
+        {
+          "date": "Sat Jun 07 2014 18:49:19 GMT+0000 (UTC)",
+          "temperature": 93,
+          "heattarget": 100,
+          "cooltarget": 93
+        },
+        {
+          "date": "Sat Jun 07 2014 18:49:49 GMT+0000 (UTC)",
+          "temperature": 95.625,
+          "heattarget": 100,
+          "cooltarget": 95.625
+        },
+        {
+          "date": "Sat Jun 07 2014 18:50:19 GMT+0000 (UTC)",
+          "temperature": 97.562,
+          "heattarget": 100,
+          "cooltarget": 97.562
+        },
+        {
+          "date": "Sat Jun 07 2014 18:50:49 GMT+0000 (UTC)",
+          "temperature": 98.562,
+          "heattarget": 100,
+          "cooltarget": 98.562
+        },
+        {
+          "date": "Sat Jun 07 2014 18:51:20 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 99.062,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 18:51:50 GMT+0000 (UTC)",
+          "temperature": 98.25,
+          "heattarget": 98.25,
+          "cooltarget": 98.25
+        },
+        {
+          "date": "Sat Jun 07 2014 18:52:20 GMT+0000 (UTC)",
+          "temperature": 97.062,
+          "heattarget": 97.062,
+          "cooltarget": 97.062
+        },
+        {
+          "date": "Sat Jun 07 2014 18:52:50 GMT+0000 (UTC)",
+          "temperature": 75.687,
+          "heattarget": 75.687,
+          "cooltarget": 75.687
+        },
+        {
+          "date": "Sat Jun 07 2014 18:53:20 GMT+0000 (UTC)",
+          "temperature": 55.375,
+          "heattarget": 55.375,
+          "cooltarget": 55.375
+        },
+        {
+          "date": "Sat Jun 07 2014 18:53:50 GMT+0000 (UTC)",
+          "temperature": 64.5,
+          "heattarget": 64.5,
+          "cooltarget": 64.5
+        },
+        {
+          "date": "Sat Jun 07 2014 18:54:20 GMT+0000 (UTC)",
+          "temperature": 78.625,
+          "heattarget": 78.625,
+          "cooltarget": 78.625
+        },
+        {
+          "date": "Sat Jun 07 2014 18:54:50 GMT+0000 (UTC)",
+          "temperature": 80,
+          "heattarget": 80,
+          "cooltarget": 80
+        },
+        {
+          "date": "Sat Jun 07 2014 18:55:20 GMT+0000 (UTC)",
+          "temperature": 82.062,
+          "heattarget": 82.062,
+          "cooltarget": 82.062
+        },
+        {
+          "date": "Sat Jun 07 2014 18:55:50 GMT+0000 (UTC)",
+          "temperature": 81.562,
+          "heattarget": 81.562,
+          "cooltarget": 81.562
+        },
+        {
+          "date": "Sat Jun 07 2014 18:56:20 GMT+0000 (UTC)",
+          "temperature": 79.875,
+          "heattarget": 79.875,
+          "cooltarget": 79.875
+        },
+        {
+          "date": "Sat Jun 07 2014 18:56:50 GMT+0000 (UTC)",
+          "temperature": 78.687,
+          "heattarget": 78.687,
+          "cooltarget": 78.687
+        },
+        {
+          "date": "Sat Jun 07 2014 18:57:20 GMT+0000 (UTC)",
+          "temperature": 78.187,
+          "heattarget": 100,
+          "cooltarget": 78.187
+        },
+        {
+          "date": "Sat Jun 07 2014 18:57:50 GMT+0000 (UTC)",
+          "temperature": 77.625,
+          "heattarget": 100,
+          "cooltarget": 77.625
+        },
+        {
+          "date": "Sat Jun 07 2014 18:58:20 GMT+0000 (UTC)",
+          "temperature": 77.5,
+          "heattarget": 100,
+          "cooltarget": 77.5
+        },
+        {
+          "date": "Sat Jun 07 2014 18:58:50 GMT+0000 (UTC)",
+          "temperature": 77.437,
+          "heattarget": 100,
+          "cooltarget": 77.437
+        },
+        {
+          "date": "Sat Jun 07 2014 18:59:20 GMT+0000 (UTC)",
+          "temperature": 77.437,
+          "heattarget": 100,
+          "cooltarget": 77.437
+        },
+        {
+          "date": "Sat Jun 07 2014 18:59:50 GMT+0000 (UTC)",
+          "temperature": 77.5,
+          "heattarget": 100,
+          "cooltarget": 77.5
+        },
+        {
+          "date": "Sat Jun 07 2014 19:00:20 GMT+0000 (UTC)",
+          "temperature": 77.625,
+          "heattarget": 100,
+          "cooltarget": 77.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:00:50 GMT+0000 (UTC)",
+          "temperature": 77.687,
+          "heattarget": 100,
+          "cooltarget": 77.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:01:20 GMT+0000 (UTC)",
+          "temperature": 77.812,
+          "heattarget": 100,
+          "cooltarget": 77.812
+        },
+        {
+          "date": "Sat Jun 07 2014 19:01:50 GMT+0000 (UTC)",
+          "temperature": 78.125,
+          "heattarget": 100,
+          "cooltarget": 78.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:02:20 GMT+0000 (UTC)",
+          "temperature": 78.937,
+          "heattarget": 100,
+          "cooltarget": 78.937
+        },
+        {
+          "date": "Sat Jun 07 2014 19:02:50 GMT+0000 (UTC)",
+          "temperature": 81,
+          "heattarget": 100,
+          "cooltarget": 81
+        },
+        {
+          "date": "Sat Jun 07 2014 19:03:21 GMT+0000 (UTC)",
+          "temperature": 86.125,
+          "heattarget": 100,
+          "cooltarget": 86.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:03:51 GMT+0000 (UTC)",
+          "temperature": 89.062,
+          "heattarget": 100,
+          "cooltarget": 89.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:04:21 GMT+0000 (UTC)",
+          "temperature": 92.312,
+          "heattarget": 100,
+          "cooltarget": 92.312
+        },
+        {
+          "date": "Sat Jun 07 2014 19:04:51 GMT+0000 (UTC)",
+          "temperature": 95.625,
+          "heattarget": 100,
+          "cooltarget": 95.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:05:21 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 100,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:05:51 GMT+0000 (UTC)",
+          "temperature": 98.812,
+          "heattarget": 100,
+          "cooltarget": 98.812
+        },
+        {
+          "date": "Sat Jun 07 2014 19:06:21 GMT+0000 (UTC)",
+          "temperature": 99.687,
+          "heattarget": 100,
+          "cooltarget": 99.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:06:51 GMT+0000 (UTC)",
+          "temperature": 100,
+          "heattarget": 100,
+          "cooltarget": 100
+        },
+        {
+          "date": "Sat Jun 07 2014 19:07:21 GMT+0000 (UTC)",
+          "temperature": 99.875,
+          "heattarget": 100,
+          "cooltarget": 99.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:07:51 GMT+0000 (UTC)",
+          "temperature": 99.375,
+          "heattarget": 100,
+          "cooltarget": 99.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:08:21 GMT+0000 (UTC)",
+          "temperature": 99.25,
+          "heattarget": 100,
+          "cooltarget": 99.25
+        },
+        {
+          "date": "Sat Jun 07 2014 19:08:51 GMT+0000 (UTC)",
+          "temperature": 99.187,
+          "heattarget": 100,
+          "cooltarget": 99.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:09:21 GMT+0000 (UTC)",
+          "temperature": 99.187,
+          "heattarget": 100,
+          "cooltarget": 99.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:09:51 GMT+0000 (UTC)",
+          "temperature": 99.187,
+          "heattarget": 100,
+          "cooltarget": 99.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:10:21 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:10:51 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:11:21 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:11:51 GMT+0000 (UTC)",
+          "temperature": 99,
+          "heattarget": 100,
+          "cooltarget": 99
+        },
+        {
+          "date": "Sat Jun 07 2014 19:12:21 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:12:51 GMT+0000 (UTC)",
+          "temperature": 99,
+          "heattarget": 100,
+          "cooltarget": 99
+        },
+        {
+          "date": "Sat Jun 07 2014 19:13:22 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:13:52 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:14:22 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:14:52 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:15:22 GMT+0000 (UTC)",
+          "temperature": 99,
+          "heattarget": 100,
+          "cooltarget": 99
+        },
+        {
+          "date": "Sat Jun 07 2014 19:15:52 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:16:22 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:16:52 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:17:22 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:17:52 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:18:22 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:18:52 GMT+0000 (UTC)",
+          "temperature": 99.187,
+          "heattarget": 100,
+          "cooltarget": 99.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:19:22 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:19:52 GMT+0000 (UTC)",
+          "temperature": 99.25,
+          "heattarget": 100,
+          "cooltarget": 99.25
+        },
+        {
+          "date": "Sat Jun 07 2014 19:20:22 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:20:52 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:21:23 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:21:53 GMT+0000 (UTC)",
+          "temperature": 99.187,
+          "heattarget": 100,
+          "cooltarget": 99.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:22:23 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 100,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:22:53 GMT+0000 (UTC)",
+          "temperature": 99.125,
+          "heattarget": 100,
+          "cooltarget": 99.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:23:23 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 99.062,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:23:53 GMT+0000 (UTC)",
+          "temperature": 98.687,
+          "heattarget": 99,
+          "cooltarget": 98.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:24:23 GMT+0000 (UTC)",
+          "temperature": 98.625,
+          "heattarget": 99,
+          "cooltarget": 98.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:24:53 GMT+0000 (UTC)",
+          "temperature": 98.75,
+          "heattarget": 99,
+          "cooltarget": 98.75
+        },
+        {
+          "date": "Sat Jun 07 2014 19:25:23 GMT+0000 (UTC)",
+          "temperature": 98.875,
+          "heattarget": 99,
+          "cooltarget": 98.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:25:53 GMT+0000 (UTC)",
+          "temperature": 99,
+          "heattarget": 99,
+          "cooltarget": 99
+        },
+        {
+          "date": "Sat Jun 07 2014 19:26:23 GMT+0000 (UTC)",
+          "temperature": 98.875,
+          "heattarget": 99,
+          "cooltarget": 98.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:26:53 GMT+0000 (UTC)",
+          "temperature": 98.375,
+          "heattarget": 99,
+          "cooltarget": 98.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:27:23 GMT+0000 (UTC)",
+          "temperature": 97.937,
+          "heattarget": 99,
+          "cooltarget": 97.937
+        },
+        {
+          "date": "Sat Jun 07 2014 19:27:53 GMT+0000 (UTC)",
+          "temperature": 97.562,
+          "heattarget": 97.562,
+          "cooltarget": 97.562
+        },
+        {
+          "date": "Sat Jun 07 2014 19:28:23 GMT+0000 (UTC)",
+          "temperature": 97.187,
+          "heattarget": 99,
+          "cooltarget": 97.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:28:54 GMT+0000 (UTC)",
+          "temperature": 97.187,
+          "heattarget": 99,
+          "cooltarget": 97.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:29:24 GMT+0000 (UTC)",
+          "temperature": 97.25,
+          "heattarget": 99,
+          "cooltarget": 97.25
+        },
+        {
+          "date": "Sat Jun 07 2014 19:29:54 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:30:24 GMT+0000 (UTC)",
+          "temperature": 97.562,
+          "heattarget": 99,
+          "cooltarget": 97.562
+        },
+        {
+          "date": "Sat Jun 07 2014 19:30:54 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:31:24 GMT+0000 (UTC)",
+          "temperature": 97.75,
+          "heattarget": 99,
+          "cooltarget": 97.75
+        },
+        {
+          "date": "Sat Jun 07 2014 19:31:54 GMT+0000 (UTC)",
+          "temperature": 97.812,
+          "heattarget": 99,
+          "cooltarget": 97.812
+        },
+        {
+          "date": "Sat Jun 07 2014 19:32:24 GMT+0000 (UTC)",
+          "temperature": 97.875,
+          "heattarget": 99,
+          "cooltarget": 97.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:32:54 GMT+0000 (UTC)",
+          "temperature": 98.062,
+          "heattarget": 99,
+          "cooltarget": 98.062
+        },
+        {
+          "date": "Sat Jun 07 2014 19:33:24 GMT+0000 (UTC)",
+          "temperature": 98.125,
+          "heattarget": 99,
+          "cooltarget": 98.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:33:54 GMT+0000 (UTC)",
+          "temperature": 98.25,
+          "heattarget": 99,
+          "cooltarget": 98.25
+        },
+        {
+          "date": "Sat Jun 07 2014 19:34:24 GMT+0000 (UTC)",
+          "temperature": 98.25,
+          "heattarget": 99,
+          "cooltarget": 98.25
+        },
+        {
+          "date": "Sat Jun 07 2014 19:34:54 GMT+0000 (UTC)",
+          "temperature": 98.125,
+          "heattarget": 99,
+          "cooltarget": 98.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:35:25 GMT+0000 (UTC)",
+          "temperature": 98,
+          "heattarget": 99,
+          "cooltarget": 98
+        },
+        {
+          "date": "Sat Jun 07 2014 19:35:55 GMT+0000 (UTC)",
+          "temperature": 97.812,
+          "heattarget": 99,
+          "cooltarget": 97.812
+        },
+        {
+          "date": "Sat Jun 07 2014 19:36:25 GMT+0000 (UTC)",
+          "temperature": 97.875,
+          "heattarget": 99,
+          "cooltarget": 97.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:36:55 GMT+0000 (UTC)",
+          "temperature": 97.937,
+          "heattarget": 99,
+          "cooltarget": 97.937
+        },
+        {
+          "date": "Sat Jun 07 2014 19:37:25 GMT+0000 (UTC)",
+          "temperature": 97.875,
+          "heattarget": 99,
+          "cooltarget": 97.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:37:55 GMT+0000 (UTC)",
+          "temperature": 97.875,
+          "heattarget": 99,
+          "cooltarget": 97.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:38:25 GMT+0000 (UTC)",
+          "temperature": 97.937,
+          "heattarget": 99,
+          "cooltarget": 97.937
+        },
+        {
+          "date": "Sat Jun 07 2014 19:38:55 GMT+0000 (UTC)",
+          "temperature": 97.812,
+          "heattarget": 99,
+          "cooltarget": 97.812
+        },
+        {
+          "date": "Sat Jun 07 2014 19:39:25 GMT+0000 (UTC)",
+          "temperature": 97.687,
+          "heattarget": 99,
+          "cooltarget": 97.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:39:55 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:40:25 GMT+0000 (UTC)",
+          "temperature": 97.5,
+          "heattarget": 99,
+          "cooltarget": 97.5
+        },
+        {
+          "date": "Sat Jun 07 2014 19:40:55 GMT+0000 (UTC)",
+          "temperature": 97.437,
+          "heattarget": 99,
+          "cooltarget": 97.437
+        },
+        {
+          "date": "Sat Jun 07 2014 19:41:25 GMT+0000 (UTC)",
+          "temperature": 97.437,
+          "heattarget": 99,
+          "cooltarget": 97.437
+        },
+        {
+          "date": "Sat Jun 07 2014 19:41:56 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:42:26 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:42:56 GMT+0000 (UTC)",
+          "temperature": 97.5,
+          "heattarget": 99,
+          "cooltarget": 97.5
+        },
+        {
+          "date": "Sat Jun 07 2014 19:43:26 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:43:56 GMT+0000 (UTC)",
+          "temperature": 97.75,
+          "heattarget": 99,
+          "cooltarget": 97.75
+        },
+        {
+          "date": "Sat Jun 07 2014 19:44:26 GMT+0000 (UTC)",
+          "temperature": 97.687,
+          "heattarget": 99,
+          "cooltarget": 97.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:44:56 GMT+0000 (UTC)",
+          "temperature": 97.687,
+          "heattarget": 99,
+          "cooltarget": 97.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:45:26 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:45:56 GMT+0000 (UTC)",
+          "temperature": 97.687,
+          "heattarget": 99,
+          "cooltarget": 97.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:46:26 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:46:56 GMT+0000 (UTC)",
+          "temperature": 97.687,
+          "heattarget": 99,
+          "cooltarget": 97.687
+        },
+        {
+          "date": "Sat Jun 07 2014 19:47:27 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:47:57 GMT+0000 (UTC)",
+          "temperature": 97.562,
+          "heattarget": 99,
+          "cooltarget": 97.562
+        },
+        {
+          "date": "Sat Jun 07 2014 19:48:27 GMT+0000 (UTC)",
+          "temperature": 97.5,
+          "heattarget": 99,
+          "cooltarget": 97.5
+        },
+        {
+          "date": "Sat Jun 07 2014 19:48:57 GMT+0000 (UTC)",
+          "temperature": 97.437,
+          "heattarget": 99,
+          "cooltarget": 97.437
+        },
+        {
+          "date": "Sat Jun 07 2014 19:49:27 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:49:57 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:50:27 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:50:57 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:51:27 GMT+0000 (UTC)",
+          "temperature": 97.437,
+          "heattarget": 99,
+          "cooltarget": 97.437
+        },
+        {
+          "date": "Sat Jun 07 2014 19:51:57 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:52:27 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:52:58 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:53:28 GMT+0000 (UTC)",
+          "temperature": 97.562,
+          "heattarget": 99,
+          "cooltarget": 97.562
+        },
+        {
+          "date": "Sat Jun 07 2014 19:53:58 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:54:28 GMT+0000 (UTC)",
+          "temperature": 97.375,
+          "heattarget": 99,
+          "cooltarget": 97.375
+        },
+        {
+          "date": "Sat Jun 07 2014 19:54:58 GMT+0000 (UTC)",
+          "temperature": 97.125,
+          "heattarget": 99,
+          "cooltarget": 97.125
+        },
+        {
+          "date": "Sat Jun 07 2014 19:55:28 GMT+0000 (UTC)",
+          "temperature": 97.25,
+          "heattarget": 99,
+          "cooltarget": 97.25
+        },
+        {
+          "date": "Sat Jun 07 2014 19:55:58 GMT+0000 (UTC)",
+          "temperature": 97.437,
+          "heattarget": 99,
+          "cooltarget": 97.437
+        },
+        {
+          "date": "Sat Jun 07 2014 19:56:28 GMT+0000 (UTC)",
+          "temperature": 97.562,
+          "heattarget": 99,
+          "cooltarget": 97.562
+        },
+        {
+          "date": "Sat Jun 07 2014 19:56:58 GMT+0000 (UTC)",
+          "temperature": 97.625,
+          "heattarget": 99,
+          "cooltarget": 97.625
+        },
+        {
+          "date": "Sat Jun 07 2014 19:57:28 GMT+0000 (UTC)",
+          "temperature": 97.812,
+          "heattarget": 99,
+          "cooltarget": 97.812
+        },
+        {
+          "date": "Sat Jun 07 2014 19:57:59 GMT+0000 (UTC)",
+          "temperature": 97.875,
+          "heattarget": 99,
+          "cooltarget": 97.875
+        },
+        {
+          "date": "Sat Jun 07 2014 19:58:29 GMT+0000 (UTC)",
+          "temperature": 97.937,
+          "heattarget": 99,
+          "cooltarget": 97.937
+        },
+        {
+          "date": "Sat Jun 07 2014 19:58:59 GMT+0000 (UTC)",
+          "temperature": 98,
+          "heattarget": 99,
+          "cooltarget": 98
+        },
+        {
+          "date": "Sat Jun 07 2014 19:59:29 GMT+0000 (UTC)",
+          "temperature": 98.187,
+          "heattarget": 99,
+          "cooltarget": 98.187
+        },
+        {
+          "date": "Sat Jun 07 2014 19:59:59 GMT+0000 (UTC)",
+          "temperature": 98.312,
+          "heattarget": 99,
+          "cooltarget": 98.312
+        },
+        {
+          "date": "Sat Jun 07 2014 20:00:29 GMT+0000 (UTC)",
+          "temperature": 98.437,
+          "heattarget": 99,
+          "cooltarget": 98.437
+        },
+        {
+          "date": "Sat Jun 07 2014 20:00:59 GMT+0000 (UTC)",
+          "temperature": 98.562,
+          "heattarget": 99,
+          "cooltarget": 98.562
+        },
+        {
+          "date": "Sat Jun 07 2014 20:01:29 GMT+0000 (UTC)",
+          "temperature": 98.687,
+          "heattarget": 99,
+          "cooltarget": 98.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:01:59 GMT+0000 (UTC)",
+          "temperature": 98.75,
+          "heattarget": 99,
+          "cooltarget": 98.75
+        },
+        {
+          "date": "Sat Jun 07 2014 20:02:29 GMT+0000 (UTC)",
+          "temperature": 98.75,
+          "heattarget": 99,
+          "cooltarget": 98.75
+        },
+        {
+          "date": "Sat Jun 07 2014 20:03:00 GMT+0000 (UTC)",
+          "temperature": 98.75,
+          "heattarget": 99,
+          "cooltarget": 98.75
+        },
+        {
+          "date": "Sat Jun 07 2014 20:03:30 GMT+0000 (UTC)",
+          "temperature": 98.812,
+          "heattarget": 99,
+          "cooltarget": 98.812
+        },
+        {
+          "date": "Sat Jun 07 2014 20:04:00 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:04:30 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:05:00 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:05:30 GMT+0000 (UTC)",
+          "temperature": 99,
+          "heattarget": 99,
+          "cooltarget": 99
+        },
+        {
+          "date": "Sat Jun 07 2014 20:06:00 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:06:30 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:07:00 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:07:30 GMT+0000 (UTC)",
+          "temperature": 99.062,
+          "heattarget": 99.062,
+          "cooltarget": 99.062
+        },
+        {
+          "date": "Sat Jun 07 2014 20:08:01 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:08:31 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:09:01 GMT+0000 (UTC)",
+          "temperature": 98.937,
+          "heattarget": 99,
+          "cooltarget": 98.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:09:31 GMT+0000 (UTC)",
+          "temperature": 98.812,
+          "heattarget": 98.812,
+          "cooltarget": 98.812
+        },
+        {
+          "date": "Sat Jun 07 2014 20:10:01 GMT+0000 (UTC)",
+          "temperature": 98,
+          "heattarget": 98,
+          "cooltarget": 98
+        },
+        {
+          "date": "Sat Jun 07 2014 20:10:31 GMT+0000 (UTC)",
+          "temperature": 97.187,
+          "heattarget": 97.187,
+          "cooltarget": 97.187
+        },
+        {
+          "date": "Sat Jun 07 2014 20:11:01 GMT+0000 (UTC)",
+          "temperature": 96.062,
+          "heattarget": 96.062,
+          "cooltarget": 96.062
+        },
+        {
+          "date": "Sat Jun 07 2014 20:11:31 GMT+0000 (UTC)",
+          "temperature": 94.625,
+          "heattarget": 94.625,
+          "cooltarget": 94.625
+        },
+        {
+          "date": "Sat Jun 07 2014 20:12:01 GMT+0000 (UTC)",
+          "temperature": 81.187,
+          "heattarget": 81.187,
+          "cooltarget": 81.187
+        },
+        {
+          "date": "Sat Jun 07 2014 20:12:32 GMT+0000 (UTC)",
+          "temperature": 75.875,
+          "heattarget": 75.875,
+          "cooltarget": 75.875
+        },
+        {
+          "date": "Sat Jun 07 2014 20:13:02 GMT+0000 (UTC)",
+          "temperature": 82.562,
+          "heattarget": 82.562,
+          "cooltarget": 82.562
+        },
+        {
+          "date": "Sat Jun 07 2014 20:13:32 GMT+0000 (UTC)",
+          "temperature": 85.562,
+          "heattarget": 85.562,
+          "cooltarget": 85.562
+        },
+        {
+          "date": "Sat Jun 07 2014 20:14:02 GMT+0000 (UTC)",
+          "temperature": 80.625,
+          "heattarget": 80.625,
+          "cooltarget": 80.625
+        },
+        {
+          "date": "Sat Jun 07 2014 20:14:32 GMT+0000 (UTC)",
+          "temperature": 77.937,
+          "heattarget": 77.937,
+          "cooltarget": 77.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:15:02 GMT+0000 (UTC)",
+          "temperature": 76,
+          "heattarget": 76,
+          "cooltarget": 76
+        },
+        {
+          "date": "Sat Jun 07 2014 20:15:32 GMT+0000 (UTC)",
+          "temperature": 75.437,
+          "heattarget": 75.437,
+          "cooltarget": 75.437
+        },
+        {
+          "date": "Sat Jun 07 2014 20:16:02 GMT+0000 (UTC)",
+          "temperature": 73.937,
+          "heattarget": 73.937,
+          "cooltarget": 73.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:16:32 GMT+0000 (UTC)",
+          "temperature": 73.75,
+          "heattarget": 73.75,
+          "cooltarget": 73.75
+        },
+        {
+          "date": "Sat Jun 07 2014 20:17:03 GMT+0000 (UTC)",
+          "temperature": 73.687,
+          "heattarget": 73.687,
+          "cooltarget": 73.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:17:33 GMT+0000 (UTC)",
+          "temperature": 73.687,
+          "heattarget": 73.687,
+          "cooltarget": 73.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:18:03 GMT+0000 (UTC)",
+          "temperature": 71.75,
+          "heattarget": 71.75,
+          "cooltarget": 71.75
+        },
+        {
+          "date": "Sat Jun 07 2014 20:18:33 GMT+0000 (UTC)",
+          "temperature": 68.125,
+          "heattarget": 68.125,
+          "cooltarget": 68.125
+        },
+        {
+          "date": "Sat Jun 07 2014 20:19:03 GMT+0000 (UTC)",
+          "temperature": 64.375,
+          "heattarget": 64.375,
+          "cooltarget": 64.375
+        },
+        {
+          "date": "Sat Jun 07 2014 20:19:33 GMT+0000 (UTC)",
+          "temperature": 60.812,
+          "heattarget": 60.812,
+          "cooltarget": 60.812
+        },
+        {
+          "date": "Sat Jun 07 2014 20:20:03 GMT+0000 (UTC)",
+          "temperature": 57.875,
+          "heattarget": 57.875,
+          "cooltarget": 57.875
+        },
+        {
+          "date": "Sat Jun 07 2014 20:20:33 GMT+0000 (UTC)",
+          "temperature": 55.437,
+          "heattarget": 55.437,
+          "cooltarget": 55.437
+        },
+        {
+          "date": "Sat Jun 07 2014 20:21:04 GMT+0000 (UTC)",
+          "temperature": 51.312,
+          "heattarget": 51.312,
+          "cooltarget": 51.312
+        },
+        {
+          "date": "Sat Jun 07 2014 20:21:34 GMT+0000 (UTC)",
+          "temperature": 47.937,
+          "heattarget": 47.937,
+          "cooltarget": 47.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:22:04 GMT+0000 (UTC)",
+          "temperature": 47.5,
+          "heattarget": 47.5,
+          "cooltarget": 47.5
+        },
+        {
+          "date": "Sat Jun 07 2014 20:22:34 GMT+0000 (UTC)",
+          "temperature": 45.375,
+          "heattarget": 45.375,
+          "cooltarget": 45.375
+        },
+        {
+          "date": "Sat Jun 07 2014 20:23:04 GMT+0000 (UTC)",
+          "temperature": 42.375,
+          "heattarget": 42.375,
+          "cooltarget": 42.375
+        },
+        {
+          "date": "Sat Jun 07 2014 20:23:34 GMT+0000 (UTC)",
+          "temperature": 41.5,
+          "heattarget": 41.5,
+          "cooltarget": 41.5
+        },
+        {
+          "date": "Sat Jun 07 2014 20:24:04 GMT+0000 (UTC)",
+          "temperature": 41.375,
+          "heattarget": 41.375,
+          "cooltarget": 41.375
+        },
+        {
+          "date": "Sat Jun 07 2014 20:24:34 GMT+0000 (UTC)",
+          "temperature": 41.187,
+          "heattarget": 41.187,
+          "cooltarget": 41.187
+        },
+        {
+          "date": "Sat Jun 07 2014 20:25:05 GMT+0000 (UTC)",
+          "temperature": 41.062,
+          "heattarget": 41.062,
+          "cooltarget": 41.062
+        },
+        {
+          "date": "Sat Jun 07 2014 20:25:35 GMT+0000 (UTC)",
+          "temperature": 40.875,
+          "heattarget": 40.875,
+          "cooltarget": 40.875
+        },
+        {
+          "date": "Sat Jun 07 2014 20:26:05 GMT+0000 (UTC)",
+          "temperature": 39.812,
+          "heattarget": 39.812,
+          "cooltarget": 39.812
+        },
+        {
+          "date": "Sat Jun 07 2014 20:26:35 GMT+0000 (UTC)",
+          "temperature": 40.687,
+          "heattarget": 40.687,
+          "cooltarget": 40.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:27:05 GMT+0000 (UTC)",
+          "temperature": 39.562,
+          "heattarget": 39.562,
+          "cooltarget": 39.562
+        },
+        {
+          "date": "Sat Jun 07 2014 20:27:35 GMT+0000 (UTC)",
+          "temperature": 38.875,
+          "heattarget": 38.875,
+          "cooltarget": 38.875
+        },
+        {
+          "date": "Sat Jun 07 2014 20:28:05 GMT+0000 (UTC)",
+          "temperature": 39,
+          "heattarget": 39,
+          "cooltarget": 39
+        },
+        {
+          "date": "Sat Jun 07 2014 20:28:35 GMT+0000 (UTC)",
+          "temperature": 38.312,
+          "heattarget": 38.312,
+          "cooltarget": 38.312
+        },
+        {
+          "date": "Sat Jun 07 2014 20:29:06 GMT+0000 (UTC)",
+          "temperature": 38.562,
+          "heattarget": 38.562,
+          "cooltarget": 38.562
+        },
+        {
+          "date": "Sat Jun 07 2014 20:29:36 GMT+0000 (UTC)",
+          "temperature": 38.562,
+          "heattarget": 38.562,
+          "cooltarget": 38.562
+        },
+        {
+          "date": "Sat Jun 07 2014 20:30:06 GMT+0000 (UTC)",
+          "temperature": 38.687,
+          "heattarget": 38.687,
+          "cooltarget": 38.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:30:36 GMT+0000 (UTC)",
+          "temperature": 38.687,
+          "heattarget": 38.687,
+          "cooltarget": 38.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:31:06 GMT+0000 (UTC)",
+          "temperature": 38.687,
+          "heattarget": 38.687,
+          "cooltarget": 38.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:31:36 GMT+0000 (UTC)",
+          "temperature": 38.687,
+          "heattarget": 38.687,
+          "cooltarget": 38.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:32:06 GMT+0000 (UTC)",
+          "temperature": 38.687,
+          "heattarget": 38.687,
+          "cooltarget": 38.687
+        },
+        {
+          "date": "Sat Jun 07 2014 20:32:36 GMT+0000 (UTC)",
+          "temperature": 38.5,
+          "heattarget": 38.5,
+          "cooltarget": 38.5
+        },
+        {
+          "date": "Sat Jun 07 2014 20:33:07 GMT+0000 (UTC)",
+          "temperature": 36.937,
+          "heattarget": 36.937,
+          "cooltarget": 36.937
+        },
+        {
+          "date": "Sat Jun 07 2014 20:33:37 GMT+0000 (UTC)",
+          "temperature": 34.25,
+          "heattarget": 34.25,
+          "cooltarget": 34.25
+        },
+        {
+          "date": "Sat Jun 07 2014 20:34:07 GMT+0000 (UTC)",
+          "temperature": 33.125,
+          "heattarget": 33.125,
+          "cooltarget": 33.125
+        },
+        {
+          "date": "Sat Jun 07 2014 20:34:37 GMT+0000 (UTC)",
+          "temperature": 32.437,
+          "heattarget": 32.437,
+          "cooltarget": 32.437
+        },
+        {
+          "date": "Sat Jun 07 2014 20:35:07 GMT+0000 (UTC)",
+          "temperature": 32.125,
+          "heattarget": 32.125,
+          "cooltarget": 32.125
+        },
+        {
+          "date": "Sat Jun 07 2014 20:35:37 GMT+0000 (UTC)",
+          "temperature": 31.625,
+          "heattarget": 31.625,
+          "cooltarget": 31.625
+        },
+        {
+          "date": "Sat Jun 07 2014 20:36:07 GMT+0000 (UTC)",
+          "temperature": 31.062,
+          "heattarget": 31.062,
+          "cooltarget": 31.062
+        },
+        {
+          "date": "Sat Jun 07 2014 20:36:37 GMT+0000 (UTC)",
+          "temperature": 26.625,
+          "heattarget": 26.625,
+          "cooltarget": 26.625
+        }
+      ]
+    }
+  ],
+  "equipmentdata": [
+    {
+      "ename": "Heating Elements",
+      "eaddress": 11,
+      "etype": "Heat",
+      "safeValue": "0",
+      "values": [
+        {
+          "date": "Sat Jun 07 2014 18:25:47 GMT+0000 (UTC)",
+          "evalue": 0
+        },
+        {
+          "date": "Sat Jun 07 2014 18:25:59 GMT+0000 (UTC)"
+        },
+        {
+          "date": "Sat Jun 07 2014 18:51:07 GMT+0000 (UTC)"
+        },
+        {
+          "date": "Sat Jun 07 2014 18:57:13 GMT+0000 (UTC)"
+        },
+        {
+          "date": "Sat Jun 07 2014 19:23:17 GMT+0000 (UTC)"
+        },
+        {
+          "date": "Sat Jun 07 2014 19:27:50 GMT+0000 (UTC)"
+        },
+        {
+          "date": "Sat Jun 07 2014 19:27:52 GMT+0000 (UTC)"
+        },
+        {
+          "date": "Sat Jun 07 2014 19:27:55 GMT+0000 (UTC)"
+        },
+        {
+          "date": "Sat Jun 07 2014 20:09:19 GMT+0000 (UTC)"
+        }
+      ]
+    },
+    {
+      "ename": "Pump",
+      "eaddress": 15,
+      "etype": "Pump",
+      "safeValue": "0",
+      "values": [
+        {
+          "date": "Sat Jun 07 2014 18:25:47 GMT+0000 (UTC)",
+          "evalue": 0
+        },
+        {
+          "date": "Sat Jun 07 2014 20:13:21 GMT+0000 (UTC)"
+        }
+      ]
+    },
+    {
+      "ename": "Valve",
+      "eaddress": 12,
+      "etype": "Valve",
+      "safeValue": 0,
+      "values": [
+        {
+          "date": "Sat Jun 07 2014 18:25:47 GMT+0000 (UTC)",
+          "evalue": 0
+        },
+        {
+          "date": "Sat Jun 07 2014 20:13:06 GMT+0000 (UTC)"
+        }
+      ]
+    }
+  ],
+  "recipe": [],
+  "ingredients": []
+}

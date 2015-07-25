@@ -84,7 +84,7 @@ exports.checkUpdate = function(systemjson,updaterequest,callback) {
 				} else {
 					cb();
 				}
-				
+
 			},function(jsonerr){
 				if (sensorexist == false) {
 					systemjson.sensors.push({sensoraddress:updatesensor.sensoraddress,

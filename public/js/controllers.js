@@ -102,12 +102,12 @@ angular.module('brwryApp.controllers')
 
 		$scope.newBrew = function(currentbrew) {
 			var data = {type:'startbrew',currentbrew:currentbrew}
-			
+
 			System.update({},data);
 		}
 		$scope.stopBrew = function() {
 			var data = {type:'stopbrew'};
-			
+
 			System.update({},data);
 		}
 	}])
@@ -118,7 +118,7 @@ angular.module('brwryApp.controllers')
 			$scope.alerts.splice(index, 1);
 		};
 
-		$scope.availablePins = [11,12,13,15,16,18];
+		$scope.availablePins = [10, 11, 12, 13, 15, 16, 17, 18, 21, 22, 23, 24];
 
 		$scope.pinSet = function(selectedPin) {
 			if ($scope.newPin) {
